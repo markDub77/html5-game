@@ -50,9 +50,13 @@ function create() {
     hookBmd.ctx.rect(0,0,4,4);
     hookBmd.ctx.fillStyle = '#ff0000';
     hookBmd.ctx.fill();
-    hook = game.add.sprite(8, 0, hookBmd);
+    hook = game.add.sprite(0, 0, hookBmd);
     hook.anchor.setTo(0, 0);
     game.physics.enable(hook, Phaser.Physics.ARCADE);
+    hook.body.collideWorldBounds = true;
+	hook.body.checkCollision.up = false;
+	hook.body.checkCollision.down = false;
+	hook.body.immovable = true;
 
     var chainLinkBmd = game.add.bitmapData(4,4);
     chainLinkBmd.ctx.beginPath();
@@ -67,38 +71,46 @@ function create() {
     squareBmd.ctx.fill();
     square = game.add.sprite(0, 0, squareBmd);
     square.anchor.setTo(0, 0);
+    game.physics.enable(square, Phaser.Physics.ARCADE);
+    square.body.collideWorldBounds = true;
+	square.body.checkCollision.up = false;
+	square.body.checkCollision.down = false;
+	square.body.immovable = true;
+
+
 
     heroGroup = game.add.group();
     heroGroup.add(hook);
     heroGroup.add(square);
     heroGroup.x = 400;
     heroGroup.y = 300;
+    // game.physics.enable(heroGroup, Phaser.Physics.ARCADE);
+    // heroGroup.body.collideWorldBounds = true;
+	// heroGroup.body.checkCollision.up = false;
+	// heroGroup.body.checkCollision.down = false;
+	// heroGroup.body.immovable = true;
     
 
     //  Init chainLink array
     for (var i = 1; i <= numChainLinks; i++) {
-        chainLink[i] = game.add.sprite(8, 0, chainLinkBmd);
+        chainLink[i] = game.add.sprite(4, 4, chainLinkBmd);
         chainLink[i].anchor.setTo(0, 0);
+        chainLink[i].alpha = 0;
         heroGroup.add(chainLink[i]);
+        game.physics.enable(chainLink[i], Phaser.Physics.ARCADE);
     }
     
     //  Init chainPath array
     for (var i = 0; i <= numChainLinks; i++) {
-        chainPath[i] = new Phaser.Point(8, 0);
+        chainPath[i] = new Phaser.Point(0, 0);
     }
    
-    console.log('hook.x1', hook.x);
-    console.log('hook.y1', hook.y);
 
-
-
-
-
-    // (function () { // gamepad indicator
-    //     indicator = game.add.sprite(10,10, 'controller-indicator');
-    //     indicator.scale.x = indicator.scale.y = 2;
-    //     indicator.animations.frame = 1;
-    // }());       
+    (function () { // gamepad indicator
+        indicator = game.add.sprite(10,10, 'controller-indicator');
+        indicator.scale.x = indicator.scale.y = 2;
+        indicator.animations.frame = 1;
+    }());       
 }
 
 
@@ -108,81 +120,62 @@ function create() {
 
 
 
-function launchGrapple() { // Will only be called once per key press. // Will be passed the full Key object. See Phaser.Key for properties.}
-    grappleLaunch = true;
-    
-}
 
-function makeGrappleDisapear() { // Will only be called once per key press. // Will be passed the full Key object. See Phaser.Key for properties.}
-    
-    console.log('makeGrappleDisapear');
-    
-    console.log('hook.x2', hook.x);
-    console.log('hook.y2', hook.y);
-    
-    grappleLaunch = false;
 
-    
-    for (var i = 1; i <= numChainLinks; i++) {
-        chainLink[i].x = 8;
-        chainLink[i].y = 0;
-    }
-    for (var i = 0; i <= numChainLinks; i++) {
-        chainPath[i].x = 8;
-        chainPath[i].y = 0;
-    }
-    
-}
+
 
 
    
 
 function update() {
 
-    // var launchGrappleButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    var launchGrappleButton = game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_RIGHT_BUMPER);
+    var launchGrappleButton = pad1.getButton(Phaser.Gamepad.XBOX360_RIGHT_BUMPER);
     launchGrappleButton.onDown.add(launchGrapple, this);
     launchGrappleButton.onUp.add(makeGrappleDisapear, this);
 
+    function launchGrapple() { // Will only be called once per key press. // Will be passed the full Key object. See Phaser.Key for properties.}
+        grappleLaunch = true;
+    }
 
-    launch();
+
+    if (grappleLaunch == true && hook.x <= numChainLinks * 5) {
+        launch();
+    } else {
+        makeGrappleDisapear();
+    }
+    
+
+    function makeGrappleDisapear() {
+        hook.body.velocity.setTo(0, 0);
+        hook.x = 12;
+        hook.y = 0;
+        grappleLaunch = false;
+
+        for (var i = 1; i <= numChainLinks; i++) {
+            chainLink[i].x = hook.x;
+            chainLink[i].y = hook.y;
+            chainLink[i].alpha = 0;
+        }
+        for (var i = 0; i <= numChainLinks; i++) {
+            chainPath[i].x = hook.x;
+            chainPath[i].y = hook.y;
+        }
+    }
 
     function launch() { // launch 
+        hook.body.velocity.setTo(300, -300);
 
-        
+        // insert the new location at the start of the array, 
+        // and knock the last position off the end
+        var part = chainPath.pop();
+        part.setTo(hook.x, hook.y);
+        chainPath.unshift(part);
 
-        if (grappleLaunch == true) {
-
-            console.log('launch');
-            
-            if(hook.x <= numChainLinks * 5){
-
-
-            console.log('hook.x3', hook.x);
-            console.log('hook.y3', hook.y);
-
-
-            hook.body.velocity.setTo(300, -300);
-
-            // insert the new location at the start of the array, 
-            // and knock the last position off the end
-            var part = chainPath.pop();
-            part.setTo(hook.x, hook.y);
-            chainPath.unshift(part);
-
-
-                for (var i = 1; i <= numChainLinks; i++){
-                    chainLink[i].x = (chainPath[i]).x;
-                    chainLink[i].y = (chainPath[i]).y;
-                }
-            } else {
-                makeGrappleDisapear();
-               
-            }
-        } else {
-             hook.body.velocity.setTo(0, 0);
-                hook.x = 8;
-                hook.y = -8;
+        for (var i = 1; i <= numChainLinks; i++){
+            chainLink[i].x = (chainPath[i]).x;
+            chainLink[i].y = (chainPath[i]).y;
+            chainLink[i].body.velocity.setTo(300, -300);
+            chainLink[i].alpha = 1;
         }
     } // end launch
     
@@ -199,11 +192,11 @@ function update() {
         // Pad "connected or not" indicator
     if (game.input.gamepad.supported && game.input.gamepad.active && pad1.connected)
     {
-        // indicator.animations.frame = 0;
+        indicator.animations.frame = 0;
     }
     else
     {
-        // indicator.animations.frame = 1;
+        indicator.animations.frame = 1;
     }
 
 
