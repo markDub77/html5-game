@@ -1,27 +1,34 @@
-const enablePhysics = require('./enablePhysics.js');
-const p2Physics = require('./p2Physics');
+var enablePhysics = require('./enablePhysics.js');
+var p2Physics = require('./p2Physics');
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var createHookFile = require('./createHook.js');
+var createHook = createHookFile.createHook;
 
-function preload() {}
 
-var hookSprite;
+
+
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
+
+
 var heroSprite;
 var groundSprite;
 var cursors;
 var platforms;
 var jumpButton;
 
-function create() {
-    enablePhysics(game);
+// function preload() {}
 
-    var hookBmd = game.add.bitmapData(4,4);
-    hookBmd.ctx.beginPath();
-    hookBmd.ctx.rect(0,0,4,4);
-    hookBmd.ctx.fillStyle = '#ff0000';
-    hookBmd.ctx.fill();
-    hookSprite = game.add.sprite(400, 300, hookBmd);
-    game.physics.p2.enable(hookSprite);
+function create() {
+
+
+    enablePhysics(game);
+    // createHook(game);
+
+    var hookSprite = createHook(game);
+
+    console.log('hookSprite1', hookSprite);
+
+
 
     var heroBmd = game.add.bitmapData(16,16);
     heroBmd.ctx.beginPath();
@@ -48,15 +55,11 @@ function create() {
     groundSprite.body.checkCollision.down = false;
     groundSprite.body.immovable = true;
 
-    p2Physics(game,heroSprite,hookSprite);
+    // p2Physics(game, heroSprite, hookSprite);
 
     // controls
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-
-
-
 }
 
 function update() {

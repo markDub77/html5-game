@@ -4,7 +4,6 @@ function p2Physics(game,heroSprite,hookSprite) {
     var localAnchorA = [0,0];
     var localAnchorB = [0,0];
     var maxForce = 400000;
-    console.log(hookSprite);
     var constraint = game.physics.p2.createDistanceConstraint(heroSprite,hookSprite, distance);
     
 }
