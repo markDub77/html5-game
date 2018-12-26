@@ -2,14 +2,15 @@ var enablePhysics = require('./enablePhysics.js');
 var p2Physics = require('./p2Physics');
 
 var createHookFile = require('./createHook.js');
-var createHook = createHookFile.createHook;
-
 var createHeroFile = require('./createHero.js');
+var createGroundFile = require('./createGround.js');
+
+var createHook = createHookFile.createHook;
 var createHero = createHeroFile.createHero;
+var createGround = createGroundFile.createGround;
 
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
 
-var groundSprite;
 var cursors;
 var jumpButton;
 
@@ -18,28 +19,7 @@ function create() {
     enablePhysics(game);
     this.hookSprite = createHook(game);
     this.heroSprite = createHero(game);
-
-    console.log('heroSprite2', this.heroSprite);
-
-    
-
-
-
-
-    var groundBmd = game.add.bitmapData(16,16);
-    groundBmd.ctx.beginPath();
-    groundBmd.ctx.rect(0,0,16,16);
-    groundBmd.ctx.fillStyle = '#DD9B33';
-    groundBmd.ctx.fill();
-    groundSprite = game.add.sprite(300, 400, groundBmd);
-    game.physics.enable(groundSprite, Phaser.Physics.ARCADE); // needed for collision detection
-    groundSprite.body.collideWorldBounds = true;
-    groundSprite.body.checkCollision.up = true;
-    groundSprite.body.checkCollision.down = false;
-    groundSprite.body.immovable = true;
-
-
-
+    this.groundSprite = createGround(game);
     p2Physics(game, this.heroSprite, this.hookSprite);
 
     // controls
@@ -49,9 +29,7 @@ function create() {
 
 function update() {
     
-    console.log('heroSprite3', this.heroSprite);
-
-    game.physics.arcade.collide(this.heroSprite, groundSprite);
+    game.physics.arcade.collide(this.heroSprite, this.groundSprite);
 
     // Archade clollision detection breaks this 
 	// heroSprite.body.setZeroVelocity();
