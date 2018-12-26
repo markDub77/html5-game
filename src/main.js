@@ -4,44 +4,27 @@ var p2Physics = require('./p2Physics');
 var createHookFile = require('./createHook.js');
 var createHook = createHookFile.createHook;
 
-
-
+var createHeroFile = require('./createHero.js');
+var createHero = createHeroFile.createHero;
 
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
 
-
-var heroSprite;
 var groundSprite;
 var cursors;
-var platforms;
 var jumpButton;
-
-// function preload() {}
 
 function create() {
 
-
     enablePhysics(game);
-    // createHook(game);
+    this.hookSprite = createHook(game);
+    this.heroSprite = createHero(game);
 
-    var hookSprite = createHook(game);
+    console.log('heroSprite2', this.heroSprite);
 
-    console.log('hookSprite1', hookSprite);
-
-
-
-    var heroBmd = game.add.bitmapData(16,16);
-    heroBmd.ctx.beginPath();
-    heroBmd.ctx.rect(0,0,16,16);
-    heroBmd.ctx.fillStyle = '#DD9B33';
-    heroBmd.ctx.fill();
-    heroSprite = game.add.sprite(400, 300, heroBmd);
     
-    game.physics.enable(heroSprite, Phaser.Physics.ARCADE); // needed for collision detection
-    heroSprite.body.bounce.y = 0.2;
-    heroSprite.body.collideWorldBounds = true;
-    heroSprite.body.collideWorldBounds = true; 
-    game.physics.p2.enable(heroSprite);
+
+
+
 
     var groundBmd = game.add.bitmapData(16,16);
     groundBmd.ctx.beginPath();
@@ -55,7 +38,9 @@ function create() {
     groundSprite.body.checkCollision.down = false;
     groundSprite.body.immovable = true;
 
-    // p2Physics(game, heroSprite, hookSprite);
+
+
+    p2Physics(game, this.heroSprite, this.hookSprite);
 
     // controls
     cursors = game.input.keyboard.createCursorKeys();
@@ -64,21 +49,23 @@ function create() {
 
 function update() {
     
-    game.physics.arcade.collide(heroSprite, groundSprite);
+    console.log('heroSprite3', this.heroSprite);
+
+    game.physics.arcade.collide(this.heroSprite, groundSprite);
 
     // Archade clollision detection breaks this 
 	// heroSprite.body.setZeroVelocity();
-    heroSprite.body.velocity.x = 0;
+     this.heroSprite.body.velocity.x = 0;
 
     if (cursors.left.isDown)
     {
     	// heroSprite.body.moveLeft(400);
-        heroSprite.body.velocity.x = -150;
+        this.heroSprite.body.velocity.x = -150;
     }
     else if (cursors.right.isDown)
     {
     	// heroSprite.body.moveRight(400);
-        heroSprite.body.velocity.x = 150;
+        this.heroSprite.body.velocity.x = 150;
     }
 
     if (cursors.up.isDown)
@@ -90,9 +77,9 @@ function update() {
         // heroSprite.body.moveDown(400);
     }
 
-    if (jumpButton.isDown && heroSprite.body.onFloor())
+    if (jumpButton.isDown && this.heroSprite.body.onFloor())
     {
-        heroSprite.body.velocity.y = -350;
+        this.heroSprite.body.velocity.y = -350;
         // jumpTimer = game.time.now + 750;
     }
 }
