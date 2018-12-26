@@ -1,14 +1,13 @@
+var enablePhysics = require('./enablePhysics.js');
+var p2Physics = require('./p2Physics');
 
 var createHookFile = require('./createHook.js');
 var createHook = createHookFile.createHook;
 
 
-
-
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
 
 
-// var hookSprite;
 var heroSprite;
 var groundSprite;
 var cursors;
@@ -16,15 +15,9 @@ var jumpButton;
 
 function create() {
 
-
-	//	Enable p2 physics
-	game.physics.startSystem(Phaser.Physics.P2JS);
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 800;
-
+    enablePhysics(game);
 
     var hookSprite = createHook(game);
-
         console.log(typeof hookSprite);
         console.log('hookSprite2', hookSprite);
 
@@ -59,12 +52,13 @@ function create() {
         groundSprite.body.immovable = true;
 
 
-    // P2 physics
-    var distance = 150;
-    var localAnchorA = [0,0];
-    var localAnchorB = [0,0];
-    var maxForce = 400000;
-    var constraint = game.physics.p2.createDistanceConstraint(heroSprite,hookSprite, distance);
+    // // P2 physics
+    // var distance = 150;
+    // var localAnchorA = [0,0];
+    // var localAnchorB = [0,0];
+    // var maxForce = 400000;
+    // var constraint = game.physics.p2.createDistanceConstraint(heroSprite,hookSprite, distance);
+    p2Physics(game, heroSprite, hookSprite);
 
 
     // controls
