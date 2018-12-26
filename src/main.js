@@ -1,17 +1,17 @@
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var createHookFile = require('./createHook.js');
+var createHook = createHookFile.createHook;
 
-function preload() {
 
-    
 
-}
 
-var hookSprite;
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
+
+
+// var hookSprite;
 var heroSprite;
 var groundSprite;
 var cursors;
-var platforms;
 var jumpButton;
 
 function create() {
@@ -23,14 +23,11 @@ function create() {
     game.physics.arcade.gravity.y = 800;
 
 
-    //  Add 2 sprites which we'll join with a spring
-    var hookBmd = game.add.bitmapData(4,4);
-        hookBmd.ctx.beginPath();
-        hookBmd.ctx.rect(0,0,4,4);
-        hookBmd.ctx.fillStyle = '#ff0000';
-        hookBmd.ctx.fill();
-        hookSprite = game.add.sprite(400, 300, hookBmd);
-        game.physics.p2.enable(hookSprite);
+    var hookSprite = createHook(game);
+
+        console.log(typeof hookSprite);
+        console.log('hookSprite2', hookSprite);
+
 
     var heroBmd = game.add.bitmapData(16,16);
         heroBmd.ctx.beginPath();
