@@ -10,9 +10,6 @@ var createHero = function(game) {
         heroSprite.body.collideWorldBounds = true;
         heroSprite.body.collideWorldBounds = true; 
         game.physics.p2.enable(heroSprite);
-
-        console.log('heroSprite1', heroSprite);
-
         return heroSprite;
 }
 
