@@ -11,10 +11,12 @@ var createHook = createHookFile.createHook;
 var createHero = createHeroFile.createHero;
 var createGround = createGroundFile.createGround;
 var createControls = createControlsFile.createControls;
+
 var controls = controlsFile.controls;
 
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
 
+var nullSprite;
 function create() {
 
     enablePhysics(game);
@@ -28,6 +30,15 @@ function create() {
     this.createControls = createControls(game);
     this.run = this.createControls.run;
     this.jump = this.createControls.jump;
+
+    var nullBmp = game.add.bitmapData(4,4);
+        nullBmp.ctx.beginPath();
+        nullBmp.ctx.rect(0,0,4,4);
+        nullBmp.ctx.fillStyle = '#0de832';
+        nullBmp.ctx.fill();
+        nullSprite = game.add.sprite(410, 300, nullBmp);
+        
+        this.heroSprite.addChild(nullSprite);
 }
 
 function update() {
