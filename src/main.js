@@ -39,11 +39,11 @@ function create() {
         heroBmd.ctx.fill();
         heroSprite = game.add.sprite(400, 300, heroBmd);
         // needed for collision detection
-        game.physics.enable(heroSprite, Phaser.Physics.ARCADE);
-        heroSprite.body.bounce.y = 0.2;
-        heroSprite.body.collideWorldBounds = true;
+        // game.physics.enable(heroSprite, Phaser.Physics.ARCADE);
+        // heroSprite.body.bounce.y = 0.2;
+        // heroSprite.body.collideWorldBounds = true;
 	    // heroSprite.body.bounce.setTo(1, 1);
-        heroSprite.body.collideWorldBounds = true;
+        // heroSprite.body.collideWorldBounds = true;
         // heroSprite.body.setSize(20, 32, 5, 16);
         game.physics.p2.enable(heroSprite);
 
@@ -84,8 +84,8 @@ function update() {
     game.physics.arcade.collide(heroSprite, groundSprite);
 
     // Archade clollision detection breaks this 
-	// heroSprite.body.setZeroVelocity();
-    heroSprite.body.velocity.x = 0;
+	heroSprite.body.setZeroVelocity();
+    // heroSprite.body.velocity.x = 0;
 
     if (cursors.left.isDown)
     {
