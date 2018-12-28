@@ -1,4 +1,4 @@
-var p2Physics = require('./p2Physics');
+var createDistanceConstraint = require('./createDistanceConstraint');
 var enablePhysics = require('./enablePhysics');
 
 var createHookFile = require('./createHook');
@@ -24,9 +24,6 @@ function create() {
     this.heroSprite = createHero(game);
     this.groundSprite = createGround(game);
 
-    // not being used right now
-    p2Physics(game, this.heroSprite, this.hookSprite);
-
     this.createControls = createControls(game);
     this.run = this.createControls.run;
     this.jump = this.createControls.jump;
@@ -37,8 +34,11 @@ function create() {
         nullBmp.ctx.fillStyle = '#0de832';
         nullBmp.ctx.fill();
         nullSprite = game.add.sprite(410, 300, nullBmp);
-        
+        game.physics.p2.enable(nullSprite);
+
         this.heroSprite.addChild(nullSprite);
+
+        createDistanceConstraint(game, nullSprite, this.hookSprite);
 }
 
 function update() {
@@ -46,7 +46,9 @@ function update() {
     game.physics.arcade.collide(this.heroSprite, this.groundSprite);
 
     // Archade clollision detection breaks this 
-	//  this.heroSprite.body.setZeroVelocity();
+     nullSprite.body.setZeroVelocity();
+     
      this.heroSprite.body.velocity.x = 0;
+
      controls(this.run, this.jump, this.heroSprite);
 }
