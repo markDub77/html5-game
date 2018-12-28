@@ -12,10 +12,17 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="manifest" href="/manifest.json">
     <style>
-        html,
-        body {
-            margin: 0;
+        * {
             padding: 0;
+            margin: 0;
+        }
+        html, body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        #phaser-example {
+            align-self: center;
         }
     </style>
 </head>
@@ -25,8 +32,6 @@
 <body>
 
     <div id="phaser-example"></div>
-    <!-- uncomment the line bellow for cordova feature -->
-    <!-- <script type="text/javascript" src="cordova.js"></script> -->
 </body>
 
 </html>

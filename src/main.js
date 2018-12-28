@@ -35,7 +35,7 @@ function create() {
         nullBmp.ctx.fill();
         nullSprite = game.add.sprite(410, 300, nullBmp);
         game.physics.p2.enable(nullSprite);
-        createDistanceConstraint(game, nullSprite, this.hookSprite);
+    createDistanceConstraint(game, nullSprite, this.hookSprite);
 
     this.heroSprite.addChild(nullSprite);
 

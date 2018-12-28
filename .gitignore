@@ -6,4 +6,5 @@ dist/
 .vscode/
 *.log
 .history
+/index.html
 build/
