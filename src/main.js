@@ -35,6 +35,7 @@ function create() {
         nullBmp.ctx.fill();
         nullSprite = game.add.sprite(410, 300, nullBmp);
         game.physics.p2.enable(nullSprite);
+
     createDistanceConstraint(game, nullSprite, this.hookSprite);
 
     this.heroSprite.addChild(nullSprite);
@@ -45,10 +46,10 @@ function update() {
     
     game.physics.arcade.collide(this.heroSprite, this.groundSprite);
 
-    // Archade clollision detection breaks this 
-     nullSprite.body.setZeroVelocity();
+    
+     nullSprite.body.setZeroVelocity(); // p2 physics
      
-     this.heroSprite.body.velocity.x = 0;
+     this.heroSprite.body.velocity.x = 0; // arcade physics
 
      controls(this.run, this.jump, this.heroSprite);
 }
