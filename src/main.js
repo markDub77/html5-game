@@ -3,15 +3,15 @@ var enablePhysics = require('./enablePhysics');
 
 
 var createHeroFile = require('./createHero');
-var createGroundFile = require('./createGround');
+var createPlatformFile = require('./createPlatform');
 var createControlsFile = require('./createControls');
-var createRopeFile = require('./createRope');
+var createChainFile = require('./createChain');
 var controlsFile = require('./controls');
 
 
 var createHero = createHeroFile.createHero;
-var createGround = createGroundFile.createGround;
-var createRope = createRopeFile.createRope;
+var createPlatform = createPlatformFile.createPlatform;
+var createChain = createChainFile.createChain;
 var createControls = createControlsFile.createControls;
 
 var controls = controlsFile.controls;
@@ -23,12 +23,12 @@ function create() {
 
     enablePhysics(game);
     this.heroSprite = createHero(game);
-    this.groundSprite = createGround(game);
+    this.platformSprite = createPlatform(game);
     
-    this.createRopeSprite = createRope(game, this.groundSprite, this.heroSprite);
-    this.ropeBitmapData = this.createRopeSprite.ropeBitmapData;
-    this.ropeAnchorX = this.createRopeSprite.ropeAnchorX;
-    this.ropeAnchorY = this.createRopeSprite.ropeAnchorY;
+    this.createChainSprite = createChain(game, this.platformSprite, this.heroSprite);
+    this.chainBitmapData = this.createChainSprite.chainBitmapData;
+    this.chainAnchorX = this.createChainSprite.chainAnchorX;
+    this.chainAnchorY = this.createChainSprite.chainAnchorY;
 
     this.createControls = createControls(game);
     this.run = this.createControls.run;
@@ -37,19 +37,14 @@ function create() {
 
 function update() {
     
-    //  this.heroSprite.body.setZeroVelocity(); // p2 physics
-     
-     // Change the bitmap data to reflect the new rope position
-    
-    this.ropeBitmapData.clear();
-    this.ropeBitmapData.ctx.beginPath();
-    this.ropeBitmapData.ctx.moveTo(this.heroSprite.x, this.heroSprite.y);
-    this.ropeBitmapData.ctx.lineTo(this.ropeAnchorX, this.ropeAnchorY);
-    this.ropeBitmapData.ctx.lineWidth = "2";
-    this.ropeBitmapData.ctx.stroke();
-    this.ropeBitmapData.ctx.closePath();
-    this.ropeBitmapData.render();
+    this.chainBitmapData.clear();
+    this.chainBitmapData.ctx.beginPath();
+    this.chainBitmapData.ctx.moveTo(this.heroSprite.x, this.heroSprite.y);
+    this.chainBitmapData.ctx.lineTo(this.chainAnchorX, this.chainAnchorY);
+    this.chainBitmapData.ctx.lineWidth = "2";
+    this.chainBitmapData.ctx.stroke();
+    this.chainBitmapData.ctx.closePath();
+    this.chainBitmapData.render();
 
-
-     controls(this.run, this.jump, this.heroSprite);
+    controls(this.run, this.jump, this.heroSprite);
 }
