@@ -7,6 +7,7 @@ var createHero = function(game) {
     var heroSprite = game.add.sprite(400, 300, heroBmd);
        
         game.physics.p2.enable(heroSprite);
+        heroSprite.body.fixedRotation = true
         return heroSprite;
 }
 
