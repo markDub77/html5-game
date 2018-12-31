@@ -1,55 +1,55 @@
 var createDistanceConstraint = require('./createDistanceConstraint');
 var enablePhysics = require('./enablePhysics');
 
-var createHookFile = require('./createHook');
+
 var createHeroFile = require('./createHero');
 var createGroundFile = require('./createGround');
 var createControlsFile = require('./createControls');
+var createRopeFile = require('./createRope');
 var controlsFile = require('./controls');
 
-var createHook = createHookFile.createHook;
+
 var createHero = createHeroFile.createHero;
 var createGround = createGroundFile.createGround;
+var createRope = createRopeFile.createRope;
 var createControls = createControlsFile.createControls;
 
 var controls = controlsFile.controls;
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
+var game = new Phaser.Game(1800, 900, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
 
-var nullSprite;
+
 function create() {
 
     enablePhysics(game);
-    this.hookSprite = createHook(game);
     this.heroSprite = createHero(game);
     this.groundSprite = createGround(game);
+    
+    this.createRopeSprite = createRope(game, this.groundSprite, this.heroSprite);
+    this.ropeBitmapData = this.createRopeSprite.ropeBitmapData;
+    this.ropeAnchorX = this.createRopeSprite.ropeAnchorX;
+    this.ropeAnchorY = this.createRopeSprite.ropeAnchorY;
 
     this.createControls = createControls(game);
     this.run = this.createControls.run;
-    this.jump = this.createControls.jump;
-
-    var nullBmp = game.add.bitmapData(4,4);
-        nullBmp.ctx.beginPath();
-        nullBmp.ctx.rect(0,0,4,4);
-        nullBmp.ctx.fillStyle = '#0de832';
-        nullBmp.ctx.fill();
-        nullSprite = game.add.sprite(410, 300, nullBmp);
-        game.physics.p2.enable(nullSprite);
-
-    createDistanceConstraint(game, nullSprite, this.hookSprite);
-
-    this.heroSprite.addChild(nullSprite);
-
+    this.jump = this.createControls.jump;  
 }
 
 function update() {
     
-    game.physics.arcade.collide(this.heroSprite, this.groundSprite);
-
-    
-     nullSprite.body.setZeroVelocity(); // p2 physics
+    //  this.heroSprite.body.setZeroVelocity(); // p2 physics
      
-     this.heroSprite.body.velocity.x = 0; // arcade physics
+     // Change the bitmap data to reflect the new rope position
+    
+    this.ropeBitmapData.clear();
+    this.ropeBitmapData.ctx.beginPath();
+    this.ropeBitmapData.ctx.moveTo(this.heroSprite.x, this.heroSprite.y);
+    this.ropeBitmapData.ctx.lineTo(this.ropeAnchorX, this.ropeAnchorY);
+    this.ropeBitmapData.ctx.lineWidth = "2";
+    this.ropeBitmapData.ctx.stroke();
+    this.ropeBitmapData.ctx.closePath();
+    this.ropeBitmapData.render();
+
 
      controls(this.run, this.jump, this.heroSprite);
 }

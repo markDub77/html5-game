@@ -4,11 +4,11 @@ var controls = function(run, jump, heroSprite) {
     } else if (run.right.isDown) {
         heroSprite.body.velocity.x = 150;
     }
-    if (jump.isDown && heroSprite.body.onFloor()) {
+    if (jump.isDown) {
         heroSprite.body.velocity.y = -350;
     }
 
-    return heroSprite;
+    return heroSprite; 
 }
 
 module.exports.controls = controls;
