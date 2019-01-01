@@ -3,6 +3,7 @@ function enablePhysics(game) {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.gravity.y = 900;
     
+    return game;
 }
 
-module.exports = enablePhysics;
+module.exports.enablePhysics = enablePhysics;

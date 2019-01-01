@@ -28,6 +28,8 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
         [-chainAnchorX, -chainAnchorY] // Where to hook the spring to body A in world coordinates. 
     );
 
+    game.world.bringToTop(heroSprite);
+    
     return {
         chainBitmapData,
         chainAnchorX, 
