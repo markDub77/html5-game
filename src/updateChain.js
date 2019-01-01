@@ -16,13 +16,18 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
     //Remove last spring
     game.physics.p2.removeSpring(chain);
 
+
 if (grappleRelease === false) {
+   
+    // var chainAnchorX = (heroSprite.x + 100);
+    // var chainAnchorY = (heroSprite.y + -100);
+   
    chain = game.physics.p2.createSpring(
        platformSprite,                       // sprite 1
        heroSprite,                           // sprite 2
        chainLength,                          // length of the Chain
-        100,                                       // stiffness (lower numbers sag)
-        15,                                         // damping (lower numbers bounce)
+        50,                                       // stiffness (lower numbers sag)
+        50,                                         // damping (lower numbers bounce)
         [-chainAnchorX, -chainAnchorY]); // Where to hook the spring to body A in world coordinates. 
 }
    

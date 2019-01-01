@@ -15,8 +15,8 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
     game.add.sprite(0, 0, chainBitmapData);
 
     // Keep track of where the Chain is anchored
-    var chainAnchorX = (platformSprite.world.x + 800);
-    var chainAnchorY = (platformSprite.world.y + platformSprite.height - 8);
+    var chainAnchorX = (heroSprite.x + 100);
+    var chainAnchorY = (heroSprite.y + -100);
 
     // Create a spring between the player and block to act as the Chain
     var chain = game.physics.p2.createSpring(
