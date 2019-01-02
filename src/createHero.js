@@ -4,7 +4,7 @@ var createHero = function(game) {
         heroBmd.ctx.rect(0,0,16,16);
         heroBmd.ctx.fillStyle = '#DD9B33';
         heroBmd.ctx.fill();
-    var heroSprite = game.add.sprite(400, 300, heroBmd);
+    var heroSprite = game.add.sprite(400, 800, heroBmd);
        
         game.physics.p2.enable(heroSprite);
         heroSprite.body.fixedRotation = true

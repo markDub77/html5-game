@@ -30,11 +30,11 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
     }
 
 
-    // if (pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
-    //     chainAnchorX = (heroSprite.x + 100);
-    //     chainAnchorY = (heroSprite.y + -100);
-    //     console.log("chainAnchorX,chainAnchorY", chainAnchorY, chainAnchorX)
-    // }
+    if (pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
+        // chainAnchorX = (heroSprite.x + 100);
+        // chainAnchorY = (heroSprite.y + -100);
+        // console.log("chainAnchorX,chainAnchorY", chainAnchorY, chainAnchorX)
+    }
 
     // grapple release button
     if (pad1.isDown(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
@@ -74,8 +74,8 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
         heroSprite,
         chainLength,
         grappleRelease,
-        // chainAnchorX,
-        // chainAnchorY
+        chainAnchorX,
+        chainAnchorY
     }
 }
 
