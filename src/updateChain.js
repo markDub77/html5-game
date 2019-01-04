@@ -43,7 +43,7 @@ var hookBmd = game.add.bitmapData(4,4);
         hookBmd.ctx.fillStyle = '#ff0000';
         hookBmd.ctx.fill();
 
-var hookSprite = game.add.sprite(heroSprite.x,heroSprite.y, hookBmd);
+// var hookSprite = game.add.sprite(heroSprite.x,heroSprite.y, hookBmd);
 
 
    

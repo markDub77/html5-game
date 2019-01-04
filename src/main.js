@@ -4,7 +4,6 @@ var game = new Phaser.Game(1800, 900, Phaser.CANVAS, 'phaser-example', { create:
 
 
 
-var handle2;
 var line1;
 var grappleGraphics
 
@@ -31,29 +30,13 @@ function create() {
 
 
 
-
-
-
-
-
-
-
-
-
-    
-
-    handle2 = game.add.sprite(400, 300, 'balls', 0);
-    handle2.anchor.set(0.5);
-    handle2.inputEnabled = true;
-    handle2.input.enableDrag(true);
-
     grappleGraphics = game.add.graphics(0,0);
     grappleGraphics.lineStyle(2, 0xc0c0c0, 1);
     grappleGraphics.moveTo(this.heroSprite.x,this.heroSprite.y);
     grappleGraphics.lineTo(this.hookSprite.x,this.hookSprite.y);
     grappleGraphics.endFill();
 
-    game.add.tween(handle2).to( { x: 900, y: 200}, 1000, Phaser.Easing.Bounce.Out, true);
+    game.add.tween(this.hookSprite).to( { x: 900, y: 200}, 1000, Phaser.Easing.Bounce.Out, true);
 
 
 
@@ -98,7 +81,7 @@ function update() {
         this.grappleRelease,
         this.line1,
         this.hookSprite
-    ); 
+    );
         this.chainBitmapData = this.updateChain.chainBitmapData;
         this.chainLength = this.updateChain.chainLength;
         this.chain = this.updateChain.chain;
@@ -109,8 +92,9 @@ function update() {
 
         grappleGraphics.clear();
         grappleGraphics = game.add.graphics(0,0);
-        grappleGraphics.lineStyle(2, 0xc0c0c0, 1);
+        grappleGraphics.lineStyle(1, 0xc0c0c0, 1);
         grappleGraphics.moveTo(this.heroSprite.x,this.heroSprite.y);
         grappleGraphics.lineTo(this.hookSprite.x,this.hookSprite.y);
         grappleGraphics.endFill();
+
 }
