@@ -1,33 +1,47 @@
 var createChain = function(game, platformSprite, heroSprite, chainLength) {
  
 
- var chainLength = 300
+    var chainLength = 300
+    var chainAnchorX = (heroSprite.x + 100);
+    var chainAnchorY = (heroSprite.y + -100);
 
     var chainBitmapData = game.add.bitmapData(game.world.width, game.world.height);
         chainBitmapData.ctx.beginPath();
         chainBitmapData.ctx.lineWidth = "2";
         chainBitmapData.ctx.strokeStyle = "#dddddd";
         chainBitmapData.ctx.setLineDash([2,2]);
+        chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
+        chainBitmapData.ctx.lineTo(chainAnchorX,chainAnchorY);
         chainBitmapData.ctx.stroke();
         chainBitmapData.ctx.closePath();
 
     // Create a new sprite using the bitmap data
-    game.add.sprite(0, 0, chainBitmapData);
+    var chainSprite = game.add.sprite(0, 0, chainBitmapData);
 
-    // Keep track of where the Chain is anchored
-    var chainAnchorX = (heroSprite.x + 100);
-    var chainAnchorY = (heroSprite.y + -100);
 
-    // Create a spring between the player and block to act as the Chain
-    var chain = game.physics.p2.createSpring(
-        platformSprite,  // sprite 1
-        heroSprite, // sprite 2
-        chainLength,       // length of the Chain
-        100,        // stiffness (lower numbers sag)
-        9,         // damping (lower numbers bounce)
-        [-chainAnchorX, -chainAnchorY] // Where to hook the spring to body A in world coordinates. 
-    );
+    var hookBmd = game.add.bitmapData(4,4);
+        hookBmd.ctx.beginPath();
+        hookBmd.ctx.rect(0,0,4,4);
+        hookBmd.ctx.fillStyle = '#ff0000';
+        hookBmd.ctx.fill();
+    var hookSprite = game.add.sprite(heroSprite.x,heroSprite.y, hookBmd);
 
+    var line1 = new Phaser.Line(heroSprite.x, heroSprite.y, hookSprite.x, hookSprite.y);
+
+
+    // game.add.tween(hookSprite).to( { x: 900, y: 200}, 2000, Phaser.Easing.Bounce.Out, true);
+
+
+
+
+
+
+    console.log('line1', line1)
+
+
+    
+
+ 
     game.world.bringToTop(heroSprite);
     
     return {
@@ -35,7 +49,8 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
         chainAnchorX, 
         chainAnchorY,
         chainLength,
-        chain
+        line1,
+        hookSprite
     }
 }
 
