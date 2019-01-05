@@ -10,7 +10,10 @@ var createPlatform = function(game) {
         game.physics.p2.enable(platformSprite);
         platformSprite.body.static = true;
         // platformSprite.anchor.setTo(0, 0);
+
+    
         
+
         return platformSprite;
 }
 

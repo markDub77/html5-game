@@ -1,7 +1,9 @@
 var createChain = function(game, platformSprite, heroSprite, chainLength) {
  
 
- var chainLength = 300
+    var chainLength = 300
+    var chainAnchorX = (heroSprite.x + 100);
+    var chainAnchorY = (heroSprite.y + -100);
 
     var chainBitmapData = game.add.bitmapData(game.world.width, game.world.height);
         chainBitmapData.ctx.beginPath();
@@ -10,13 +12,19 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
         chainBitmapData.ctx.setLineDash([2,2]);
         chainBitmapData.ctx.stroke();
         chainBitmapData.ctx.closePath();
+    var chainSprite = game.add.sprite(0, 0, chainBitmapData);
 
-    // Create a new sprite using the bitmap data
-    game.add.sprite(0, 0, chainBitmapData);
+    
 
-    // Keep track of where the Chain is anchored
-    var chainAnchorX = (heroSprite.x + 100);
-    var chainAnchorY = (heroSprite.y + -100);
+    var hookBmd = game.add.bitmapData(4,4);
+        hookBmd.ctx.beginPath();
+        hookBmd.ctx.rect(0,0,4,4);
+        hookBmd.ctx.fillStyle = '#ff0000';
+        hookBmd.ctx.fill();
+    var hookSprite = game.add.sprite(heroSprite.x,heroSprite.y, hookBmd);
+    game.physics.p2.enable(hookSprite);
+    // game.physics.arcade.enable(hookSprite);
+
 
     // Create a spring between the player and block to act as the Chain
     var chain = game.physics.p2.createSpring(
@@ -35,7 +43,9 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
         chainAnchorX, 
         chainAnchorY,
         chainLength,
-        chain
+        chain,
+        chainSprite,
+        hookSprite
     }
 }
 

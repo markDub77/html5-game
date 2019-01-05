@@ -1,4 +1,4 @@
-var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLength, chainAnchorX, chainAnchorY) {
+var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLength, chainAnchorX, chainAnchorY, hookSprite) {
     
     // dpad left
     if (run.left.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {
@@ -38,9 +38,18 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
 
     // grapple release button
     if (pad1.isDown(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
+
         var grappleRelease = false
-    } else {
-        var grappleRelease = true
+
+       
+        hookSprite.body.velocity.y = -500;
+        hookSprite.body.velocity.x = 500;
+
+        
+      
+        
+
+        
     }
 
 
@@ -74,6 +83,7 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
         heroSprite,
         chainLength,
         grappleRelease,
+        hookSprite
         // chainAnchorX,
         // chainAnchorY
     }
