@@ -1,5 +1,13 @@
 var game = new Phaser.Game(1800, 900, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
 
+
+
+
+
+var line1;
+var grappleGraphics
+
+
 function create() {
 
     require('./enablePhysics').enablePhysics(game);
@@ -11,21 +19,21 @@ function create() {
         this.chainBitmapData = this.createChainSprite.chainBitmapData;
         this.chainAnchorX = this.createChainSprite.chainAnchorX;
         this.chainAnchorY = this.createChainSprite.chainAnchorY;
-        this.chainLength = this.createChainSprite.chainLength;
-        this.chain = this.createChainSprite.chain;
-    
+        this.chainLength = this.createChainSprite.chainLength
+        this.line1 = this.createChainSprite.line1
+        this.hookSprite = this.createChainSprite.hookSprite
+        this.grappleGraphics = this.createChainSprite.grappleGraphics
+        this.chainSprite = this.createChainSprite.chainSprite
 
     this.createControls = require('./createControls').createControls(game);
         this.run = this.createControls.run;
         this.jump = this.createControls.jump;
         this.pad1 = this.createControls.pad1;
-
 }
-
-
 
 function update() {
     
+
     this.controls =  require('./controls').controls(
         this.run, 
         this.jump, 
@@ -38,8 +46,8 @@ function update() {
     );
         this.chainLength = this.controls.chainLength;
         this.grappleRelease = this.controls.grappleRelease;
-        // this.chainAnchorX = this.controls.chainAnchorX;
-        // this.chainAnchorY = this.controls.chainAnchorY;
+    
+
 
     this.updateChain =  require('./updateChain').updateChain(
         game, 
@@ -50,11 +58,19 @@ function update() {
         this.chainBitmapData, 
         this.chainAnchorX, 
         this.chainAnchorY, 
-        this.grappleRelease
-    ); 
+        this.grappleRelease,
+        this.line1,
+        this.hookSprite,
+        this.grappleGraphics,
+        this.chainSprite
+    );
         this.chainBitmapData = this.updateChain.chainBitmapData;
         this.chainLength = this.updateChain.chainLength;
         this.chain = this.updateChain.chain;
         this.chainAnchorX = this.updateChain.chainAnchorX;
         this.chainAnchorY = this.updateChain.chainAnchorY;
+        this.line1 = this.updateChain.line1;
+        this.hookSprite = this.updateChain.hookSprite;
+
+
 }
