@@ -1,7 +1,14 @@
-var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, chainAnchorX, chainAnchorY, grappleRelease, hookSprite) {
+var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, chainAnchorX, chainAnchorY, grappleRelease, hookSprite, hookSprite2, chainSprite) {
  
 
-    
+        hookSprite2.x = hookSprite.x;
+        hookSprite2.y = hookSprite.y
+
+        console.log('hookSprite2.x', hookSprite2.x);
+
+    // chainSprite.destroy();
+
+
 
     // if (grappleRelease === false) {
         chainBitmapData.clear();
@@ -43,7 +50,8 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
         chainAnchorY,
         chainLength,
         chain,
-        hookSprite
+        hookSprite,
+        hookSprite2
     }
 }
 

@@ -14,6 +14,7 @@ function create() {
         this.chainLength = this.createChainSprite.chainLength;
         this.chain = this.createChainSprite.chain;
         this.hookSprite = this.createChainSprite.hookSprite;
+        this.hookSprite2 = this.createChainSprite.hookSprite2;
     
 
     this.createControls = require('./createControls').createControls(game);
@@ -36,7 +37,8 @@ function update() {
         this.chainLength,
         this.chainAnchorX,
         this.chainAnchorY,
-        this.hookSprite
+        this.hookSprite,
+        this.hookSprite2
     );
         this.chainLength = this.controls.chainLength;
         this.grappleRelease = this.controls.grappleRelease;
@@ -54,7 +56,9 @@ function update() {
         this.chainAnchorX, 
         this.chainAnchorY, 
         this.grappleRelease,
-        this.hookSprite
+        this.hookSprite,
+        this.hookSprite2,
+        this.chainSprite
     ); 
         this.chainBitmapData = this.updateChain.chainBitmapData;
         this.chainLength = this.updateChain.chainLength;
@@ -62,4 +66,5 @@ function update() {
         this.chainAnchorX = this.updateChain.chainAnchorX;
         this.chainAnchorY = this.updateChain.chainAnchorY;
         this.hookSprite = this.updateChain.hookSprite;
+        this.hookSprite2 = this.updateChain.hookSprite2;
 }
