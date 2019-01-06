@@ -8,7 +8,7 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
     var chainBitmapData = game.add.bitmapData(game.world.width, game.world.height);
         chainBitmapData.ctx.beginPath();
         chainBitmapData.ctx.lineWidth = "2";
-        chainBitmapData.ctx.strokeStyle = "#dddddd";
+        chainBitmapData.ctx.strokeStyle = "#999999";
         chainBitmapData.ctx.setLineDash([2,2]);
         chainBitmapData.ctx.stroke();
         chainBitmapData.ctx.closePath();
@@ -19,7 +19,7 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
     var hookBmd = game.add.bitmapData(4,4);
         hookBmd.ctx.beginPath();
         hookBmd.ctx.rect(0,0,4,4);
-        hookBmd.ctx.fillStyle = '#ff0000';
+        // hookBmd.ctx.fillStyle = '#ff0000';
         hookBmd.ctx.fill();
     var hookSprite = game.add.sprite(heroSprite.x,heroSprite.y, hookBmd);
     game.physics.p2.enable(hookSprite);
@@ -27,11 +27,12 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
      var hookBmd2 = game.add.bitmapData(4,4);
         hookBmd2.ctx.beginPath();
         hookBmd2.ctx.rect(0,0,4,4);
-        hookBmd2.ctx.fillStyle = '#00ff00';
+        hookBmd2.ctx.fillStyle = '#cccccc';
         hookBmd2.ctx.fill();
-    var hookSprite2 = game.add.sprite(hookSprite.x,hookSprite.y, hookBmd2);
 
-console.log('hookSprite2.x', hookSprite2.x);
+    var hookSprite2 = game.add.sprite(hookSprite.x,hookSprite.y, hookBmd2);
+    hookSprite2.anchor.setTo(0.5, 0.5);    
+
 
     // Create a spring between the player and block to act as the Chain
     var chain = game.physics.p2.createSpring(

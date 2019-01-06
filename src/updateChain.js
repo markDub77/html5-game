@@ -1,23 +1,25 @@
 var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, chainAnchorX, chainAnchorY, grappleRelease, hookSprite, hookSprite2, chainSprite) {
  
 
-        hookSprite2.x = hookSprite.x;
-        hookSprite2.y = hookSprite.y
+        
+    // make the hook follow the null hook
+    hookSprite2.x = hookSprite.x;
+    hookSprite2.y = hookSprite.y
 
-        console.log('hookSprite2.x', hookSprite2.x);
-
-    // chainSprite.destroy();
-
+    // give the chin a limit
+    if (hookSprite.body.x >= (heroSprite.body.x + 300)) {
+        hookSprite.body.velocity.x = 0;
+    }
 
 
     // if (grappleRelease === false) {
-        chainBitmapData.clear();
-        chainBitmapData.ctx.beginPath();
-        chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
-        chainBitmapData.ctx.lineTo(hookSprite.x,hookSprite.y);
-        chainBitmapData.ctx.stroke();
-        chainBitmapData.ctx.closePath();
-        chainBitmapData.render();
+    chainBitmapData.clear();
+    chainBitmapData.ctx.beginPath();
+    chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
+    chainBitmapData.ctx.lineTo(hookSprite.x,hookSprite.y);
+    chainBitmapData.ctx.stroke();
+    chainBitmapData.ctx.closePath();
+    chainBitmapData.render();
     // }
     
     
@@ -25,9 +27,7 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
     game.physics.p2.removeSpring(chain);
 
 
-    if (hookSprite.body.x >= (heroSprite.body.x + 300)) {
-        hookSprite.body.velocity.x = 0;
-    }
+    
 
 
     // if (grappleRelease === false) {
