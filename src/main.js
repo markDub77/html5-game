@@ -35,13 +35,11 @@ function update() {
         this.pad1, 
         this.chainBitmapData, 
         this.chainLength,
-        this.chainAnchorX,
-        this.chainAnchorY,
         this.hookSprite,
         this.hookSprite2
     );
         this.chainLength = this.controls.chainLength;
-        this.grappleRelease = this.controls.grappleRelease;
+        this.hookLaunch = this.controls.hookLaunch;
         this.hookSprite = this.controls.hookSprite;
         // this.chainAnchorX = this.controls.chainAnchorX;
         // this.chainAnchorY = this.controls.chainAnchorY;
@@ -53,9 +51,7 @@ function update() {
         this.chainLength, 
         this.chain, 
         this.chainBitmapData, 
-        this.chainAnchorX, 
-        this.chainAnchorY, 
-        this.grappleRelease,
+        this.hookLaunch,
         this.hookSprite,
         this.hookSprite2,
         this.chainSprite

@@ -1,53 +1,69 @@
-var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, chainAnchorX, chainAnchorY, grappleRelease, hookSprite, hookSprite2, chainSprite) {
+var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, hookLaunch, hookSprite, hookSprite2, chainSprite) {
  
-
+    
         
+    
+
+
+
+    
+
+
+
+    // always be clearing bitmap data
+    chainBitmapData.clear();
+
     // make the hook follow the null hook
     hookSprite2.x = hookSprite.x;
     hookSprite2.y = hookSprite.y
 
-    // give the chin a limit
-    if (hookSprite.body.x >= (heroSprite.body.x + 300)) {
+
+    if (hookLaunch === true) {
+
+
+// Launch the hook!
+        hookSprite.body.velocity.y = -600;
+        hookSprite.body.velocity.x = 600;
+        
+        // give the chin a limit
+    if (hookSprite.body.x >= (heroSprite.body.x + chainLength)) {
         hookSprite.body.velocity.x = 0;
     }
 
+        
 
-    // if (grappleRelease === false) {
-    chainBitmapData.clear();
-    chainBitmapData.ctx.beginPath();
-    chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
-    chainBitmapData.ctx.lineTo(hookSprite.x,hookSprite.y);
-    chainBitmapData.ctx.stroke();
-    chainBitmapData.ctx.closePath();
-    chainBitmapData.render();
-    // }
-    
-    
-    //Remove last spring
-    game.physics.p2.removeSpring(chain);
+        
+        
+        // draw bitmap data for the chain
+        chainBitmapData.ctx.beginPath();
+        chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
+        chainBitmapData.ctx.lineTo(hookSprite.x,hookSprite.y);
+        chainBitmapData.ctx.stroke();
+        chainBitmapData.ctx.closePath();
+        chainBitmapData.render();
 
+    } else {
+        // hookSprite.body.velocity.y = 0;
+        // hookSprite.body.velocity.x = 0;
+        hookSprite.body.x = heroSprite.body.x;
+        hookSprite.body.y = heroSprite.body.y-16
+    }
 
-    
+    console.log('hookLaunch', hookLaunch)
 
-
-    // if (grappleRelease === false) {
-    
-    //     // var chainAnchorX = (heroSprite.x + 100);
-    //     // var chainAnchorY = (heroSprite.y + -100);
-    
+    // //Remove last spring
+    // game.physics.p2.removeSpring(chain);
     // chain = game.physics.p2.createSpring(
     //     hookSprite,                          // sprite 1
     //     heroSprite,                          // sprite 2
     //     chainLength,                         // length of the Chain
-    //     50,                                  // stiffness (lower numbers sag)
-    //     50,                                  // damping (lower numbers bounce)
+    //     0,                                  // stiffness (lower numbers sag)
+    //     7,                                  // damping (lower numbers bounce)
     //     [-hookSprite.x, -hookSprite.y]); // Where to hook the spring to body A in world coordinates. 
-    // }
+    
    
     return {
         chainBitmapData,
-        chainAnchorX, 
-        chainAnchorY,
         chainLength,
         chain,
         hookSprite,

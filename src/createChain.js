@@ -35,14 +35,15 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
 
 
     // Create a spring between the player and block to act as the Chain
-    var chain = game.physics.p2.createSpring(
-        platformSprite,  // sprite 1
-        heroSprite, // sprite 2
-        chainLength,       // length of the Chain
-        100,        // stiffness (lower numbers sag)
-        9,         // damping (lower numbers bounce)
-        [-chainAnchorX, -chainAnchorY] // Where to hook the spring to body A in world coordinates. 
-    );
+    var chain 
+    // = game.physics.p2.createSpring(
+    //     platformSprite,  // sprite 1
+    //     heroSprite, // sprite 2
+    //     chainLength,       // length of the Chain
+    //     100,        // stiffness (lower numbers sag)
+    //     9,         // damping (lower numbers bounce)
+    //     [-chainAnchorX, -chainAnchorY] // Where to hook the spring to body A in world coordinates. 
+    // );
 
     game.world.bringToTop(heroSprite);
     
