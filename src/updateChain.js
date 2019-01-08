@@ -1,15 +1,5 @@
 var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, hookLaunch, hookSprite, hookSprite2, chainSprite) {
  
-    
-        
-    
-
-
-
-    
-
-
-
     // always be clearing bitmap data
     chainBitmapData.clear();
 
@@ -17,30 +7,26 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
     hookSprite2.x = hookSprite.x;
     hookSprite2.y = hookSprite.y
 
+    // draw bitmap data for the chain
+    chainBitmapData.ctx.beginPath();
+    chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
+    chainBitmapData.ctx.lineTo(hookSprite.x,hookSprite.y);
+    chainBitmapData.ctx.stroke();
+    chainBitmapData.ctx.closePath();
+    chainBitmapData.render();
 
     if (hookLaunch === true) {
 
-
-// Launch the hook!
-        hookSprite.body.velocity.y = -600;
-        hookSprite.body.velocity.x = 600;
-        
         // give the chin a limit
-    if (hookSprite.body.x >= (heroSprite.body.x + chainLength)) {
-        hookSprite.body.velocity.x = 0;
-    }
+        if (hookSprite.body.x >= (heroSprite.body.x + chainLength)) {
+            hookSprite.body.velocity.x = 0;
+        }
 
-        
 
-        
-        
-        // draw bitmap data for the chain
-        chainBitmapData.ctx.beginPath();
-        chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
-        chainBitmapData.ctx.lineTo(hookSprite.x,hookSprite.y);
-        chainBitmapData.ctx.stroke();
-        chainBitmapData.ctx.closePath();
-        chainBitmapData.render();
+        // hookLaunch = false;
+
+
+
 
     } else {
         // hookSprite.body.velocity.y = 0;

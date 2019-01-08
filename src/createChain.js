@@ -31,7 +31,7 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
         hookBmd2.ctx.fill();
 
     var hookSprite2 = game.add.sprite(hookSprite.x,hookSprite.y, hookBmd2);
-    hookSprite2.anchor.setTo(0.5, 0.5);    
+    hookSprite2.anchor.setTo(0.5, 0.5);
 
 
     // Create a spring between the player and block to act as the Chain

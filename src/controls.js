@@ -30,17 +30,20 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
     }
 
 
-    // if (pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
-    //     chainAnchorX = (heroSprite.x + 100);
-    //     chainAnchorY = (heroSprite.y + -100);
-    //     console.log("chainAnchorX,chainAnchorY", chainAnchorY, chainAnchorX)
-    // }
+    if (pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
+               
+        // Launch the hook!
+        hookSprite.body.velocity.y = -500;
+        hookSprite.body.velocity.x = 500;
+    } else {
+        
+    }
 
     // grapple release button
     if (pad1.isDown(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
         var hookLaunch = true
     } else {
-        var hookLaunch = false
+        // var hookLaunch = false
     }
 
 
