@@ -33,8 +33,9 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
     if (pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
                
         // Launch the hook!
-        hookSprite.body.velocity.y = -500;
-        hookSprite.body.velocity.x = 500;
+        // hookSprite.body.mass = 100
+        hookSprite.body.velocity.y = -550; 
+        hookSprite.body.velocity.x = 250;
     } else {
         
     }
