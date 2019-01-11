@@ -55,12 +55,13 @@ var hookBmd = game.add.bitmapData(4,4);
     // pandas.enableBody = true;
     panda.physicsBodyType = Phaser.Physics.P2JS;
     game.physics.p2.enable(panda, false);
-    panda.body.setRectangle(40, 40);
+    panda.body.setRectangle(4, 4);
     
-    // panda.body.collides(pandaCollisionGroup);
+    panda.body.collides([pandaCollisionGroup, playerCollisionGroup]);
     panda.body.velocity.x = 400;
     panda.body.velocity.y = 400;
     panda.body.setCollisionGroup(pandaCollisionGroup);
+    
 
     //     var panda = pandas.create(game.world.randomX, game.world.randomY, 'hookBmd2');
     //     panda.body.setRectangle(40, 40);
@@ -107,7 +108,8 @@ var hookBmd = game.add.bitmapData(4,4);
 
     //  The ship will collide with the pandas, and when it strikes one the hitPanda callback will fire, causing it to alpha out a bit
     //  When pandas collide with each other, nothing happens to them.
-    
+    ship.body.collides(pandaCollisionGroup);
+
     game.camera.follow(ship);
 
     cursors = game.input.keyboard.createCursorKeys();
