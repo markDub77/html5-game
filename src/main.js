@@ -1,9 +1,10 @@
-var game = new Phaser.Game(1800, 900, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
+var game = new Phaser.Game(1800, 400, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
 
 function create() {
 
     require('./enablePhysics').enablePhysics(game);
 
+   
     this.heroSprite = require('./createHero').createHero(game);
     this.platformSprite = require('./createPlatform').createPlatform(game);
     
@@ -16,12 +17,33 @@ function create() {
         this.hookSprite = this.createChainSprite.hookSprite;
         this.hookSprite2 = this.createChainSprite.hookSprite2;
     
+    // game.world.bringToTop(this.heroSprite);
+
 
     this.createControls = require('./createControls').createControls(game);
         this.run = this.createControls.run;
         this.jump = this.createControls.jump;
         this.pad1 = this.createControls.pad1;
 
+
+
+
+
+    //  Create our collision groups. One for the heroSprite, one for the hookSprites
+    var heroSpriteCollisionGroup = game.physics.p2.createCollisionGroup();
+    var hookSpriteCollisionGroup = game.physics.p2.createCollisionGroup();
+    var platformSpriteCollisionGroup = game.physics.p2.createCollisionGroup();
+    
+    //  Set the heroSprites collision group
+    this.heroSprite.body.setCollisionGroup(heroSpriteCollisionGroup);
+    this.hookSprite.body.setCollisionGroup(hookSpriteCollisionGroup);
+    this.platformSprite.body.setCollisionGroup(platformSpriteCollisionGroup);
+    
+    //  The heroSprite will collide with the hookSprites, and when it strikes one the hithookSprite callback will fire, causing it to alpha out a bit
+    //  When hookSprites collide with each other, nothing happens to them.
+    this.heroSprite.body.collides([platformSpriteCollisionGroup]);
+    this.hookSprite.body.collides([platformSpriteCollisionGroup]);
+    this.platformSprite.body.collides([hookSpriteCollisionGroup, heroSpriteCollisionGroup]);
 }
 
 

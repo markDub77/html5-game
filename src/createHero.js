@@ -6,8 +6,10 @@ var createHero = function(game) {
         heroBmd.ctx.fill();
     var heroSprite = game.add.sprite(400, 300, heroBmd);
        
-        game.physics.p2.enable(heroSprite);
+        game.physics.p2.enable(heroSprite, false);
+        // heroSprite.body.setRectangle(16, 16);
         heroSprite.body.fixedRotation = true
+        
 
         return heroSprite;
 }

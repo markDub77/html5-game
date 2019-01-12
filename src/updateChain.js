@@ -26,7 +26,7 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
         // snap back to the hero
         hookSprite.body.static = true
         // hookSprite.body.mass = 1000
-        hookSprite.body.x = heroSprite.x+16;
+        hookSprite.body.x = heroSprite.x;
         hookSprite.body.y = heroSprite.y;
         
         // hookBmd.ctx.fillStyle = '#ff0000';

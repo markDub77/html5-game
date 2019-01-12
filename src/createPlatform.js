@@ -7,10 +7,10 @@ var createPlatform = function(game) {
     var platformSprite = game.add.sprite(0, 200, platformBmd);
         
         // Enable P2 Physics and set the block not to move
-        game.physics.p2.enable(platformSprite);
+        game.physics.p2.enable(platformSprite, false);
         platformSprite.body.static = true;
         // platformSprite.anchor.setTo(0, 0);
-
+        // platformSprite.body.setRectangle(game.world.width, 16);
     
         
 

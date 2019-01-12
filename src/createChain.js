@@ -19,7 +19,7 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
     var hookBmd = game.add.bitmapData(4,4);
         hookBmd.ctx.beginPath();
         hookBmd.ctx.rect(0,0,4,4);
-        // hookBmd.ctx.fillStyle = '#ff0000';
+        hookBmd.ctx.fillStyle = '#ff0000';
         hookBmd.ctx.fill();
     var hookSprite = game.add.sprite(heroSprite.x,heroSprite.y, hookBmd);
     game.physics.p2.enable(hookSprite);
@@ -45,7 +45,7 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
     //     [-chainAnchorX, -chainAnchorY] // Where to hook the spring to body A in world coordinates. 
     // );
 
-    game.world.bringToTop(heroSprite);
+    // game.world.bringToTop(heroSprite);
     
     return {
         chainBitmapData,
