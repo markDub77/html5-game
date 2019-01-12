@@ -4,12 +4,17 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
     if (run.left.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {
 
         heroSprite.body.velocity.x = -150;
+        // hookSprite.body.velocity.x = -150;
+        //  hookSprite.body.x = heroSprite.body.x;
 
 
     // dpad right
     } else if (run.right.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) {
        
         heroSprite.body.velocity.x = 150;
+        // hookSprite.body.velocity.x = 150;
+        // hookSprite.body.x = heroSprite.body.x;
+       
     
     // dpad up
     } else if (pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1) {
@@ -26,6 +31,7 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
     // jump button
     if (jump.isDown || pad1.justPressed(Phaser.Gamepad.XBOX360_A)) {
         heroSprite.body.velocity.y = -250;
+        // hookSprite.body.velocity.y = -250;
 
     }
 

@@ -1,12 +1,12 @@
 var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, hookLaunch, hookSprite, hookSprite2, chainSprite) {
  
-    // make the hook follow the null hook
-    hookSprite2.x = hookSprite.x;
-    hookSprite2.y = hookSprite.y
+    // make the hook follow the null hook, there will be a delay
+    hookSprite2.x = hookSprite.body.x;
+    hookSprite2.y = hookSprite.body.y
 
     // always be clearing bitmap data
     chainBitmapData.clear();
-    // draw bitmap data for the chain
+    // draw bitmap data for the chain, there will be a delay
     chainBitmapData.ctx.beginPath();
     chainBitmapData.ctx.moveTo(heroSprite.x,heroSprite.y);
     chainBitmapData.ctx.lineTo(hookSprite.x,hookSprite.y);
@@ -20,14 +20,20 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
         hookSprite.body.velocity.x = 0; // this is a problem if Hero steps backwards or forwards even
     }
 
+    // console.log('hookLaunch', hookLaunch);
 
-    if (hookLaunch != true) {
+    if (hookLaunch != true) { // if normal mode
+
+        
+        // hookSprite.body.mass = 1000
+        hookSprite.body.velocity.y = 0;
+        hookSprite.body.velocity.x = 0;
+        hookSprite.body.x = heroSprite.body.x;
+        hookSprite.body.y = heroSprite.body.y;
+         hookSprite.alpha = 0 
 
         // snap back to the hero
         hookSprite.body.static = true
-        // hookSprite.body.mass = 1000
-        hookSprite.body.x = heroSprite.x;
-        hookSprite.body.y = heroSprite.y;
         
         // hookBmd.ctx.fillStyle = '#ff0000';
     
