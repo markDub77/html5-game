@@ -1,88 +1,152 @@
-var game = new Phaser.Game(1800, 400, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
+ // Create the state that will contain the whole game
+var mainState = {
+    preload: function() {  
+        // Here we preload the assets
+    },
 
-function create() {
+    create: function() {
+        // Here we create the game
+        // Set the background color to blue
+        game.stage.backgroundColor = '#3598db';
 
-    require('./enablePhysics').enablePhysics(game);
+        // Start the Arcade physics system (for movements and collisions)
+        game.physics.startSystem(Phaser.Physics.ARCADE);
 
+        // Add the physics engine to all game objects
+        game.world.enableBody = true;
+
+        // Variable to store the arrow key pressed
+        this.cursor = game.input.keyboard.createCursorKeys();
+
+
+
+
+        // Create the player in the middle of the game
+        var heroBmd = game.add.bitmapData(16,16);
+            heroBmd.ctx.beginPath();
+            heroBmd.ctx.rect(0,0,16,16);
+            heroBmd.ctx.fillStyle = '#DD9B33';
+            heroBmd.ctx.fill();
+        this.player = game.add.sprite(40, 70, heroBmd);
+
+
+        
+        // Add gravity to make it fall
+        this.player.body.gravity.y = 600;
+
+        // Create 3 groups that will contain our objects
+        this.walls = game.add.group();
+        this.coins = game.add.group();
+        this.enemies = game.add.group();
+
+        // Design the level. x = wall, o = coin, ! = lava.
+        var level = [
+            'xxxxxxxxxxxxxxxxxxxxxx',
+            '!         !          x',
+            '!                 o  x',
+            '!                    x',
+            '!                    x',
+            '!                    x',
+            '!                    x',
+            '!         o          x',
+            '!                    x',
+            '!     o   !    x     x',
+            'xxxxxxxxxxxxxxxx!!!!!x',
+        ];
+
+
+        var wallBmd = game.add.bitmapData(16,16);
+            wallBmd.ctx.beginPath();
+            wallBmd.ctx.rect(0,0,16,16);
+            wallBmd.ctx.fillStyle = '#366dc5';
+            wallBmd.ctx.fill();
+        
+        var coinBmd = game.add.bitmapData(16,16);
+            coinBmd.ctx.beginPath();
+            coinBmd.ctx.rect(0,0,16,16);
+            coinBmd.ctx.fillStyle = '#EDC233';
+            coinBmd.ctx.fill();
+
+        var lavaBmd = game.add.bitmapData(16,16);
+            lavaBmd.ctx.beginPath();
+            lavaBmd.ctx.rect(0,0,16,16);
+            lavaBmd.ctx.fillStyle = '#D95F49';
+            lavaBmd.ctx.fill();
+
+        // Create the level by going through the array
+        for (var i = 0; i < level.length; i++) {
+            for (var j = 0; j < level[i].length; j++) {
+
+                // Create a wall and add it to the 'walls' group
+                if (level[i][j] == 'x') {
+                    var wall = game.add.sprite(16*j, 16*i, wallBmd);
+                    this.walls.add(wall);
+                    wall.body.immovable = true; 
+                }
+
+                // Create a coin and add it to the 'coins' group
+                else if (level[i][j] == 'o') {
+                    var coin = game.add.sprite(16*j, 16*i, coinBmd);
+                    this.coins.add(coin);
+                }
+
+                // Create a enemy and add it to the 'enemies' group
+                else if (level[i][j] == '!') {
+                    var enemy = game.add.sprite(16*j, 16*i, lavaBmd);
+                    this.enemies.add(enemy);
+                }
+            }
+        }
+
+    },
+
+    update: function() {
+        // Here we update the game 60 times per second
+
+        // Move the player when an arrow key is pressed
+        if (this.cursor.left.isDown) {
+            this.player.body.velocity.x = -200;
+        } else if (this.cursor.right.isDown) {
+            this.player.body.velocity.x = 200;
+        } else {
+            this.player.body.velocity.x = 0;
+        } 
+            
+
+        // Make the player jump if he is touching the ground
+        if (this.cursor.up.isDown) {
+            console.log('cursor.up.isDown');
+            this.player.body.velocity.y = -650;
+        }
+        
    
-    this.heroSprite = require('./createHero').createHero(game);
-    this.platformSprite = require('./createPlatform').createPlatform(game);
+
+        // Make the player and the walls collide
+        game.physics.arcade.collide(this.player, this.walls);
+
+        // Call the 'takeCoin' function when the player takes a coin
+        game.physics.arcade.overlap(this.player, this.coins, this.takeCoin, null, this);
+
+        // Call the 'restart' function when the player touches the enemy
+        game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
+
+     },
+
     
-    this.createChainSprite = require('./createChain').createChain(game, this.platformSprite, this.heroSprite);
-        this.chainBitmapData = this.createChainSprite.chainBitmapData;
-        this.chainAnchorX = this.createChainSprite.chainAnchorX;
-        this.chainAnchorY = this.createChainSprite.chainAnchorY;
-        this.chainLength = this.createChainSprite.chainLength;
-        this.chain = this.createChainSprite.chain;
-        this.hookSprite = this.createChainSprite.hookSprite;
-        this.hookSprite2 = this.createChainSprite.hookSprite2;
-    
-    // game.world.bringToTop(this.heroSprite);
+    // Function to kill a coin
+    takeCoin: function(player, coin) {
+        coin.kill();
+    },
+
+    // Function to restart the game
+    restart: function() {
+        game.state.start('main');
+    }
 
 
-    this.createControls = require('./createControls').createControls(game);
-        this.run = this.createControls.run;
-        this.jump = this.createControls.jump;
-        this.pad1 = this.createControls.pad1;
+};
 
-
-
-
-
-    //  Create our collision groups. One for the heroSprite, one for the hookSprites
-    var heroSpriteCollisionGroup = game.physics.p2.createCollisionGroup();
-    var hookSpriteCollisionGroup = game.physics.p2.createCollisionGroup();
-    var platformSpriteCollisionGroup = game.physics.p2.createCollisionGroup();
-    
-    //  Set the heroSprites collision group
-    this.heroSprite.body.setCollisionGroup(heroSpriteCollisionGroup);
-    this.hookSprite.body.setCollisionGroup(hookSpriteCollisionGroup);
-    this.platformSprite.body.setCollisionGroup(platformSpriteCollisionGroup);
-    
-    //  The heroSprite will collide with the hookSprites, and when it strikes one the hithookSprite callback will fire, causing it to alpha out a bit
-    //  When hookSprites collide with each other, nothing happens to them.
-    this.heroSprite.body.collides([platformSpriteCollisionGroup]);
-    this.hookSprite.body.collides([platformSpriteCollisionGroup]);
-    this.platformSprite.body.collides([hookSpriteCollisionGroup, heroSpriteCollisionGroup]);
-}
-
-
-
-function update() {
-    
-    this.controls =  require('./controls').controls(
-        this.run, 
-        this.jump, 
-        this.heroSprite, 
-        this.pad1, 
-        this.chainBitmapData, 
-        this.chainLength,
-        this.hookSprite,
-        this.hookSprite2
-    );
-        this.chainLength = this.controls.chainLength;
-        this.hookLaunch = this.controls.hookLaunch;
-        this.hookSprite = this.controls.hookSprite;
-        // this.chainAnchorX = this.controls.chainAnchorX;
-        // this.chainAnchorY = this.controls.chainAnchorY;
-
-    this.updateChain =  require('./updateChain').updateChain(
-        game, 
-        this.platformSprite, 
-        this.heroSprite, 
-        this.chainLength, 
-        this.chain, 
-        this.chainBitmapData, 
-        this.hookLaunch,
-        this.hookSprite,
-        this.hookSprite2,
-        this.chainSprite
-    ); 
-        this.chainBitmapData = this.updateChain.chainBitmapData;
-        this.chainLength = this.updateChain.chainLength;
-        this.chain = this.updateChain.chain;
-        this.chainAnchorX = this.updateChain.chainAnchorX;
-        this.chainAnchorY = this.updateChain.chainAnchorY;
-        this.hookSprite = this.updateChain.hookSprite;
-        this.hookSprite2 = this.updateChain.hookSprite2;
-}
+// Initialize the game and start our state
+var game = new Phaser.Game(1800, 400, Phaser.AUTO, 'phaser-example');  
+game.state.add('main', mainState);  
+game.state.start('main');
