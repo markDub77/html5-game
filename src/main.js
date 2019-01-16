@@ -1,6 +1,22 @@
-var game = new Phaser.Game(1800, 400, Phaser.CANVAS, 'phaser-example', { create: create, update: update });
+// var game = new Phaser.Game(600 , 200 , Phaser.AUTO, 'phaser-example', { create: create, update: update, render: render });
+var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio - 40, window.innerHeight * window.devicePixelRatio - 40, Phaser.AUTO, 'phaser-example', { create: create, update: update, render: render });
+
 
 function create() {
+
+    //  Advanced profiling, including the fps rate, fps min/max, suggestedFps and msMin/msMax are updated
+    game.time.advancedTiming = true;
+
+    // Stretch to fill
+    // game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    
+    // Keep original size
+    // game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
+
+    // Maintain aspect ratio
+    // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+    game.input.onDown.add(gofull, this);
 
     require('./enablePhysics').enablePhysics(game);
 
@@ -10,14 +26,21 @@ function create() {
     
     this.createChainSprite = require('./createChain').createChain(game, this.platformSprite, this.heroSprite);
         this.chainBitmapData = this.createChainSprite.chainBitmapData;
-        this.chainAnchorX = this.createChainSprite.chainAnchorX;
-        this.chainAnchorY = this.createChainSprite.chainAnchorY;
         this.chainLength = this.createChainSprite.chainLength;
         this.chain = this.createChainSprite.chain;
         this.hookSprite = this.createChainSprite.hookSprite;
         this.hookSprite2 = this.createChainSprite.hookSprite2;
     
     // game.world.bringToTop(this.heroSprite);
+    // this.heroSprite.addChild(this.hookSprite2);
+    // this.heroSprite.addChild(this.hookSprite2);
+    // this.hookSprite.anchor.setTo(.5, .5); 
+    // this.hookSprite.addChild(this.heroSprite);
+    
+
+    
+
+
 
 
     this.createControls = require('./createControls').createControls(game);
@@ -85,4 +108,24 @@ function update() {
         this.chainAnchorY = this.updateChain.chainAnchorY;
         this.hookSprite = this.updateChain.hookSprite;
         this.hookSprite2 = this.updateChain.hookSprite2;
+}
+
+function render() {
+
+    //  FPS debug info
+    game.debug.text('FPS: ' + game.time.fps || 'FPS: --', 0, 10, "#00ff00");
+
+}
+
+function gofull() {
+
+    if (game.scale.isFullScreen)
+    {
+        game.scale.stopFullScreen();
+    }
+    else
+    {
+        game.scale.startFullScreen(false);
+    }
+
 }
