@@ -9,11 +9,13 @@ var createControls = function(game) {
     
 
 
-    fireButton.onDown.add(shootBullet, this);
-    function shootBullet() { 
-        // Will only be called once per key press. // Will be passed the full Key object. See Phaser.Key for properties.
-        console.log('shooting bullet');
-    }
+    // fireButton.onDown.add(shootBullet, this);    
+
+    // function shootBullet() { 
+    //     // Will only be called once per key press. // Will be passed the full Key object. See Phaser.Key for properties.
+    //     console.log('shooting bullet');
+    // } 
+
 
 
     return {

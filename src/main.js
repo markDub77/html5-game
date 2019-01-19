@@ -30,6 +30,7 @@ function create() {
         this.chain = this.createChainSprite.chain;
         this.hookSprite = this.createChainSprite.hookSprite;
         this.hookSprite2 = this.createChainSprite.hookSprite2;
+        this.onChainLimmit = this.createChainSprite.onChainLimmit
     
     // game.world.bringToTop(this.heroSprite);
     // this.heroSprite.addChild(this.hookSprite2);
@@ -95,7 +96,8 @@ function update() {
         this.hookLaunch,
         this.hookSprite,
         this.hookSprite2,
-        this.chainSprite
+        this.chainSprite,
+        this.onChainLimmit
     ); 
         this.chainBitmapData = this.updateChain.chainBitmapData;
         this.chainLength = this.updateChain.chainLength;

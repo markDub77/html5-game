@@ -1,4 +1,4 @@
-var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, hookLaunch, hookSprite, hookSprite2, chainSprite) {
+var updateChain = function(game, platformSprite, heroSprite, chainLength, chain, chainBitmapData, hookLaunch, hookSprite, hookSprite2, chainSprite, onChainLimmit) {
  
     
     // make the hook follow the null hook, there will be a delay
@@ -32,20 +32,25 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
 
     if (distance >= chainLength){
         hookSprite.body.velocity.x = 0;
+        hookSprite.body.velocity.y = 0;
         // hookSprite.body.x = heroSprite.body.x + chainLength;
         // hookSprite.body.velocity.y = hookSprite.body.velocity.y++;
         // console.log('distance', Phaser.Math.distance(heroSprite.body.x, heroSprite.body.y, hookSprite.body.x, hookSprite.body.y))
+        // onChainLimmit.dispatch();
+        
     }
 
     if (hookSprite.body.y > heroSprite.body.y + 7 ) {
-        hookSprite.body.velocity.y = 0;
-        hookSprite.body.velocity.x = 0;
-        hookSprite.body.x = heroSprite.body.x;
-        hookSprite.body.y = heroSprite.body.y;
-        hookSprite.alpha = 0 
+        // hookSprite.body.velocity.y = 0;
+        // hookSprite.body.velocity.x = 0;
+        // hookSprite.body.x = heroSprite.body.x;
+        // hookSprite.body.y = heroSprite.body.y;
+        // hookSprite.alpha = 0 
 
-        hookSprite2.x = heroSprite.body.x;
-        hookSprite2.y = heroSprite.body.y;
+        // hookSprite2.x = heroSprite.body.x;
+        // hookSprite2.y = heroSprite.body.y;
+
+        // onChainLimmit.dispatch();
 
         // snap back to the hero
         // hookSprite.body.static = true
@@ -89,9 +94,9 @@ var updateChain = function(game, platformSprite, heroSprite, chainLength, chain,
 
     if (hookLaunch != true) { // if normal mode
 
-        // game.physics.p2.removeConstraint(hookSprite.constraint);
-        // hookSprite.constraint = null;
-        // console.log('constraint removed2')
+        game.physics.p2.removeConstraint(hookSprite.constraint);
+        hookSprite.constraint = null;
+        // console.log('hookSprite.constraint', hookSprite.constraint);
 
         // hookSprite.body.mass = 1000
         hookSprite.body.velocity.y = 0;

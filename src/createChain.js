@@ -1,7 +1,7 @@
 var createChain = function(game, platformSprite, heroSprite, chainLength) {
  
 
-    var chainLength = 300
+    var chainLength = 200
     
 
     var chainBitmapData = game.add.bitmapData(game.world.width, game.world.height);
@@ -46,14 +46,36 @@ var createChain = function(game, platformSprite, heroSprite, chainLength) {
 
     // game.world.bringToTop(heroSprite);
     
+
+    var onChainLimmit = new Phaser.Signal();
+
+    //define the signal:
+    // game.events.onChainLimmit = new Phaser.Signal();
+
+    //The listener:
+    onChainLimmit.add(constrainChain, this);
+    
+    //Dispatch:
+    // onChainLimmit.dispatch();
+
+
+    function constrainChain() {
+        // Will only be called once per key press. // Will be passed the full Key object. See Phaser.Key for properties.
+        hookSprite.constraint = game.physics.p2.createDistanceConstraint(hookSprite, heroSprite, chainLength, [0,0], [0,0],9);
+        // console.log('hookSprite.constraint', hookSprite.constraint);
+        console.log('hookSprite.angle', hookSprite.angle);
+        // console.log('hookSprite.rotation', hookSprite.rotation);
+    } 
+
+
     return {
         chainBitmapData,
-       
         chainLength,
         chain,
         // chainSprite,
         hookSprite,
-        hookSprite2
+        hookSprite2,
+        onChainLimmit
     }
 }
 
