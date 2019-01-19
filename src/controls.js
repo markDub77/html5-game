@@ -41,7 +41,7 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
         // Launch the hook!
         // hookSprite.body.mass = 100
         hookSprite.body.velocity.y = -550;
-        hookSprite.body.velocity.x = 250;
+        hookSprite.body.velocity.x = 550;
 
        
 

@@ -5,7 +5,7 @@ var createHero = function(game) {
         heroBmd.ctx.fillStyle = '#DD9B33';
         heroBmd.ctx.fill();
     var heroSprite = game.add.sprite(800, 100, heroBmd);
-        heroSprite.anchor.setTo(8, 8);
+        heroSprite.anchor.setTo(.5, .5);
         
         
         game.physics.p2.enable(heroSprite, false);

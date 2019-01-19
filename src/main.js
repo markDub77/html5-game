@@ -37,20 +37,10 @@ function create() {
     // this.hookSprite.anchor.setTo(.5, .5); 
     // this.hookSprite.addChild(this.heroSprite);
     
-
-    
-
-
-
-
     this.createControls = require('./createControls').createControls(game);
         this.run = this.createControls.run;
         this.jump = this.createControls.jump;
         this.pad1 = this.createControls.pad1;
-
-
-
-
 
     //  Create our collision groups. One for the heroSprite, one for the hookSprites
     var heroSpriteCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -67,6 +57,12 @@ function create() {
     this.heroSprite.body.collides([platformSpriteCollisionGroup]);
     this.hookSprite.body.collides([platformSpriteCollisionGroup]);
     this.platformSprite.body.collides([hookSpriteCollisionGroup, heroSpriteCollisionGroup]);
+
+
+
+    
+
+
 }
 
 
