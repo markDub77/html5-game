@@ -1,5 +1,9 @@
-var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLength, hookSprite) {
+var controls = function(run, jump, shoot, heroSprite, pad1, lasers) {
     
+
+    heroSprite.body.velocity.x = 0;
+
+
     // dpad left
     if (run.left.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {
 
@@ -19,20 +23,33 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
     // dpad up
     } else if (pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1) {
         
-        chainLength -= 1;
+        // chainLength -= 1;
        
     // dpad down
     } else if (pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_DOWN) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.1) {
-        
-        chainLength += 1
-    
+        // chainLength += 1
     }
 
     // jump button
     if (jump.isDown || pad1.justPressed(Phaser.Gamepad.XBOX360_A)) {
-        heroSprite.body.velocity.y = -250;
-        // hookSprite.body.velocity.y = -250;
+        heroSprite.body.velocity.y = -150;
+    }
 
+    // shoot button
+    if (shoot.isDown || pad1.justPressed(Phaser.Gamepad.XBOX360_B)) {
+        fireLaser();
+        console.log('fire lazer')
+    }
+
+    function fireLaser() {
+        // Get the first laser that's inactive, by passing 'false' as a parameter
+        var laser = lasers.getFirstExists(false);
+        if (laser) {
+            // If we have a laser, set it to the starting position
+            laser.reset(heroSprite.body.x, heroSprite.body.y);
+            // Give it a velocity of -500 so it starts shooting
+            laser.body.velocity.x = 500;
+        }
     }
 
 
@@ -40,15 +57,15 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
                
         // Launch the hook!
         // hookSprite.body.mass = 100
-        hookSprite.body.velocity.y = -550; 
-        hookSprite.body.velocity.x = 250;
+        // hookSprite.body.velocity.y = -550; 
+        // hookSprite.body.velocity.x = 250;
     } else {
         
     }
 
     // grapple release button
     if (pad1.isDown(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
-        var hookLaunch = true
+        // var hookLaunch = true
     } else {
         // var hookLaunch = false
     }
@@ -82,9 +99,9 @@ var controls = function(run, jump, heroSprite, pad1, chainBitmapData, chainLengt
     // return heroSprite; 
     return {
         heroSprite,
-        chainLength,
-        hookLaunch,
-        hookSprite
+        // chainLength,
+        // hookLaunch,
+        // hookSprite
     }
 }
 
