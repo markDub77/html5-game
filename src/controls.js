@@ -1,23 +1,27 @@
-var controls = function(run, jump, shoot, heroSprite, pad1, lasers) {
+var controls = function(run, jump, shoot, heroSprite, pad1, pad2, lasers, runLeft) {
     
+
 
     heroSprite.body.velocity.x = 0;
 
 
+
     // dpad left
-    if (run.left.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {
+    if (runLeft) {
 
         heroSprite.body.velocity.x = -150;
         // hookSprite.body.velocity.x = -150;
         //  hookSprite.body.x = heroSprite.body.x;
+        heroSprite.facing = 'left'
 
 
     // dpad right
-    } else if (run.right.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) {
+    } else if (run.right.isDown || (pad1 && pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT)) || (pad1 && pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)) > 0.1) {
        
         heroSprite.body.velocity.x = 150;
         // hookSprite.body.velocity.x = 150;
         // hookSprite.body.x = heroSprite.body.x;
+        heroSprite.facing = 'right'
        
     
     // dpad up
@@ -48,7 +52,12 @@ var controls = function(run, jump, shoot, heroSprite, pad1, lasers) {
             // If we have a laser, set it to the starting position
             laser.reset(heroSprite.body.x, heroSprite.body.y);
             // Give it a velocity of -500 so it starts shooting
-            laser.body.velocity.x = 500;
+
+            if (heroSprite.facing == 'right') {
+                laser.body.velocity.x = 500;
+            } else {
+                laser.body.velocity.x = -500;
+            }
         }
     }
 
