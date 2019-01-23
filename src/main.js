@@ -7,13 +7,16 @@ var mainState = {
 
     create: function() {
 
-        
+
+        this.thing = require('./enablePhysics').enablePhysics(game);
+        this.enablePhysics = this.thing.enablePhysics;
+
         this.indicator1 = game.add.sprite(10,10, 'controller-indicator');
-        this.indicator1.scale.x = this.indicator1.scale.y = 2;
+        this.indicator1.scale.x = this.indicator1.scale.y = 1;
         this.indicator1.animations.frame = 1;
     
-        this.indicator2 = game.add.sprite(10,50, 'controller-indicator');
-        this.indicator2.scale.x = this.indicator2.scale.y = 2;
+        this.indicator2 = game.add.sprite(900,10, 'controller-indicator');
+        this.indicator2.scale.x = this.indicator2.scale.y = 1;
         this.indicator2.animations.frame = 1;    
 
 
@@ -29,7 +32,7 @@ var mainState = {
         // game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
 
         // Maintain aspect ratio
-        // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         game.input.onDown.add(this.gofull, this);
 
@@ -201,10 +204,21 @@ var mainState = {
     },
 
     update: function() {
+
+
+
+        // if (this.jumpButton.isDown) {
+        //     // jump code goes here!
+        //     console.log('button is down');
+        // }
+
+
+
         // Here we update the game 60 times per second
 
          // Make the player and the walls collide
          game.physics.arcade.collide(this.heroSprite, this.walls);
+         
 
         this.controls =  require('./controls').controls(
             this.run, 
@@ -276,7 +290,7 @@ if(game.input.gamepad.supported && game.input.gamepad.active && game.input.gamep
 };
 
 // Initialize the game and start our state
-// var game = new Phaser.Game(1800, 400, Phaser.AUTO, 'phaser-example');  
+// var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'phaser-example');  
 var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio - 40, window.innerHeight * window.devicePixelRatio - 40, Phaser.AUTO, 'phaser-example');
 
 game.state.add('main', mainState);  

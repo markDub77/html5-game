@@ -5,7 +5,6 @@ var createControls = function(game) {
     var run = null;
     var jump = null;
     var shoot = null;
-    var runLeft = null;
 
 
     var run = game.input.keyboard.createCursorKeys();
@@ -15,13 +14,12 @@ var createControls = function(game) {
 
     var pad1 = game.input.gamepad.pad1; 
     // var pad2 = game.input.gamepad.pad2; 
-
     pad1.addCallbacks(this, {
         onConnect: function() {
             // you could use a different button here if you want...
             // jumpButton = pad1.getButton(Phaser.Gamepad.BUTTON_1);
-            runLeft = pad1.getButton(Phaser.Gamepad.XBOX360_DPAD_LEFT);
-            console.log('runLeft', runLeft);
+            // runLeft = pad1.getButton(Phaser.Gamepad.XBOX360_DPAD_LEFT);
+            console.log('pad1 connected');
         }
     });
 
@@ -37,7 +35,6 @@ var createControls = function(game) {
         jump,
         shoot,
         pad1, 
-        runLeft
         // pad2
     }
 }

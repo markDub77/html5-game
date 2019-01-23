@@ -1,4 +1,4 @@
-var controls = function(run, jump, shoot, heroSprite, pad1, pad2, lasers, runLeft) {
+var controls = function(run, jump, shoot, heroSprite, pad1, pad2, lasers) {
     
 
 
@@ -7,7 +7,7 @@ var controls = function(run, jump, shoot, heroSprite, pad1, pad2, lasers, runLef
 
 
     // dpad left
-    if (runLeft) {
+    if (run.left.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {
 
         heroSprite.body.velocity.x = -150;
         // hookSprite.body.velocity.x = -150;
