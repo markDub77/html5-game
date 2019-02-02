@@ -1,7 +1,8 @@
-var controls = function(game) {
+var controls = function(game, fireLaser) {
     
 
     game.playerSprite.body.velocity.x = 0;
+    game.player2Sprite.body.velocity.x = 0;
 
     // dpad left
     if (game.run.left.isDown || game.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || game.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {
@@ -34,31 +35,15 @@ var controls = function(game) {
     // jump button
     if (game.jump.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_A)) {
         game.playerSprite.body.velocity.y = -150;
+
+        console.log('jumping');
     }
 
     // shoot button
     if (game.shoot.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_B)) {
         fireLaser();
-        console.log('fire lazer')
+        console.log('fire laser')
     }
-
-    function fireLaser() {
-        // Get the first laser that's inactive, by passing 'false' as a parameter
-        var laser = game.lasers.getFirstExists(false);
-        if (laser) {
-            // If we have a laser, set it to the starting position
-            laser.reset(game.playerSprite.body.x, game.playerSprite.body.y);
-            // Give it a velocity of -500 so it starts shooting
-
-            if (game.playerSprite.facing == 'right') {
-                laser.body.velocity.x = 500;
-            } else {
-                laser.body.velocity.x = -500;
-            }
-        }
-    }
-
-
     if (game.pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)) {
                
         // Launch the hook!

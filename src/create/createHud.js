@@ -22,15 +22,26 @@ var createHud = function(game) {
         healthBmd.ctx.fillStyle = '#c4c3c1';
         healthBmd.ctx.fill();
         
-        game.health = game.add.sprite(40, 10, healthBmd);
-        game.health = game.add.sprite(46, 10, healthBmd);
-        game.health = game.add.sprite(52, 10, healthBmd);
-        game.health = game.add.sprite(58, 10, healthBmd);
-        game.health = game.add.sprite(64, 10, healthBmd);
+        game.healthContainerSprite = game.add.sprite(40, 10, healthBmd);
+        game.healthContainerSprite.addChild(game.make.sprite(7, 0, healthBmd));
+        game.healthContainerSprite.addChild(game.make.sprite(14, 0, healthBmd));
+        game.healthContainerSprite.addChild(game.make.sprite(21, 0, healthBmd));
+        game.healthContainerSprite.addChild(game.make.sprite(28, 0, healthBmd));
+        game.healthContainerSprite.addChild(game.make.sprite(35, 0, healthBmd));
+        // game.addChild = game.add.sprite(46, 10, healthBmd);
+        // game.addChild = game.add.sprite(52, 10, healthBmd);
+        // game.addChild = game.add.sprite(58, 10, healthBmd);
+        // game.addChild = game.add.sprite(64, 10, healthBmd);
 
 
+        game.healthContainerSprite2 = game.add.sprite(540, 10, healthBmd);
+        game.healthContainerSprite2.addChild(game.make.sprite(7, 0, healthBmd));
+        game.healthContainerSprite2.addChild(game.make.sprite(14, 0, healthBmd));
+        game.healthContainerSprite2.addChild(game.make.sprite(21, 0, healthBmd));
+        game.healthContainerSprite2.addChild(game.make.sprite(28, 0, healthBmd));
+        game.healthContainerSprite2.addChild(game.make.sprite(35, 0, healthBmd));
 
-        game.laserHudIcon = game.add.sprite(80, 10, 'laserHudIcon');
+        
 
 
 

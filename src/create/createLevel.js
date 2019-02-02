@@ -12,38 +12,59 @@ var createLevel = function(game) {
             '                                                                ',
             '                                                                ',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-            'x                                                              x',                                                                                           
-            'x                                                              x',                                                                         
-            'x                                                              x',                                                                                           
-            'x                                                              x',                                                                                           
-            'x                                                              x',                    
-            'x                                                              x',                    
-            'x                                                              x',          
-            'x                                                              x',                    
-            'x     l                    x                                   x',     
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx     x',
-            '                                                               x',
-            '                                                               x',
-            '                                                              x ',
-            '                                                             x',
-            '                                                            x',
-            '                                                           x',
-            '                                                          x',
-            '                                                         x',
-            '                                                        x',
-            '                                                       x',
-            '                                                      x',
-            '        l                   x                        x',
-            '    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'xxx                                                         xxxx',                                                                                           
+            'xx                             l                               x',                                                                         
+            'x                              x                               x',                                                                                           
+            'x                             xxx                              x',
+            'x                       xxxxxxxxxxxxxxx                        x', 
+            'x                        xxxxxxxxxxxxx                         x', 
+            'x                         xxxxxxxxxxx                          x',                                                                                           
+            'x                           xxxxxxx                          xxx',                    
+            'x                              x                               x',                    
+            'xxxxxxxxx                      x                               x',          
+            'x                              x                               x',                    
+            'x       xxxxxxx                x                               x',   
+            'x                              x  xxxxxxxxxxxx                 x',
+            'x                              x    x        x                 x',                    
+            'x              xxxxxxx         xxxx xxxxxxxx xxxxx             x',                    
+            'x           xxxx                x   x        x                 x',   
+            'x                               x xxxxxxxxxxxx xxxxxxxxxxxxxxx x',
+            'x                               x            x                 x',
+            'x                               x xxxxxxx    x                 x',                    
+            'x       xxxxxxxx                x            x                 x',   
+            'x                               xxxxxx       xxxxxxxxxxx       x',
+            'x                              xxxxx                           x',                    
+            'x                              x                               x',                    
+            'x           xxxxxxxx           x                               x',
+            'x                              x                               x',                    
+            'x                              x                               x',
+            'x                              x                               x',                    
+            'xxxx     xxxx                  xx                              x',
+            'x                              xx                              x', 
+            'x                              xx                              x',                    
+            'x       xxxxxxxx               xx                              x',
+            'x                              xx                              x',
+            'x              xxxxx           xx                              x',
+            'x                             xx                               x',
+            'x                             xx                              xx',
+            'x        xx                   xx                             xxx',
+            'x                             xx                            xxxx',
+            'x            xxxxx            xx                           xxxxx',
+            'x                             xx                          xxxxxx',
+            'x                             xx                         xxxxxxx',
+            'x                             xx                        xxxxxxxx',
+            'x                             xx                       xxxxxxxxx',
+            'xx                                                    xxxxxxxxxx',
+            'xxx!!!!!!!!!!!!!!!!!!!!!!!!!xxxxxx!!!!!!!!!!!!!!!!!!!xxxxxxxxxxx',
             
 
         ];
 
-        var wallBmd = game.add.bitmapData(16,16);
-            wallBmd.ctx.beginPath();
-            wallBmd.ctx.rect(0,0,16,16);
-            wallBmd.ctx.fillStyle = '#366dc5';
-            wallBmd.ctx.fill();
+        // var wallBmd = game.add.bitmapData(16,16);
+        //     wallBmd.ctx.beginPath();
+        //     wallBmd.ctx.rect(0,0,16,16);
+        //     wallBmd.ctx.fillStyle = '#366dc5';
+        //     wallBmd.ctx.fill();
         
         var laserIconBmd = game.add.bitmapData(16,16);
             laserIconBmd.ctx.beginPath();
@@ -63,14 +84,14 @@ var createLevel = function(game) {
 
                 // Create a wall and add it to the 'walls' group
                 if (level[i][j] == 'x') {
-                    var wall = game.add.sprite(16*j, 16*i, wallBmd);
+                    var wall = game.add.sprite(16*j, 16*i, 'ground');
                     game.walls.add(wall);
                     wall.body.immovable = true; 
                 }
 
                 // Create a laserIconSprite and add it to the 'laserIconSprites' group
                 else if (level[i][j] == 'l') {
-                    var laserIconSprite = game.add.sprite(16*j, 16*i-3, 'laserIcon');
+                    var laserIconSprite = game.add.sprite(16*j, 16*i, 'laserHudIcon');
                     // game.add.tween(laserIconSprite.position)
                     //     .to( {y: laserIconSprite.position.y-10}, 2000, 
                     //         Phaser.Easing.Linear.None, true, 0, 0, true)

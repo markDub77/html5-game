@@ -5,6 +5,7 @@ var mainState = {
         game.load.spritesheet('controller-indicator', 'assets/images/controller-indicator.png', 16,16);
         game.load.spritesheet('laserHudIcon', 'assets/images/laserHudIcon.png', 16,16);
         game.load.spritesheet('laserIcon', 'assets/images/laserIcon.png', 16,16);
+        game.load.spritesheet('ground', 'assets/images/ground.png', 16,16);
     },
 
     create: function() {
@@ -17,19 +18,42 @@ var mainState = {
     },
 
     update: function() {
-        require('./update/collisions').collisions(game, this.hitWall, this.getLaser, this.restart);
-        require('./update/controls').controls(game);
+        
+        require('./update/controls').controls(game, this.fireLaser);
+        require('./update/collisions').collisions(game, this.hitWall, this.getLaser, this.restart, this.hitPlayer);
         require('./update/hud').hud(game);
+        require('./update/weapons').weapons(game);
+
+        
      },
 
-    
+     fireLaser: function() {
+        // Get the first laser that's inactive, by passing 'false' as a parameter
+        var laser = game.lasers.getFirstExists(false);
+        if (laser) {
+            // If we have a laser, set it to the starting position
+            laser.reset(game.playerSprite.body.x, game.playerSprite.body.y);
+            // Give it a velocity of -500 so it starts shooting
+
+            if (game.playerSprite.facing == 'right') {
+                laser.body.velocity.x = 500;
+            } else {
+                laser.body.velocity.x = -500;
+            }
+        }
+    },
+
     // Function to kill a coin
-    getLaser: function(player, coin) {
-        coin.kill();
+    getLaser: function(player, laserIcon) {
+        laserIcon.kill();
+        game.laserHudIcon = game.add.sprite(90, 10, 'laserHudIcon');
+
     },
     hitWall: function(laser) {
         laser.kill();
-        console.log('hitWall');
+    },
+    hitPlayer: function(obj1, obj2) {
+        obj2.kill();
     },
     // Function to restart the game
     restart: function() {
