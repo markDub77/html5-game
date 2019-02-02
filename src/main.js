@@ -18,9 +18,8 @@ var mainState = {
     },
 
     update: function() {
-        
-        require('./update/controls').controls(game, this.fireLaser);
         require('./update/collisions').collisions(game, this.hitWall, this.getLaser, this.restart, this.hitPlayer);
+        require('./update/controls').controls(game, this.fireLaser);
         require('./update/hud').hud(game);
         require('./update/weapons').weapons(game);
 

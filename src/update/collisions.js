@@ -10,7 +10,7 @@ var collisions = function(game, hitWall, getLaser, restart, hitPlayer) {
 
     // 
 
-    // game.physics.arcade.overlap(game.lasers,[game.playerSprite, game.player2Sprite], hitPlayer, null, this);
+    game.physics.arcade.overlap(game.lasers,[game.playerSprite, game.player2Sprite], hitPlayer, null, this);
 
 
 
