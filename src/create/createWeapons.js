@@ -3,10 +3,14 @@ var createWeapons = function(game) {
     var laserBmd = game.add.bitmapData(4,4);
         laserBmd.ctx.beginPath();
         laserBmd.ctx.rect(0,0,4,4);
-        laserBmd.ctx.fillStyle = '#ff0000';
+        laserBmd.ctx.fillStyle = '#ffffff';
         laserBmd.ctx.fill();
+        
+
+
         // Create the group using the group factory
         game.lasers = game.add.group();
+        
         // To move the sprites later on, we have to enable the body
         game.lasers.enableBody = true;
         // We're going to set the body type to the ARCADE physics, since we don't need any advanced physics
@@ -25,15 +29,14 @@ var createWeapons = function(game) {
 		Instead of looping over every sprite in the group manually, this function will do it for us.
         */
        game.lasers.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', outOfBounds);
-       console.log('game.playerSprite.facing', game.playerSprite.facing);
-
+       
+       
       
         // This will set 'checkWorldBounds' to true on all sprites in the group
         game.lasers.setAll('checkWorldBounds', true);
 
         function outOfBounds(laser) {
             laser.kill();
-            console.log('outOfBounds');
         }
 
 

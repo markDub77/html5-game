@@ -22,8 +22,6 @@ var mainState = {
         require('./update/controls').controls(game, this.fireLaser);
         require('./update/hud').hud(game);
         require('./update/weapons').weapons(game);
-
-        
      },
 
      fireLaser: function() {
@@ -48,16 +46,38 @@ var mainState = {
         game.laserHudIcon = game.add.sprite(90, 10, 'laserHudIcon');
 
     },
+
     hitWall: function(laser) {
         laser.kill();
     },
-    hitPlayer: function(obj1, obj2) {
-        obj2.kill();
+
+
+    hitPlayer: function(shotGuy, laser) {
+        laser.kill(); 
+
+        // Blink code
+        game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
+        var updateCounter = function() {    
+            game.counter++; 
+            if (game.counter <= 10) {
+                if (game.counter % 2) { 
+                    shotGuy.tint = 0xff0000; 
+                } else {
+                    shotGuy.tint = 0xffffff;
+                }
+            } else { // give the guy back his normal tint and stop the counter
+                shotGuy.tint = 0x0055dd; 
+                game.time.events.remove(event);
+            }
+        }
+        var event = game.time.events.loop(100, updateCounter, this);
     },
+
     // Function to restart the game
     restart: function() {
         game.state.start('main');
     },
+
     gofull: function() {
         if (game.scale.isFullScreen){
             game.scale.stopFullScreen();
@@ -65,9 +85,10 @@ var mainState = {
             game.scale.startFullScreen(false);
         }
     },
+
     render: function() {
         //  FPS debug info
-        game.debug.text('FPS: ' + game.time.fps || 'FPS: --', 0, 765, "#366dc5");
+        game.debug.text(game.time.fps, 1009, 10, "#366dc5");
     }
 };
 
