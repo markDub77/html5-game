@@ -1,4 +1,4 @@
-var controls = function(game, fireLaser) {
+var controls = function(game, laserFire) {
     
     var walkspeed = 90
     var jumpStrength = 100
@@ -26,7 +26,12 @@ var controls = function(game, fireLaser) {
 
     // shoot button
     if (game.shoot.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_B)) {
-        fireLaser();
+        
+
+        if (game.laserGot == 'true') {
+            laserFire();
+        }
+        
     }
 
     return {

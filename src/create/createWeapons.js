@@ -3,7 +3,7 @@ var createWeapons = function(game) {
     var laserBmd = game.add.bitmapData(4,4);
         laserBmd.ctx.beginPath();
         laserBmd.ctx.rect(0,0,4,4);
-        laserBmd.ctx.fillStyle = '#ffffff';
+        laserBmd.ctx.fillStyle = '#ff0000';
         laserBmd.ctx.fill();
         
 
@@ -30,8 +30,6 @@ var createWeapons = function(game) {
         */
        game.lasers.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', outOfBounds);
        
-       
-      
         // This will set 'checkWorldBounds' to true on all sprites in the group
         game.lasers.setAll('checkWorldBounds', true);
 

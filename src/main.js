@@ -15,16 +15,19 @@ var mainState = {
         require('./create/createLevel').createLevel(game);
         require('./create/createWeapons').createWeapons(game);
         require('./create/createHud').createHud(game);
+
+        game.ran = false
+        game.player2Sprite.invincible = false
     },
 
     update: function() {
-        require('./update/collisions').collisions(game, this.hitWall, this.getLaser, this.restart, this.hitPlayer);
-        require('./update/controls').controls(game, this.fireLaser);
+        require('./update/collisions').collisions(game, this.laserHitWall, this.laserGet, this.restart, this.laserHitPlayer);
+        require('./update/controls').controls(game, this.laserFire);
         require('./update/hud').hud(game);
         require('./update/weapons').weapons(game);
      },
 
-     fireLaser: function() {
+    laserFire: function() {
         // Get the first laser that's inactive, by passing 'false' as a parameter
         var laser = game.lasers.getFirstExists(false);
         if (laser) {
@@ -39,43 +42,106 @@ var mainState = {
             }
         }
     },
-
     // Function to kill a coin
-    getLaser: function(player, laserIcon) {
+    laserGet: function(player, laserIcon) {
         laserIcon.kill();
         game.laserHudIcon = game.add.sprite(90, 10, 'laserHudIcon');
+        game.laserHudIcon.tint = 0xff0000;
+        game.laserGot = 'true'
 
     },
-
-    hitWall: function(laser) {
+    laserHitWall: function(laser) {
         laser.kill();
     },
 
 
-    hitPlayer: function(shotGuy, laser) {
-        laser.kill(); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    laserHitPlayer: function(shotGuy, laser) {
+
+        laser.kill();
+        
+        
+        
+
 
         // Blink code
+        var originalTint = shotGuy.tint
         game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
-        var updateCounter = function() {    
-            game.counter++; 
+        
+        
+        
+        var updateCounter = function() { 
+            
+            game.counter++;
+
+            // blink for 10 frames
             if (game.counter <= 10) {
-                if (game.counter % 2) { 
+
+                //make invicible for 10 frames
+                shotGuy.invincible = true
+
+                // alternate colors every frame
+                if (game.counter % 2) {
                     shotGuy.tint = 0xff0000; 
                 } else {
                     shotGuy.tint = 0xffffff;
                 }
-            } else { // give the guy back his normal tint and stop the counter
-                shotGuy.tint = 0x0055dd; 
+
+            } else { 
+                
+                // give the guy back his normal tint and stop the counter
                 game.time.events.remove(event);
+                shotGuy.tint = originalTint
+                game.ran = false
+                shotGuy.invincible = false
             }
         }
-        var event = game.time.events.loop(100, updateCounter, this);
+
+        // if (!game.ran) {
+        //     game.ran = true
+        //     console.log('originalTint',originalTint)
+        // }
+
+
+        if (shotGuy.invincible == false) {
+            var event = game.time.events.loop(100, updateCounter, this);
+        }
+
+        
     },
+
+
+
+
+
 
     // Function to restart the game
     restart: function() {
         game.state.start('main');
+        game.laserGot = 'false'
     },
 
     gofull: function() {
