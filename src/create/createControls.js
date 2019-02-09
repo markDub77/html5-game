@@ -1,8 +1,12 @@
 var createControls = function(game, gofull) {
 
     game.run = game.input.keyboard.createCursorKeys();
+
+
     game.jump = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     game.shoot = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    
+    
     game.pad1 = game.input.gamepad.pad1; 
     game.pad2 = game.input.gamepad.pad2;
 
@@ -30,6 +34,16 @@ var createControls = function(game, gofull) {
     // game.input.onDown.add(gofull, this);
     game.input.onTap.add(gofull, this);
     
+
+
+    // // Listen to space & enter keys
+    // var keys = [Phaser.KeyCode.SPACEBAR, Phaser.KeyCode.ENTER];
+    // // Create Phaser.Key objects for listening to the state
+    // game.phaserKeys = game.input.keyboard.addKeys(keys);
+    // // Capture these keys to stop the browser from receiving this event
+    // game.input.keyboard.addKeyCapture(keys);
+
+
     return {
         game
     }

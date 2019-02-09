@@ -1,6 +1,6 @@
 var weapons = function(game) {
     
-    if (game.playerSprite.facing == 'right') {
+    if (game.player1Sprite.facing == 'right') {
         game.lasers.callAll('anchor.setTo', 'anchor', -5, -1.5);
     } else {
         game.lasers.callAll('anchor.setTo', 'anchor', 2, -1.5);

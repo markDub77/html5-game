@@ -19,44 +19,27 @@ var createHud = function(game) {
     var healthBmd = game.add.bitmapData(4,16);
         healthBmd.ctx.beginPath();
         healthBmd.ctx.rect(0,0,4,16);
-        healthBmd.ctx.fillStyle = '#c4c3c1';
+        healthBmd.ctx.fillStyle = '#ffffff';
         healthBmd.ctx.fill();
         
-        game.healthContainerSprite = game.add.sprite(40, 10, healthBmd);
-        game.healthContainerSprite.addChild(game.make.sprite(7, 0, healthBmd));
-        game.healthContainerSprite.addChild(game.make.sprite(14, 0, healthBmd));
-        game.healthContainerSprite.addChild(game.make.sprite(21, 0, healthBmd));
-        game.healthContainerSprite.addChild(game.make.sprite(28, 0, healthBmd));
-        game.healthContainerSprite.addChild(game.make.sprite(35, 0, healthBmd));
-        // game.addChild = game.add.sprite(46, 10, healthBmd);
-        // game.addChild = game.add.sprite(52, 10, healthBmd);
-        // game.addChild = game.add.sprite(58, 10, healthBmd);
-        // game.addChild = game.add.sprite(64, 10, healthBmd);
-
-
-        game.healthContainerSprite2 = game.add.sprite(540, 10, healthBmd);
-        game.healthContainerSprite2.addChild(game.make.sprite(7, 0, healthBmd));
-        game.healthContainerSprite2.addChild(game.make.sprite(14, 0, healthBmd));
-        game.healthContainerSprite2.addChild(game.make.sprite(21, 0, healthBmd));
-        game.healthContainerSprite2.addChild(game.make.sprite(28, 0, healthBmd));
-        game.healthContainerSprite2.addChild(game.make.sprite(35, 0, healthBmd));
-
+        game.player1Sprite.healthContainerSprite = game.add.sprite(30, 10   ); // parent is invisible
+        game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(7, 0, healthBmd));
+        game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(14, 0, healthBmd));
+        game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(21, 0, healthBmd));
+        game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(28, 0, healthBmd));
+        game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(35, 0, healthBmd));
+        game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(35, 0, healthBmd));
+        game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(42, 0, healthBmd));
+        // game.healthContainerSprite.tint = 0xff0000; // that wont work with an invisible parent
+        // healthBmd.ctx.fillStyle = '#c4c3c1';
         
-
-
-
-        // game.laserHudGroup = game.add.group();
-        // var laserHudGraphic = game.add.graphics(0, 0);
-        // laserHudGraphic.lineStyle(1, 0xff0000, 1);
-        // laserHudGraphic.drawRect(80, 10, 16, 16);
-        // game.laserHudSprite = game.add.sprite(64, 10, 'laserHudGraphic');
-        // game.laserHudGroup.add(laserHudGraphic);
-        // game.indicator1 = game.add.sprite(10,10, 'controller-indicator');
-        // game.indicator1.scale.x = game.indicator1.scale.y = 1;
-        // game.indicator1.animations.frame = 1;
-        // game.indicator2 = game.add.sprite(512,10, 'controller-indicator');
-        // game.indicator2.scale.x = game.indicator2.scale.y = 1;
-        // game.indicator2.animations.frame = 1;
+        game.player2Sprite.healthContainerSprite = game.add.sprite(530, 10, ); // parent is invisible
+        game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(7, 0, healthBmd));
+        game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(14, 0, healthBmd));
+        game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(21, 0, healthBmd));
+        game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(28, 0, healthBmd));
+        game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(35, 0, healthBmd));
+        game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(42, 0, healthBmd));
 
         return {
             game

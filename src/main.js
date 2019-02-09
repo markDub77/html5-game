@@ -14,10 +14,7 @@ var mainState = {
         require('./create/createPlayer').createPlayer(game);
         require('./create/createLevel').createLevel(game);
         require('./create/createWeapons').createWeapons(game);
-        require('./create/createHud').createHud(game);
-
-        game.ran = false
-        game.player2Sprite.invincible = false
+        require('./create/createHud').createHud(game);  
     },
 
     update: function() {
@@ -32,16 +29,18 @@ var mainState = {
         var laser = game.lasers.getFirstExists(false);
         if (laser) {
             // If we have a laser, set it to the starting position
-            laser.reset(game.playerSprite.body.x, game.playerSprite.body.y);
+            laser.reset(game.player1Sprite.body.x, game.player1Sprite.body.y);
             // Give it a velocity of -500 so it starts shooting
 
-            if (game.playerSprite.facing == 'right') {
+            if (game.player1Sprite.facing == 'right') {
                 laser.body.velocity.x = 500;
             } else {
                 laser.body.velocity.x = -500;
             }
         }
     },
+
+
     // Function to kill a coin
     laserGet: function(player, laserIcon) {
         laserIcon.kill();
@@ -50,59 +49,27 @@ var mainState = {
         game.laserGot = 'true'
 
     },
+
     laserHitWall: function(laser) {
         laser.kill();
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     laserHitPlayer: function(shotGuy, laser) {
 
         laser.kill();
         
-        
-        
-
+        game.player2Sprite.healthContainerSprite.children.pop(); 
 
         // Blink code
         var originalTint = shotGuy.tint
         game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
-        
-        
         
         var updateCounter = function() { 
             
             game.counter++;
 
             // blink for 10 frames
-            if (game.counter <= 10) {
-
-                //make invicible for 10 frames
-                shotGuy.invincible = true
-
+            if (game.counter <= 10 ) {
                 // alternate colors every frame
                 if (game.counter % 2) {
                     shotGuy.tint = 0xff0000; 
@@ -110,8 +77,7 @@ var mainState = {
                     shotGuy.tint = 0xffffff;
                 }
 
-            } else { 
-                
+            } else {
                 // give the guy back his normal tint and stop the counter
                 game.time.events.remove(event);
                 shotGuy.tint = originalTint
@@ -120,23 +86,8 @@ var mainState = {
             }
         }
 
-        // if (!game.ran) {
-        //     game.ran = true
-        //     console.log('originalTint',originalTint)
-        // }
-
-
-        if (shotGuy.invincible == false) {
-            var event = game.time.events.loop(100, updateCounter, this);
-        }
-
-        
+        var event = game.time.events.loop(100, updateCounter, this);
     },
-
-
-
-
-
 
     // Function to restart the game
     restart: function() {
