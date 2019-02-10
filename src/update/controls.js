@@ -24,9 +24,14 @@ var controls = function(game, laserFire) {
         game.player1Sprite.body.velocity.y = -jumpStrength;
     }
 
-    // shoot button
-    if (game.shoot.justDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_B)) {
+    // shoot button 
+    if ((game.shoot.justDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_B)  && !game.holdFire)    ) {
+        game.holdFire = true;
         laserFire();
+    }
+    
+    if (game.pad1.justReleased(Phaser.Gamepad.XBOX360_B)) {            
+        game.holdFire = false;
     }
 
     return {

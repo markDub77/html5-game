@@ -10,8 +10,12 @@ var createPlayer = function(game) {
     
     game.player1Sprite = game.add.sprite(40, 200, player1Bmd);
     game.player1Sprite.tint = 0xDD9B33;
+
+    // game.Player1Sprite.ginalTint = 0xDD9B33;
+    
     game.player1Sprite.anchor.setTo(0.5, 0.5);
-    game.player1Sprite.facing = 'right'
+    game.player1Sprite.facing = 'right';
+    
     game.player1Sprite.body.gravity.y = 400;
 
 

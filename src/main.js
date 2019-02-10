@@ -15,6 +15,11 @@ var mainState = {
         require('./create/createLevel').createLevel(game);
         require('./create/createWeapons').createWeapons(game);
         require('./create/createHud').createHud(game);  
+
+        game.holdFire = false;
+        
+          
+
     },
 
     update: function() {
@@ -57,14 +62,14 @@ var mainState = {
     laserHitPlayer: function(shotGuy, laser) {
 
         laser.kill();
-        
+    
         game.player2Sprite.healthContainerSprite.children.pop(); 
 
         // Blink code
         var originalTint = shotGuy.tint
         game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
         
-        var updateCounter = function() { 
+        var updateCounter = function() {
             
             game.counter++;
 
