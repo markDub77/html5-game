@@ -1,7 +1,7 @@
 var controls = function(game, laserFire) {
     
     var walkspeed = 90
-    var jumpStrength = 100
+    var jumpStrength = 200
 
     game.player1Sprite.body.velocity.x = 0;
     game.player2Sprite.body.velocity.x = 0;
@@ -20,7 +20,17 @@ var controls = function(game, laserFire) {
     } 
 
     // jump button
-    if (game.jump.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_A)) {
+    if (   
+        
+        (game.jump.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_A))
+        &&  (game.player1Sprite.body.onFloor() || game.player1Sprite.body.touching.down)
+        
+        
+        ) {
+  
+        
+
+
         game.player1Sprite.body.velocity.y = -jumpStrength;
     }
 

@@ -14,12 +14,7 @@ var mainState = {
         require('./create/createPlayer').createPlayer(game);
         require('./create/createLevel').createLevel(game);
         require('./create/createWeapons').createWeapons(game);
-        require('./create/createHud').createHud(game);  
-
-        game.holdFire = false;
-        
-          
-
+        require('./create/createHud').createHud(game);   
     },
 
     update: function() {
@@ -66,7 +61,6 @@ var mainState = {
         game.player2Sprite.healthContainerSprite.children.pop(); 
 
         // Blink code
-        var originalTint = shotGuy.tint
         game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
         
         var updateCounter = function() {
@@ -85,7 +79,7 @@ var mainState = {
             } else {
                 // give the guy back his normal tint and stop the counter
                 game.time.events.remove(event);
-                shotGuy.tint = originalTint
+                shotGuy.tint = shotGuy.originalTint
                 game.ran = false
                 shotGuy.invincible = false
             }

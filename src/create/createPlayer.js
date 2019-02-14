@@ -10,12 +10,9 @@ var createPlayer = function(game) {
     
     game.player1Sprite = game.add.sprite(40, 200, player1Bmd);
     game.player1Sprite.tint = 0xDD9B33;
-
-    // game.Player1Sprite.ginalTint = 0xDD9B33;
-    
+    game.player1Sprite.originalTint = 0xDD9B33;
     game.player1Sprite.anchor.setTo(0.5, 0.5);
     game.player1Sprite.facing = 'right';
-    
     game.player1Sprite.body.gravity.y = 400;
 
 
@@ -28,7 +25,8 @@ var createPlayer = function(game) {
         
     game.player2Sprite = game.add.sprite(70, 200, player2Bmd);
     game.player2Sprite.tint = 0x0055dd;
-    game.player2Sprite.facing = 'left'
+    game.player2Sprite.originalTint = 0x0055dd;
+    game.player2Sprite.facing = 'left';
     game.player2Sprite.body.gravity.y = 400;
     game.player2Sprite.anchor.setTo(0.5, 0.5);
 
