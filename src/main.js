@@ -6,6 +6,8 @@ var mainState = {
         game.load.spritesheet('laserHudIcon', 'assets/images/laserHudIcon.png', 16,16);
         game.load.spritesheet('laserIcon', 'assets/images/laserIcon.png', 16,16);
         game.load.spritesheet('ground', 'assets/images/ground.png', 16,16);
+
+        console.log(game);
     },
 
     create: function() {
@@ -22,32 +24,22 @@ var mainState = {
         require('./update/controls').controls(game, this.laserFire);
         require('./update/hud').hud(game);
         require('./update/weapons').weapons(game);
-     },
+    },
 
     laserFire: function() {
-        // Get the first laser that's inactive, by passing 'false' as a parameter
-        var laser = game.lasers.getFirstExists(false);
-        if (laser) {
-            // If we have a laser, set it to the starting position
-            laser.reset(game.player1Sprite.body.x, game.player1Sprite.body.y);
-            // Give it a velocity of -500 so it starts shooting
-
-            if (game.player1Sprite.facing == 'right') {
-                laser.body.velocity.x = 500;
-            } else {
-                laser.body.velocity.x = -500;
-            }
-        }
+        require('./update/laserFire').laserFire(game);
     },
 
 
+    // laserGet: function() {
+    //     console.log(laserIcon)
+    //     //require('./update/laserGet').laserGet(game, this.laserIcon);
+    // },
+
     // Function to kill a coin
     laserGet: function(player, laserIcon) {
-        laserIcon.kill();
-        game.laserHudIcon = game.add.sprite(90, 10, 'laserHudIcon');
-        game.laserHudIcon.tint = 0xff0000;
-        game.laserGot = 'true'
-
+        // console.log(player)
+        require('./update/laserGet').laserGet(player, laserIcon, game);
     },
 
     laserHitWall: function(laser) {
@@ -91,7 +83,6 @@ var mainState = {
     // Function to restart the game
     restart: function() {
         game.state.start('main');
-        game.laserGot = 'false'
     },
 
     gofull: function() {

@@ -20,22 +20,12 @@ var controls = function(game, laserFire) {
     } 
 
     // jump button
-    if (   
-        
-        (game.jump.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_A))
-        &&  (game.player1Sprite.body.onFloor() || game.player1Sprite.body.touching.down)
-        
-        
-        ) {
-  
-        
-
-
+    if ( (game.jump.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_A)) && (game.player1Sprite.body.onFloor() || game.player1Sprite.body.touching.down) ) {
         game.player1Sprite.body.velocity.y = -jumpStrength;
     }
 
     // shoot button 
-    if ((game.shoot.justDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_B)  && !game.holdFire)    ) {
+    if ((game.shoot.justDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_B)  && !game.holdFire && game.player1Sprite.weapon)    ) {
         game.holdFire = true;
         laserFire();
     }

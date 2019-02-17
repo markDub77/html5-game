@@ -32,6 +32,30 @@ var createHud = function(game) {
         game.player1Sprite.healthContainerSprite.addChild(game.make.sprite(42, 0, healthBmd));
         // game.healthContainerSprite.tint = 0xff0000; // that wont work with an invisible parent
         // healthBmd.ctx.fillStyle = '#c4c3c1';
+
+
+        // game.laserHudIcon = game.add.sprite(90, 10, 'laserHudIcon');
+        // game.laserHudIcon.tint = 0xff0000;
+        // game.player1Sprite.weapon = 'laser'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         game.player2Sprite.healthContainerSprite = game.add.sprite(530, 10, ); // parent is invisible
         game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(7, 0, healthBmd));
@@ -40,6 +64,19 @@ var createHud = function(game) {
         game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(28, 0, healthBmd));
         game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(35, 0, healthBmd));
         game.player2Sprite.healthContainerSprite.addChild(game.make.sprite(42, 0, healthBmd));
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return {
             game

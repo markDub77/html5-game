@@ -16,8 +16,9 @@ var collisions = function(game, laserHitWall, laserGet, restart, laserHitPlayer)
     // lasers and walls collide
     game.physics.arcade.collide(game.lasers, game.walls, laserHitWall, null, this);
     
-    // Call the 'laserGet' function when the player takes a coin
+    // Call the 'laserGet' function when the player takes a laser icon
     game.physics.arcade.overlap(game.player1Sprite, game.laserIconGroup, laserGet, null, this);
+
     // Call the 'restart' function when the player touches the enemy
     game.physics.arcade.overlap(game.player1Sprite, game.enemies, restart, null, this);
 

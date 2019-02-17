@@ -13,6 +13,7 @@ var createPlayer = function(game) {
     game.player1Sprite.originalTint = 0xDD9B33;
     game.player1Sprite.anchor.setTo(0.5, 0.5);
     game.player1Sprite.facing = 'right';
+    game.player1Sprite.weapon = 'laser';
     game.player1Sprite.body.gravity.y = 400;
 
 
