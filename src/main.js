@@ -30,15 +30,7 @@ var mainState = {
         require('./update/laserFire').laserFire(game);
     },
 
-
-    // laserGet: function() {
-    //     console.log(laserIcon)
-    //     //require('./update/laserGet').laserGet(game, this.laserIcon);
-    // },
-
-    // Function to kill a coin
     laserGet: function(player, laserIcon) {
-        // console.log(player)
         require('./update/laserGet').laserGet(player, laserIcon, game);
     },
 
