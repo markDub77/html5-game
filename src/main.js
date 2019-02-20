@@ -4,6 +4,7 @@ var mainState = {
         // Here we preload the assets
         game.load.spritesheet('controller-indicator', 'assets/images/controller-indicator.png', 16,16);
         game.load.spritesheet('laserHudIcon', 'assets/images/laserHudIcon.png', 16,16);
+        game.load.spritesheet('hudFrame', 'assets/images/hudFrame.png', 201,48);
         game.load.spritesheet('laserIcon', 'assets/images/laserIcon.png', 16,16);
         game.load.spritesheet('ground', 'assets/images/ground.png', 16,16);
 
@@ -16,7 +17,7 @@ var mainState = {
         require('./create/createPlayer').createPlayer(game);
         require('./create/createLevel').createLevel(game);
         require('./create/createWeapons').createWeapons(game);
-        require('./create/createHud').createHud(game);   
+        require('./create/createHud').createHud(game);
     },
 
     update: function() {
@@ -26,8 +27,8 @@ var mainState = {
         require('./update/weapons').weapons(game);
     },
 
-    laserFire: function() {
-        require('./update/laserFire').laserFire(game);
+    laserFire: function(player) {
+        require('./update/laserFire').laserFire(game, player);
     },
 
     laserGet: function(player, laserIcon) {
@@ -42,7 +43,7 @@ var mainState = {
 
         laser.kill();
     
-        game.player2Sprite.healthContainerSprite.children.pop(); 
+        shotGuy.healthContainerSprite.children.pop(); 
 
         // Blink code
         game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
