@@ -1,8 +1,6 @@
-var createHud = function(game) {
-
-
-    // health bars
-    var player1SpriteHealthBmd = game.add.bitmapData(4,16);
+var createHud = function (game) {
+  // health bars
+    var player1SpriteHealthBmd = game.add.bitmapData(4, 16)
         player1SpriteHealthBmd.ctx.beginPath();
         player1SpriteHealthBmd.ctx.rect(0,0,4,16);
         player1SpriteHealthBmd.ctx.fillStyle = '#DD9B33';
@@ -19,8 +17,8 @@ var createHud = function(game) {
      
 
     // the frame
-    game.hudFrame1 = game.add.sprite(0, 0, 'hudFrame');
-    game.hudFrame1.tint = 0xDD9B33;
+    // game.hudFrame1 = game.add.sprite(0, 0, 'hudFrame');
+    // game.hudFrame1.tint = 0xDD9B33;
         
 
 
