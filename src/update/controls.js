@@ -1,8 +1,16 @@
 /* eslint-disable no-undef */
 
-var controls = function (game, laserFire) {
+// laserFire: function (player) {
+//   require('./update/laserFire').laserFire(game, player)
+// },
+
+var controls = function (game) {
   const walkspeed = 90
-  const jumpStrength = 200
+  const jumpStrength = 300
+
+  const laserFire = function (player) {
+    require('../update/laserFire').laserFire(game, player)
+  }
 
   game.player1Sprite.body.velocity.x = 0
   game.player2Sprite.body.velocity.x = 0
@@ -45,7 +53,7 @@ var controls = function (game, laserFire) {
     game.player1Sprite.holdFire = true
     laserFire(game.player1Sprite)
 
-    if (game.player1Sprite.facing == 'right') {
+    if (game.player1Sprite.facing === 'right') {
       game.lasers.callAll('anchor.setTo', 'anchor', -5, -1.5)
     } else {
       game.lasers.callAll('anchor.setTo', 'anchor', 2, -1.5)
@@ -92,7 +100,7 @@ var controls = function (game, laserFire) {
     laserFire(game.player2Sprite)
 
     // not sure if this should really go here
-    if (game.player2Sprite.facing == 'right') {
+    if (game.player2Sprite.facing === 'right') {
       game.lasers.callAll('anchor.setTo', 'anchor', -5, -1.5)
     } else {
       game.lasers.callAll('anchor.setTo', 'anchor', 2, -1.5)

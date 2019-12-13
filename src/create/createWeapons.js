@@ -41,7 +41,6 @@ var createWeapons = function (game) {
     laser.kill()
   }
 
-  π
   return {
     game
   }

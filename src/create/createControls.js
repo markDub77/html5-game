@@ -1,4 +1,13 @@
-var createControls = function (game, gofull) {
+/* eslint-disable no-undef */
+var createControls = function (game) {
+  const gofull = () => {
+    if (game.scale.isFullScreen) {
+      game.scale.stopFullScreen()
+    } else {
+      game.scale.startFullScreen(false)
+    }
+  }
+
   game.run = game.input.keyboard.createCursorKeys()
   game.jump = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
   game.shoot = game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
