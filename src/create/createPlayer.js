@@ -1,36 +1,45 @@
 var createPlayer = function (game) {
-  const blockSize = 30
   const gravity = 500
+  game.blockSize = 30
 
-  // player 1
-  var player1Bmd = game.add.bitmapData(blockSize, blockSize * 2)
-  player1Bmd.ctx.beginPath()
-  player1Bmd.ctx.rect(0, 0, blockSize, blockSize * 2)
-  player1Bmd.ctx.fillStyle = '#ffffff'
-  player1Bmd.ctx.fill()
+  const players = {
+    player1Sprite: {
+      color: '0xdd9b33',
+      locationX: 300
+    },
+    player2Sprite: {
+      color: '0x0055dd',
+      locationX: 700
+    }
+  }
 
-  game.player1Sprite = game.add.sprite(300, 200, player1Bmd)
-  game.player1Sprite.tint = 0xdd9b33
-  game.player1Sprite.originalTint = 0xdd9b33
-  game.player1Sprite.anchor.setTo(0.5, 0.5)
-  game.player1Sprite.facing = 'right'
-  game.player1Sprite.weapon = 'laser'
-  game.player1Sprite.body.gravity.y = gravity
+  for (const player in players) {
+    const playerBmd = game.add.bitmapData(game.blockSize, game.blockSize * 2)
+    playerBmd.ctx.beginPath()
+    playerBmd.ctx.rect(0, 0, game.blockSize, game.blockSize * 2)
+    playerBmd.ctx.fillStyle = '#ffffff' // needs to be white to lay to tint over, a blank canvas
+    playerBmd.ctx.fill()
 
-  // player 2
-  var player2Bmd = game.add.bitmapData(blockSize, blockSize * 2)
-  player2Bmd.ctx.beginPath()
-  player2Bmd.ctx.rect(0, 0, blockSize, blockSize * 2)
-  player2Bmd.ctx.fillStyle = '#ffffff'
-  player2Bmd.ctx.fill()
+    const playerSprite = game.add.sprite(
+      players[player].locationX,
+      350,
+      playerBmd
+    )
+    playerSprite.tint = players[player].color // now we add the color over the white canvas
+    playerSprite.originalTint = players[player].color // now we add the color over the white canvas
+    playerSprite.anchor.setTo(0.5, 0)
+    playerSprite.facing = 'right'
+    playerSprite.weapon = 'laser'
+    playerSprite.body.gravity.y = gravity
 
-  game.player2Sprite = game.add.sprite(80, 200, player2Bmd)
-  game.player2Sprite.tint = 0x0055dd
-  game.player2Sprite.originalTint = 0x0055dd
-  game.player2Sprite.facing = 'left'
-  game.player2Sprite.body.gravity.y = gravity
-  game.player2Sprite.anchor.setTo(0.5, 0.5)
+    // save it as a global variable
+    game[player] = playerSprite
 
+    // whaaaat???
+    // const player = 'what'
+    // window[player] = 'Why does this work?'
+    // console.log(what)
+  }
   return game
 }
 

@@ -1,8 +1,4 @@
 const collisions = game => {
-  const laserGet = (player, laserIcon) => {
-    require('../update/laserGet').laserGet(player, laserIcon, game)
-  }
-
   // Function to restart the game
   const restart = () => {
     game.state.start('main')
@@ -11,7 +7,7 @@ const collisions = game => {
   const laserHitPlayer = (shotGuy, laser) => {
     laser.kill()
 
-    shotGuy.healthContainerSprite.children.pop()
+    // shotGuy.healthContainerSprite.children.pop()
 
     // Blink code
     game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
@@ -30,16 +26,10 @@ const collisions = game => {
       } else {
         // give the guy back his normal tint and stop the counter
         game.time.events.remove(blinkEvent)
-        shotGuy.tint = shotGuy.originalTint
-        game.ran = false
-        shotGuy.invincible = false
+        shotGuy.tint = shotGuy.originalTint // this is dumb, but if a second shot hits while a player is blinking, they may return as white or red
       }
     }
     const blinkEvent = game.time.events.loop(100, updateCounter, this)
-  }
-
-  const laserHitWall = laser => {
-    laser.kill()
   }
 
   // player and the walls collide
@@ -63,13 +53,23 @@ const collisions = game => {
   // }
 
   // lasers and walls collide
-  game.physics.arcade.collide(game.lasers, game.walls, laserHitWall, null, this)
+  game.physics.arcade.collide(
+    game.lasers,
+    game.walls,
+    laser => {
+      laser.kill()
+    },
+    null,
+    this
+  )
 
   // Call the 'laserGet' function when the player takes a laser icon
   game.physics.arcade.overlap(
     game.player1Sprite,
     game.laserIconGroup,
-    laserGet,
+    (player, laserIcon) => {
+      require('../update/laserGet').laserGet(player, laserIcon, game)
+    },
     null,
     this
   )

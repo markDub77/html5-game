@@ -15,7 +15,7 @@ const mainState = {
       16,
       16
     )
-    game.load.spritesheet('hudFrame', 'assets/images/hudFrame.png', 201, 48)
+    // game.load.spritesheet('hudFrame', 'assets/images/hudFrame.png', 201, 48)
     game.load.spritesheet('laserIcon', 'assets/images/laserIcon.png', 16, 16)
     game.load.spritesheet('ground', 'assets/images/ground.png', 16, 16)
   },
@@ -32,7 +32,6 @@ const mainState = {
   update: function () {
     require('./update/collisions').collisions(game)
     require('./update/controls').controls(game)
-    require('./update/hud').hud(game)
     require('./update/enemy').enemy(game)
   },
 

@@ -11,11 +11,9 @@ var createHud = game => {
     },
     player2: {
       color: '#0055dd',
-      locationX: 500
+      locationX: game.world.centerX
     }
   }
-
-  // TODO need to make helper function to find half of screen
 
   for (const player in players) {
     // make the bitmap data
@@ -27,6 +25,8 @@ var createHud = game => {
 
     // make a sprite out of the bitmap data
     const healthContainerSprite = game.add.sprite(players[player].locationX, 5) // parent is invisible
+
+    // assign to player number
 
     // make the individual bars
     for (let i = 0; i < numberOfBars; i++) {

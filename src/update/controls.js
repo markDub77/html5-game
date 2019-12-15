@@ -51,18 +51,31 @@ var controls = function (game) {
       game.player1Sprite.weapon)
   ) {
     game.player1Sprite.holdFire = true
-    laserFire(game.player1Sprite)
+    // laserFire(game.player1Sprite)
+
+    let playerWeaponSize = game.blockSize
+
+    if (game.player1Sprite.facing === 'left') {
+      playerWeaponSize = -game.blockSize
+
+      if (game.weapon.bulletSpeed > 0) {
+        game.weapon.bulletSpeed = -game.weapon.bulletSpeed
+        game.weapon.fireAngle = -game.weapon.fireAngle
+      }
+    }
 
     if (game.player1Sprite.facing === 'right') {
-      game.lasers.callAll('anchor.setTo', 'anchor', -5, -1.5)
-    } else {
-      game.lasers.callAll('anchor.setTo', 'anchor', 2, -1.5)
+      game.weapon.bulletSpeed = Math.abs(game.weapon.bulletSpeed)
+      game.weapon.fireAngle = Math.abs(game.weapon.fireAngle)
     }
+
+    game.weapon.trackSprite(game.player1Sprite, playerWeaponSize, 20, false)
+    game.weapon.fire()
   }
 
-  if (game.pad1.justReleased(Phaser.Gamepad.XBOX360_B)) {
-    game.player1Sprite.holdFire = false
-  }
+  // if (game.pad1.justReleased(Phaser.Gamepad.XBOX360_B)) {
+  //   game.player1Sprite.holdFire = false
+  // }
 
   /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // pad2
