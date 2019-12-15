@@ -1,16 +1,8 @@
 /* eslint-disable no-undef */
 
-// laserFire: function (player) {
-//   require('./update/laserFire').laserFire(game, player)
-// },
-
 var controls = function (game) {
-  const walkspeed = 90
+  const walkspeed = 180
   const jumpStrength = 300
-
-  const laserFire = function (player) {
-    require('../update/laserFire').laserFire(game, player)
-  }
 
   game.player1Sprite.body.velocity.x = 0
   game.player2Sprite.body.velocity.x = 0
@@ -50,32 +42,8 @@ var controls = function (game) {
       !game.player1Sprite.holdFire &&
       game.player1Sprite.weapon)
   ) {
-    game.player1Sprite.holdFire = true
-    // laserFire(game.player1Sprite)
-
-    let playerWeaponSize = game.blockSize
-
-    if (game.player1Sprite.facing === 'left') {
-      playerWeaponSize = -game.blockSize
-
-      if (game.weapon.bulletSpeed > 0) {
-        game.weapon.bulletSpeed = -game.weapon.bulletSpeed
-        game.weapon.fireAngle = -game.weapon.fireAngle
-      }
-    }
-
-    if (game.player1Sprite.facing === 'right') {
-      game.weapon.bulletSpeed = Math.abs(game.weapon.bulletSpeed)
-      game.weapon.fireAngle = Math.abs(game.weapon.fireAngle)
-    }
-
-    game.weapon.trackSprite(game.player1Sprite, playerWeaponSize, 20, false)
-    game.weapon.fire()
+    require('./laserFire').laserFire(game)
   }
-
-  // if (game.pad1.justReleased(Phaser.Gamepad.XBOX360_B)) {
-  //   game.player1Sprite.holdFire = false
-  // }
 
   /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // pad2
@@ -109,8 +77,7 @@ var controls = function (game) {
     game.pad2.justPressed(Phaser.Gamepad.XBOX360_B) &&
     !game.player2Sprite.holdFire
   ) {
-    game.player2Sprite.holdFire = true
-    laserFire(game.player2Sprite)
+    // game.player2Sprite.holdFire = true
 
     // not sure if this should really go here
     if (game.player2Sprite.facing === 'right') {

@@ -1,7 +1,8 @@
 var createPlayer = function (game) {
   const gravity = 500
-  game.blockSize = 30
+  game.blockSize = 30 // TODO we need global constants
 
+  // TODO we need global constants
   const players = {
     player1Sprite: {
       color: '0xdd9b33',

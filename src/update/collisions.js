@@ -7,29 +7,32 @@ const collisions = game => {
   const laserHitPlayer = (shotGuy, laser) => {
     laser.kill()
 
-    // shotGuy.healthContainerSprite.children.pop()
+    if (shotGuy.healthContainerSprite.children.length > 1) {
+      shotGuy.healthContainerSprite.children.pop()
+      // Blink code
+      game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
 
-    // Blink code
-    game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
+      const updateCounter = function () {
+        game.counter++
 
-    const updateCounter = function () {
-      game.counter++
-
-      // blink for 10 frames
-      if (game.counter <= 10) {
-        // alternate colors every frame
-        if (game.counter % 2) {
-          shotGuy.tint = 0xff0000
+        // blink for 10 frames
+        if (game.counter <= 10) {
+          // alternate colors every frame
+          if (game.counter % 2) {
+            shotGuy.tint = 0xff0000
+          } else {
+            shotGuy.tint = 0xffffff
+          }
         } else {
-          shotGuy.tint = 0xffffff
+          // give the guy back his normal tint and stop the counter
+          game.time.events.remove(blinkEvent)
+          shotGuy.tint = shotGuy.originalTint // this is dumb, but if a second shot hits while a player is blinking, they may return as white or red
         }
-      } else {
-        // give the guy back his normal tint and stop the counter
-        game.time.events.remove(blinkEvent)
-        shotGuy.tint = shotGuy.originalTint // this is dumb, but if a second shot hits while a player is blinking, they may return as white or red
       }
+      const blinkEvent = game.time.events.loop(100, updateCounter, this)
+    } else {
+      restart()
     }
-    const blinkEvent = game.time.events.loop(100, updateCounter, this)
   }
 
   // player and the walls collide
@@ -44,7 +47,7 @@ const collisions = game => {
   // player and laser collide
   // if (game.shotGuy.invincible == false) {
   game.physics.arcade.overlap(
-    game.lasers,
+    game.weapon.bullets,
     [game.player1Sprite, game.player2Sprite],
     laserHitPlayer,
     null,
@@ -54,7 +57,7 @@ const collisions = game => {
 
   // lasers and walls collide
   game.physics.arcade.collide(
-    game.lasers,
+    game.weapon.bullets,
     game.walls,
     laser => {
       laser.kill()
