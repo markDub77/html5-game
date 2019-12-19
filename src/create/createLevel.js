@@ -4,35 +4,7 @@ var createLevel = function (game) {
   game.laserIconGroup = game.add.group()
   game.enemies = game.add.group()
 
-  // Design the level. x = wall, o = laserIconSprite, ! = lava.
-  // var level = [
-  //   '                                                                ',
-  //   '                                                                ',
-  //   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  //   'xxxx                             x',
-  //   'xxx                           xxxx',
-  //   'xx                               x',
-  //   'x                                x',
-  //   'x                                x',
-  //   'x                       xxxxxxxx x',
-  //   'x                        xxxxxxxxxxxxx                         x',
-  //   'x                         xxxxxxxxxxx                          x',
-  //   'x                           xxxxxxx                          xxx',
-  //   'x       l                      x                               x',
-  //   'xxxxxxxxx                      x                               x',
-  //   'x        x                     x                               x',
-  //   'x         xxxxx                x                               x',
-  //   'x                              x  xxxxxxxxxxxx                 x',
-  //   'x                              x    x        x                 x',
-  //   'x              xxxxxxx         xxxx xxxxxxxx xxxxx             x',
-  //   'x           xxxx                x   x        x                 x',
-  //   'x                               x xxxxxxxxxxxx xxxxxxxxxxxxxxx x',
-  //   'x                               x            x                 x',
-  //   'x                               x xxxxxxx    x                 x',
-  //   'x       xxxxxxxx                x            x                 x',
-  //   'x       xxxxxxxx                x            x                 x',
-  //   'xxx!!!!!!!!!!!!!!!!!!!!!!!!!xxxxxx!!!!!!!!!!!!!!!!!!!xxxxxxxxxxx'
-  // ]
+
 
   var level = [
     '                                                                ',
@@ -53,7 +25,62 @@ var createLevel = function (game) {
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
   ]
 
-  // const blockSize = 30
+
+//level array
+const levelData =
+[
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+];
+
+var easystarjs = require('easystarjs');
+var easystar = new easystarjs.js();
+easystar.setGrid(levelData);
+easystar.setAcceptableTiles([0]);
+easystar.enableDiagonals(); // we want path to have diagonals
+easystar.disableCornerCutting(); // no diagonal path when walking at wall corners
+
+function placeTile(tileType, i, j){ //place minimap
+  var tile = '';
+  if(tileType == 1){
+      tile = 'ground';
+  }
+  minimap.create(j * game.blockSize, i * game.blockSize, tile);
+}
+
+var minimap = game.add.group();
+var tileType = 0;
+
+for (var i = 0; i < levelData.length; i++) {
+  for (var j = 0; j < levelData[0].length; j++) {
+      tileType = levelData[i][j];
+      placeTile(tileType,i,j);
+  }
+}
+
 
   var lavaBmd = game.add.bitmapData(game.blockSize, game.blockSize)
   lavaBmd.ctx.beginPath()

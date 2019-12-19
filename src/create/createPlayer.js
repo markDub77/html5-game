@@ -1,6 +1,6 @@
 var createPlayer = function (game) {
   const gravity = 500
-  game.blockSize = 30 // TODO we need global constants
+  game.blockSize = 16 // TODO we need global constants
 
   // TODO we need global constants
   const players = {

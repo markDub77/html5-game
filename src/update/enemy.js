@@ -2,7 +2,7 @@ const enemy = game => {
   const spaceBetween = 120
   const enemy = game.player2Sprite
   const hero = game.player1Sprite
-  const blockSize = 30
+  const blockSize = 16
   const enemyX = Math.round(enemy.x) + blockSize
   const heroX = Math.round(hero.x)
   const difference = heroX - enemyX

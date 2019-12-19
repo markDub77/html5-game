@@ -18,6 +18,9 @@ const mainState = {
     // game.load.spritesheet('hudFrame', 'assets/images/hudFrame.png', 201, 48)
     game.load.spritesheet('laserIcon', 'assets/images/laserIcon.png', 16, 16)
     game.load.spritesheet('ground', 'assets/images/ground.png', 16, 16)
+    //  tiles are 16x16 each
+    game.load.image('tiles', 'assets/images/sci-fi-tiles.png')
+    game.load.image('ground', 'assets/images/ground.png')
   },
 
   create: function () {
@@ -42,7 +45,7 @@ const mainState = {
 }
 
 // Initialize the game and start our state
-const game = new Phaser.Game(1024, 768, Phaser.AUTO, 'phaser-example')
+const game = new Phaser.Game(500, 400, Phaser.AUTO, 'phaser-example')
 
 game.state.add('main', mainState)
 game.state.start('main')
