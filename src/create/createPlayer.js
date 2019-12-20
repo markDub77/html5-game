@@ -6,11 +6,11 @@ var createPlayer = function (game) {
   const players = {
     player1Sprite: {
       color: '0xdd9b33',
-      locationX: 300
+      locationX: 100
     },
     player2Sprite: {
       color: '0x0055dd',
-      locationX: 700
+      locationX: 300
     }
   }
 
@@ -23,7 +23,7 @@ var createPlayer = function (game) {
 
     const playerSprite = game.add.sprite(
       players[player].locationX,
-      350,
+      300,
       playerBmd
     )
     playerSprite.tint = players[player].color // now we add the color over the white canvas
