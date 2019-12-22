@@ -1,14 +1,14 @@
 var createHud = game => {
-  const healthBarWidth = 8
-  const healthBarHeight = 20
-  const healthBarGapWidth = 12
-  const numberOfBars = 12
+  const healthBarWidth = 4
+  const healthBarHeight = 16
+  const healthBarGapWidth = 5
+  const numberOfBars = 7
 
   // TODO we need global constants
   const players = {
     player1Sprite: {
       color: '#dd9b33',
-      locationX: 10
+      locationX: 4
     },
     player2Sprite: {
       color: '#0055dd',
@@ -25,7 +25,7 @@ var createHud = game => {
     spriteHealthBmd.ctx.fill()
 
     // make a sprite out of the bitmap data
-    const healthContainerSprite = game.add.sprite(players[player].locationX, 10) // parent is invisible
+    const healthContainerSprite = game.add.sprite(players[player].locationX, 4) // parent is invisible
 
     // assign to player number
 

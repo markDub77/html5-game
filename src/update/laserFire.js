@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 const laserFire = function (game) {
-  let playerWeaponSize = game.blockSize
+  // let playerWeaponSize = game.blockSize
 
   if (game.player1Sprite.facing === 'left') {
-    playerWeaponSize = -game.blockSize
+    // playerWeaponSize = -game.blockSize
 
     if (game.weapon.bulletSpeed > 0) {
       game.weapon.bulletSpeed = -game.weapon.bulletSpeed
@@ -17,7 +17,7 @@ const laserFire = function (game) {
     }
   }
 
-  game.weapon.trackSprite(game.player1Sprite, playerWeaponSize, 20, false)
+  game.weapon.trackSprite(game.player1Sprite, 16, 20, false)
   game.weapon.fire()
 }
 

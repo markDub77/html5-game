@@ -10,10 +10,10 @@ var createWeapons = function (game) {
   let weapon = game.add.weapon(1000, bulletBmd)
   weapon.bulletKillType = Phaser.Weapon.KILL_NEVER
   weapon.bulletSpeed = 300
-  weapon.fireAngle = -30
-  weapon.fireRate = 1100
+  weapon.fireAngle = 0
+  weapon.fireRate = 800
   weapon.bulletWorldWrap = true
-  weapon.bulletGravity = new Phaser.Point(0, 120.2)
+  // weapon.bulletGravity = new Phaser.Point(0, 120.2)
 
   game.weapon = weapon
 

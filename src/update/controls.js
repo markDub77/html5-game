@@ -1,20 +1,21 @@
 /* eslint-disable no-undef */
 
 var controls = function (game) {
-  const walkspeed = 180
-  const jumpStrength = 300
-
   game.player1Sprite.body.velocity.x = 0
+  game.player1Sprite.body.velocity.y = 0
   game.player2Sprite.body.velocity.x = 0
+  game.player2Sprite.body.velocity.y = 0
 
   // pad1
   // dpad left
+
+  // console.log("game.player1Sprite.walkspeed", game.player1Sprite.walkspeed)
   if (
     game.run.left.isDown ||
     game.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) ||
     game.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1
   ) {
-    game.player1Sprite.body.velocity.x = -walkspeed
+    game.player1Sprite.body.velocity.x = -game.player1Sprite.walkspeed
     game.player1Sprite.facing = 'left'
 
     // dpad right
@@ -23,8 +24,22 @@ var controls = function (game) {
     (game.pad1 && game.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT)) ||
     (game.pad1 && game.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)) > 0.1
   ) {
-    game.player1Sprite.body.velocity.x = walkspeed
+    game.player1Sprite.body.velocity.x = game.player1Sprite.walkspeed
     game.player1Sprite.facing = 'right'
+  } else if (
+    game.run.up.isDown ||
+    (game.pad1 && game.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP)) ||
+    (game.pad1 && game.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)) > 0.1
+  ) {
+    game.player1Sprite.body.velocity.y = -game.player1Sprite.walkspeed
+    game.player1Sprite.facing = 'up'
+  } else if (
+    game.run.down.isDown ||
+    (game.pad1 && game.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP)) ||
+    (game.pad1 && game.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)) > 0.1
+  ) {
+    game.player1Sprite.body.velocity.y = game.player1Sprite.walkspeed
+    game.player1Sprite.facing = 'down'
   }
 
   // jump button
@@ -32,7 +47,7 @@ var controls = function (game) {
     (game.jump.isDown || game.pad1.justPressed(Phaser.Gamepad.XBOX360_A)) &&
     (game.player1Sprite.body.onFloor() || game.player1Sprite.body.touching.down)
   ) {
-    game.player1Sprite.body.velocity.y = -jumpStrength
+    game.player1Sprite.body.velocity.y = -game.player1Sprite.jumpStrength
   }
 
   // shoot button
@@ -52,7 +67,7 @@ var controls = function (game) {
     game.pad2.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) ||
     game.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1
   ) {
-    game.player2Sprite.body.velocity.x = -walkspeed
+    game.player2Sprite.body.velocity.x = -game.player2Sprite.walkspeed
     game.player2Sprite.facing = 'left'
 
     // dpad right
@@ -60,7 +75,7 @@ var controls = function (game) {
     (game.pad2 && game.pad2.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT)) ||
     (game.pad2 && game.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)) > 0.1
   ) {
-    game.player2Sprite.body.velocity.x = walkspeed
+    game.player2Sprite.body.velocity.x = game.player2Sprite.walkspeed
     game.player2Sprite.facing = 'right'
   }
 
@@ -69,7 +84,7 @@ var controls = function (game) {
     game.pad2.justPressed(Phaser.Gamepad.XBOX360_A) &&
     (game.player2Sprite.body.onFloor() || game.player2Sprite.body.touching.down)
   ) {
-    game.player2Sprite.body.velocity.y = -jumpStrength
+    game.player2Sprite.body.velocity.y = -game.player2Sprite.jumpStrength
   }
 
   // shoot button

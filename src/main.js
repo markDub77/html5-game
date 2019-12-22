@@ -25,8 +25,8 @@ const mainState = {
 
   create: function () {
     require('./create/enablePhysics').enablePhysics(game)
-    require('./create/createControls').createControls(game)
     require('./create/createPlayer').createPlayer(game)
+    require('./create/createControls').createControls(game)
     require('./create/createLevel').createLevel(game)
     require('./create/createWeapons').createWeapons(game)
     require('./create/createHud').createHud(game)
@@ -40,12 +40,15 @@ const mainState = {
 
   render: function () {
     //  FPS debug info
-    game.debug.text(game.time.fps, 1009, 10, '#366dc5')
+    game.debug.text(game.time.fps, 480, 16, '#cccccc', {
+      font: '10pt Arial',
+      fill: '#000'
+    })
   }
 }
 
 // Initialize the game and start our state
-const game = new Phaser.Game(500, 400, Phaser.AUTO, 'phaser-example')
+const game = new Phaser.Game(496, 384, Phaser.AUTO, 'phaser-example')
 
 game.state.add('main', mainState)
 game.state.start('main')

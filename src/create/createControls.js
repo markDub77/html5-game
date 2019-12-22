@@ -9,6 +9,7 @@ var createControls = function (game) {
   }
 
   game.run = game.input.keyboard.createCursorKeys()
+  console.log('game.run', game.run)
   game.jump = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
   game.shoot = game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
 
