@@ -1,253 +1,208 @@
 /* eslint-disable no-undef */
-/* activity uses path finding to lead the character to mouse click position
-using https://github.com/prettymuchbryce/easystarjs for pathfinding
-*/
 const easystarjs = require('easystarjs')
+// eslint-disable-next-line new-cap
 var easystar = new easystarjs.js()
 
 var game = new Phaser.Game(600, 400, Phaser.AUTO, 'TutContainer', {
-  preload: preload,
   create: create,
   update: update
 })
 
-// level array
-var levelData = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1],
-  [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1],
-  [1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-  [1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-  [1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]
-
 // x & y values of the direction vector for character movement
 var dX = 0
 var dY = 0
-var tileWidth = 32 // the width of a tile
-var normText // text to display hero coordinates
-var minimap // minimap holder group
-var heroMapSprite // hero marker sprite in the minimap
-var gameScene // this is the render texture onto which we draw depth sorted scene
-var heroMapTile = new Phaser.Point(1, 1) // hero tile values in array
-var heroMapPos // 2D coordinates of hero map marker sprite in minimap, assume this is mid point of graphic
-var heroSpeed = 1.2 // well, speed of our hero
-var tapPos = new Phaser.Point(0.5, 0.5)
-var isFindingPath = false
+var tileSize = 32 // the width of a tile
+var enemySprite // hero marker sprite in the map
+var enemyCurrentTile = new Phaser.Point(1, 1) // hero tile values in array
+var destinationMapTile = enemyCurrentTile
+var enemyPoint // 2D coordinates of hero map marker sprite in map, assume this is mid point of graphic
+var enemySpeed = 0.9 // well, speed of our hero
 var path = []
-var destination = heroMapTile
-var isWalking
-
-function preload () {
-  game.load.crossOrigin = 'Anonymous'
-  game.load.bitmapFont(
-    'font',
-    'https://dl.dropboxusercontent.com/s/z4riz6hymsiimam/font.png?dl=0',
-    'https://dl.dropboxusercontent.com/s/7caqsovjw5xelp0/font.xml?dl=0'
-  )
-  game.load.image(
-    'greenTile',
-    'https://dl.dropboxusercontent.com/s/nxs4ptbuhrgzptx/green_tile.png?dl=0'
-  )
-  game.load.image(
-    'redTile',
-    'https://dl.dropboxusercontent.com/s/zhk68fq5z0c70db/red_tile.png?dl=0'
-  )
-
-  game.load.atlasJSONArray(
-    'hero',
-    'https://dl.dropboxusercontent.com/s/hradzhl7mok1q25/hero_8_4_41_62.png?dl=0',
-    'https://dl.dropboxusercontent.com/s/95vb0e8zscc4k54/hero_8_4_41_62.json?dl=0'
-  )
-}
+var wallColor = '#045000'
+var floorColor = '#ffe18a'
 
 function create () {
-  normText = game.add.text(10, 360, 'hi')
-  game.stage.backgroundColor = '#cccccc'
-  // we draw the depth sorted scene into this render texture
-  gameScene = game.add.renderTexture(game.width, game.height)
-  game.add.sprite(0, 0, gameScene)
+  game.physics.startSystem(Phaser.Physics.ARCADE)
 
-  isWalking = false
-  createLevel()
+  // Add the physics engine to all game objects
+  game.world.enableBody = true
 
-  easystar.setGrid(levelData)
+  // level array
+  game.levelData = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+    [1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  ]
+  game.walls = game.add.group()
+  let tileType = 0
+
+  function placeTile (tileType, i, j) {
+    var wallBmd = game.add.bitmapData(tileSize, tileSize)
+    wallBmd.ctx.beginPath()
+    wallBmd.ctx.rect(0, 0, tileSize, tileSize)
+    wallBmd.ctx.fillStyle = wallColor
+    wallBmd.ctx.fill()
+
+    var floorBmd = game.add.bitmapData(tileSize, tileSize)
+    floorBmd.ctx.beginPath()
+    floorBmd.ctx.rect(0, 0, tileSize, tileSize)
+    floorBmd.ctx.fillStyle = floorColor
+    floorBmd.ctx.fill()
+
+    // place tiles of different types down map
+    // var tile = floorBmd
+    if (tileType === 1) {
+      // map.create(j * tileSize, i * tileSize, tile)
+      var wall = game.add.sprite(tileSize * j, tileSize * i, wallBmd)
+      game.walls.add(wall)
+      wall.body.immovable = true
+    }
+  }
+
+  // create map
+  for (var i = 0; i < game.levelData.length; i++) {
+    for (var j = 0; j < game.levelData[0].length; j++) {
+      tileType = game.levelData[i][j]
+      placeTile(tileType, i, j)
+    }
+  }
+
+  enemySprite = game.add.sprite(
+    enemyCurrentTile.y * tileSize,
+    enemyCurrentTile.x * tileSize,
+    'enemyTile'
+  )
+
+  enemyPoint = new Phaser.Point(
+    enemySprite.x + enemySprite.width / 2,
+    enemySprite.y + enemySprite.height / 2
+  )
+
+  enemyCurrentTile = getTileCoordinates(enemyPoint, tileSize)
+
+  easystar.setGrid(game.levelData)
   easystar.setAcceptableTiles([0])
   easystar.enableDiagonals() // we want path to have diagonals
   easystar.disableCornerCutting() // no diagonal path when walking at wall corners
 
-  game.input.activePointer.leftButton.onUp.add(findPath)
+  game.input.activePointer.leftButton.onUp.add(findPathOnTap)
 }
 
 function update () {
-  // follow the path
-  aiWalk()
+  game.physics.arcade.collide(enemySprite, game.walls)
 
-  heroMapPos.x += heroSpeed * dX
-  heroMapPos.y += heroSpeed * dY
-  heroMapSprite.x = heroMapPos.x - heroMapSprite.width / 2
-  heroMapSprite.y = heroMapPos.y - heroMapSprite.height / 2
-  // get the new hero map tile
-  heroMapTile = getTileCoordinates(heroMapPos, tileWidth)
-  // depthsort & draw new scene
-  renderScene()
-}
+  if (path.length === 0) {
+    return
+  }
 
-function createLevel () {
-  // create minimap
-  minimap = game.add.group()
-  var tileType = 0
-  for (var i = 0; i < levelData.length; i++) {
-    for (var j = 0; j < levelData[0].length; j++) {
-      tileType = levelData[i][j]
-      placeTile(tileType, i, j)
-      if (tileType === 2) {
-        // save hero map tile
-        heroMapTile = new Phaser.Point(i, j)
+  const snapPointMode = true
+  const freeStyleMode = false
+
+  if (snapPointMode) {
+    if (
+      enemyCurrentTile.x === destinationMapTile.x &&
+      enemyCurrentTile.y === destinationMapTile.y
+    ) {
+      // snap to center of tile
+      // enemy has reached a point on a destinationMapTile in his path
+      // we really only want this type of thing when he gets stuck on a corner
+      // definately not wanted when running
+      enemySprite.x =
+        enemyCurrentTile.x * tileSize + tileSize / 2 - enemySprite.width / 2
+      enemySprite.y =
+        enemyCurrentTile.y * tileSize + tileSize / 2 - enemySprite.height / 2
+      enemyPoint.x = enemySprite.x + enemySprite.width / 2
+      enemyPoint.y = enemySprite.y + enemySprite.height / 2
+
+      destinationMapTile = path.pop() // whats next tile in path
+
+      if (enemyCurrentTile.x < destinationMapTile.x) {
+        // go right
+        console.log('going right')
+        dX = 1
+        // enemySprite.body.velocity.x = 90
+      } else if (enemyCurrentTile.x > destinationMapTile.x) {
+        // go left
+        console.log('going left')
+        dX = -1
+        // enemySprite.body.velocity.x = -90
+      } else {
+        // stop
+        // console.log('stopping x')
+        dX = 0
+        // enemySprite.body.velocity.x = 0
+      }
+      if (enemyCurrentTile.y < destinationMapTile.y) {
+        // go down
+        console.log('going down')
+        dY = 1
+        // enemySprite.body.velocity.y = 90
+      } else if (enemyCurrentTile.y > destinationMapTile.y) {
+        // go up
+        console.log('going up')
+        dY = -1
+        // enemySprite.body.velocity.y = -90
+      } else {
+        // console.log('stopping y')
+        dY = 0
       }
     }
+    enemyPoint.x += 0.9 * dX
+    enemyPoint.y += 0.9 * dY
+
+    enemySprite.x = enemyPoint.x - enemySprite.width / 2
+    enemySprite.y = enemyPoint.y - enemySprite.height / 2
+
+    // get the new map tile
+    enemyCurrentTile = getTileCoordinates(enemyPoint, tileSize)
   }
+}
 
-  heroMapSprite = minimap.create(
-    heroMapTile.y * tileWidth,
-    heroMapTile.x * tileWidth,
-    'heroTile'
+// this will go away
+// just needed for clicking
+function findPathOnTap () {
+  var pointerPosition = game.input.activePointer.position
+  var pointerPositionPoint = new Phaser.Point(
+    pointerPosition.x,
+    pointerPosition.y
   )
+  const endTile = getTileCoordinates(pointerPositionPoint, tileSize)
 
-  heroMapPos = new Phaser.Point(
-    heroMapSprite.x + heroMapSprite.width / 2,
-    heroMapSprite.y + heroMapSprite.height / 2
-  )
-  heroMapTile = getTileCoordinates(heroMapPos, tileWidth)
-  // minimap.scale = new Phaser.Point(1, 1)
-  minimap.x = 0
-  minimap.y = 0
-  renderScene() // draw once the initial state
-}
-
-function placeTile (tileType, i, j) {
-  // as far as I can tell, this is just for the mini map
-  // place minimap
-  var tile = 'greenTile'
-  if (tileType === 1) {
-    tile = 'redTile'
-  }
-  var tmpSpr = minimap.create(j * tileWidth, i * tileWidth, tile)
-  tmpSpr.name = 'tile' + i + '_' + j // ????
-}
-
-function renderScene () {
-  gameScene.clear() // clear the previous frame then draw again
-  normText.text = 'Tap on x,y: ' + tapPos.x + ',' + tapPos.y
-}
-
-function findPath () {
-  if (isFindingPath || isWalking) return
-  var pos = game.input.activePointer.position
-  var isoPt = new Phaser.Point(pos.x, pos.y)
-  tapPos = isometricToCartesian(isoPt)
-  tapPos = getTileCoordinates(tapPos, tileWidth)
-  if (tapPos.x > -1 && tapPos.y > -1) {
+  if (endTile.x > -1 && endTile.y > -1) {
     // tapped within grid
-    if (levelData[tapPos.y][tapPos.x] !== 1) {
+    if (game.levelData[endTile.y][endTile.x] !== 1) {
       // not wall tile
-      isFindingPath = true
       // let the algorithm do the magic
+
       easystar.findPath(
-        heroMapTile.x,
-        heroMapTile.y,
-        tapPos.x,
-        tapPos.y,
-        plotAndMove
+        enemyCurrentTile.x,
+        enemyCurrentTile.y,
+        endTile.x,
+        endTile.y,
+        newPath => {
+          // this is all very confusing, I'll have to come back to this later
+          path = newPath
+          path.push(endTile)
+          path.reverse()
+          path.pop()
+        }
       )
       easystar.calculate()
     }
   }
 }
-function plotAndMove (newPath) {
-  destination = heroMapTile
-  path = newPath
-  isFindingPath = false
-  repaintMinimap()
-  if (path === null) {
-    console.log('No Path was found.')
-  } else {
-    path.push(tapPos)
-    path.reverse()
-    path.pop()
-    for (var i = 0; i < path.length; i++) {
-      var tmpSpr = minimap.getByName('tile' + path[i].y + '_' + path[i].x)
-      tmpSpr.tint = 0x0000ff
-    }
-  }
-}
-function repaintMinimap () {
-  for (var i = 0; i < levelData.length; i++) {
-    for (var j = 0; j < levelData[0].length; j++) {
-      var tmpSpr = minimap.getByName('tile' + i + '_' + j)
-      tmpSpr.tint = 0xffffff
-    }
-  }
-}
-function aiWalk () {
-  if (path.length === 0) {
-    // path has ended
-    if (heroMapTile.x === destination.x && heroMapTile.y === destination.y) {
-      dX = 0
-      dY = 0
-      // console.log("ret "+destination.x+" ; "+destination.y+"-"+heroMapTile.x+" ; "+heroMapTile.y);
-      isWalking = false
-      return
-    }
-  }
 
-  isWalking = true
-  if (heroMapTile.x === destination.x && heroMapTile.y === destination.y) {
-    // centralise the hero on the tile
-    heroMapSprite.x =
-      heroMapTile.x * tileWidth + tileWidth / 2 - heroMapSprite.width / 2
-    heroMapSprite.y =
-      heroMapTile.y * tileWidth + tileWidth / 2 - heroMapSprite.height / 2
-    heroMapPos.x = heroMapSprite.x + heroMapSprite.width / 2
-    heroMapPos.y = heroMapSprite.y + heroMapSprite.height / 2
-    destination = path.pop() // whats next tile in path
-    if (heroMapTile.x < destination.x) {
-      dX = 1
-    } else if (heroMapTile.x > destination.x) {
-      dX = -1
-    } else {
-      dX = 0
-    }
-    if (heroMapTile.y < destination.y) {
-      dY = 1
-    } else if (heroMapTile.y > destination.y) {
-      dY = -1
-    } else {
-      dY = 0
-    }
-    if (heroMapTile.x === destination.x) {
-      // top or bottom
-      dX = 0
-    } else if (heroMapTile.y === destination.y) {
-      // left or right
-      dY = 0
-    }
-  }
-}
-
-function isometricToCartesian (isoPt) {
+// interesting helper function
+function getTileCoordinates (pos, tileSize) {
   var tempPt = new Phaser.Point()
-  tempPt.x = isoPt.x
-  tempPt.y = isoPt.y
-  return tempPt
-}
-function getTileCoordinates (cartPt, tileHeight) {
-  var tempPt = new Phaser.Point()
-  tempPt.x = Math.floor(cartPt.x / tileHeight)
-  tempPt.y = Math.floor(cartPt.y / tileHeight)
+  tempPt.x = Math.floor(pos.x / tileSize)
+  tempPt.y = Math.floor(pos.y / tileSize)
   return tempPt
 }
