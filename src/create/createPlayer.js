@@ -1,6 +1,7 @@
 var createPlayer = function (game) {
   // const gravity = 500
   game.blockSize = 32 // TODO we need global constants
+  game.cornerMode = false
   const playerSize = 32 // TODO we need global constants
 
   // TODO we need global constants
@@ -18,7 +19,7 @@ var createPlayer = function (game) {
       color: '0x0055dd',
       startingLocationX: 300,
       startingLocationY: 200,
-      walkspeed: 20,
+      walkspeed: 50,
       jumpStrength: 220,
       facing: 'left',
       weapon: 'laser'
@@ -39,7 +40,7 @@ var createPlayer = function (game) {
     )
     playerSprite.tint = players[player].color // now we add the color over the white canvas
     playerSprite.originalTint = players[player].color // now we add the color over the white canvas
-    // playerSprite.anchor.setTo(0.5, 0.5)
+    // playerSprite.anchor.setTo(1, 1)
     playerSprite.facing = players[player].facing
     playerSprite.weapon = players[player].weapon
     playerSprite.walkspeed = players[player].walkspeed

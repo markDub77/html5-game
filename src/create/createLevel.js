@@ -5,14 +5,13 @@ var createLevel = function (game) {
   let tileType
   const levelData = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -37,7 +36,8 @@ var createLevel = function (game) {
   game.enemies = game.add.group()
 
   // eslint-disable-next-line space-before-function-paren
-  function placeTile(tileType, i, j) { // https://jsfiddle.net/juwalbose/pu0gt7nc/
+  function placeTile(tileType, i, j) {
+    // https://jsfiddle.net/juwalbose/pu0gt7nc/
     // var tile
     if (tileType === 1) {
       var tile = 'ground2'
@@ -74,7 +74,7 @@ var createLevel = function (game) {
   var easystar = new easystarjs.js()
   easystar.setGrid(levelData)
   easystar.setAcceptableTiles([0])
-  easystar.enableDiagonals() // we want path to have diagonals
+  // easystar.enableDiagonals() // we want path to have diagonals
   easystar.disableCornerCutting() // no diagonal path when walking at wall corners
   game.easystar = easystar
 }

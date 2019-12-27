@@ -3,8 +3,8 @@
 var controls = function (game) {
   game.player1Sprite.body.velocity.x = 0
   game.player1Sprite.body.velocity.y = 0
-  game.player2Sprite.body.velocity.x = 0
-  game.player2Sprite.body.velocity.y = 0
+  // game.player2Sprite.body.velocity.x = 0
+  // game.player2Sprite.body.velocity.y = 0
 
   // pad1
   // dpad left

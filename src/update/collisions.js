@@ -35,6 +35,12 @@ const collisions = game => {
     }
   }
 
+  game.physics.arcade.collide(
+    [game.player2Sprite],
+    game.walls,
+    game.stuckOnCorner
+  )
+
   // player and the walls collide
   game.physics.arcade.collide(
     [game.player1Sprite, game.player2Sprite],
