@@ -1,22 +1,45 @@
 const easystarjs = require('easystarjs')
 
 var createLevel = function (game) {
+  game.counter = 0
   const groundColor = '#045000'
+
   let tileType
   const levelData = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+    [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   ]
+
+  // const levelData = [
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  //   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  // ]
 
   var lavaBmd = game.add.bitmapData(game.blockSize, game.blockSize)
   lavaBmd.ctx.beginPath()
@@ -24,11 +47,11 @@ var createLevel = function (game) {
   lavaBmd.ctx.fillStyle = '#D95F49'
   lavaBmd.ctx.fill()
 
-  // var groundBmd = game.add.bitmapData(game.blockSize, game.blockSize)
-  // groundBmd.ctx.beginPath()
-  // groundBmd.ctx.rect(0, 0, game.blockSize, game.blockSize)
-  // groundBmd.ctx.fillStyle = groundColor
-  // groundBmd.ctx.fill()
+  var groundBmd = game.add.bitmapData(game.blockSize, game.blockSize)
+  groundBmd.ctx.beginPath()
+  groundBmd.ctx.rect(0, 0, game.blockSize, game.blockSize)
+  groundBmd.ctx.fillStyle = groundColor
+  groundBmd.ctx.fill()
 
   // Create 3 groups that will contain our objects
   game.walls = game.add.group()
@@ -40,17 +63,17 @@ var createLevel = function (game) {
     // https://jsfiddle.net/juwalbose/pu0gt7nc/
     // var tile
     if (tileType === 1) {
-      var tile = 'ground2'
+      var tile = groundBmd
       var wall = game.add.sprite(
         game.blockSize * j,
-        game.blockSize * i
-        // groundBmd
+        game.blockSize * i,
+        groundBmd
       )
       game.walls.add(wall)
       wall.body.immovable = true
     }
-    if (tileType === '!') {
-      // tile = 'ground'
+    if (tileType === '0') {
+      tile = 'ground'
       var lava = game.add.sprite(
         game.blockSize * j,
         game.blockSize * i,
@@ -59,6 +82,16 @@ var createLevel = function (game) {
       game.walls.add(lava)
       lava.body.immovable = true
     }
+    // if (tileType === '!') {
+    //   tile = 'ground'
+    //   var lava = game.add.sprite(
+    //     game.blockSize * j,
+    //     game.blockSize * i,
+    //     lavaBmd
+    //   )
+    //   game.walls.add(lava)
+    //   lava.body.immovable = true
+    // }
     game.walls.create(j * game.blockSize, i * game.blockSize, tile)
   }
 
@@ -75,7 +108,7 @@ var createLevel = function (game) {
   easystar.setGrid(levelData)
   easystar.setAcceptableTiles([0])
   // easystar.enableDiagonals() // we want path to have diagonals
-  // easystar.disableCornerCutting() // no diagonal path when walking at wall corners
+  easystar.disableCornerCutting() // no diagonal path when walking at wall corners
   game.easystar = easystar
 }
 

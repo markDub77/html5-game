@@ -1,6 +1,6 @@
 var createHud = game => {
   const healthBarWidth = 4
-  const healthBarHeight = 16
+  const healthBarHeight = 7
   const healthBarGapWidth = 5
   const numberOfBars = 7
 

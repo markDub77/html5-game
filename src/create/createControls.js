@@ -9,7 +9,6 @@ var createControls = function (game) {
   }
 
   game.run = game.input.keyboard.createCursorKeys()
-  console.log('game.run', game.run)
   game.jump = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
   game.shoot = game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
 
@@ -21,7 +20,6 @@ var createControls = function (game) {
   //         // you could use a different button here if you want...
   //         // jumpButton = pad1.getButton(Phaser.Gamepad.BUTTON_1);
   //         // runLeft = pad1.getButton(Phaser.Gamepad.XBOX360_DPAD_LEFT);
-  //         console.log('pad1 connected');
   //     }
   // });
 

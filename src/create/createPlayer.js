@@ -1,25 +1,24 @@
 var createPlayer = function (game) {
   // const gravity = 500
-  game.blockSize = 32 // TODO we need global constants
-  game.cornerMode = false
-  const playerSize = 30 // TODO we need global constants
+  game.blockSize = 16 // TODO we need global constants
+  game.playerSize = 15 // TODO we need global constants
 
   // TODO we need global constants
   const players = {
     player1Sprite: {
       color: '0xdd9b33',
-      startingLocationX: 100,
-      startingLocationY: 200,
-      walkspeed: 100,
+      startingLocationX: 50,
+      startingLocationY: 100,
+      walkspeed: 40,
       jumpStrength: 220,
       facing: 'right',
       weapon: 'laser'
     },
     player2Sprite: {
       color: '0x0055dd',
-      startingLocationX: 400,
-      startingLocationY: 200,
-      walkspeed: 60,
+      startingLocationX: 280,
+      startingLocationY: 180,
+      walkspeed: 0,
       jumpStrength: 220,
       facing: 'left',
       weapon: 'laser'
@@ -27,9 +26,9 @@ var createPlayer = function (game) {
   }
 
   for (const player in players) {
-    const playerBmd = game.add.bitmapData(playerSize, playerSize)
+    const playerBmd = game.add.bitmapData(game.playerSize, game.playerSize)
     playerBmd.ctx.beginPath()
-    playerBmd.ctx.rect(1, 1, playerSize, game.blockSize)
+    playerBmd.ctx.rect(1, 1, game.playerSize, game.blockSize)
     playerBmd.ctx.fillStyle = '#ffffff' // needs to be white to lay to tint over, a blank canvas
     playerBmd.ctx.fill()
 
@@ -38,6 +37,7 @@ var createPlayer = function (game) {
       players[player].startingLocationY,
       playerBmd
     )
+    // playerSprite.immovable = true
     playerSprite.tint = players[player].color // now we add the color over the white canvas
     playerSprite.originalTint = players[player].color // now we add the color over the white canvas
     playerSprite.anchor.setTo(0, 0)
@@ -46,6 +46,12 @@ var createPlayer = function (game) {
     playerSprite.walkspeed = players[player].walkspeed
     playerSprite.jumpStrength = players[player].jumpStrength
     // playerSprite.body.gravity.y = gravity
+
+    //  This makes the game world bounce-able
+    // playerSprite.body.collideWorldBounds = true
+    //  This sets the image bounce energy for the horizontal
+    //  and vertical vectors. "1" is 100% energy return
+    // playerSprite.body.bounce.set(1, 1)
 
     // save it as a global variable
     game[player] = playerSprite

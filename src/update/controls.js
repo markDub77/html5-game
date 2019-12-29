@@ -35,7 +35,7 @@ var controls = function (game) {
     game.player1Sprite.facing = 'up'
   } else if (
     game.run.down.isDown ||
-    (game.pad1 && game.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP)) ||
+    (game.pad1 && game.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_DOWN)) ||
     (game.pad1 && game.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)) > 0.1
   ) {
     game.player1Sprite.body.velocity.y = game.player1Sprite.walkspeed

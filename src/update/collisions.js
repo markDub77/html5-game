@@ -1,4 +1,7 @@
 const collisions = game => {
+  const shotKickback = 200
+  let shotDirection
+
   // Function to restart the game
   const restart = () => {
     game.state.start('main')
@@ -7,13 +10,34 @@ const collisions = game => {
   const laserHitPlayer = (shotGuy, laser) => {
     laser.kill()
 
+    // enemy still has health
     if (shotGuy.healthContainerSprite.children.length > 1) {
       shotGuy.healthContainerSprite.children.pop()
+
+      if (shotGuy.body.touching.right) {
+        shotDirection = 'right'
+      } else if (shotGuy.body.touching.left) {
+        shotDirection = 'left'
+      } else if (shotGuy.body.touching.up) {
+        shotDirection = 'up'
+      } else {
+        shotDirection = 'down'
+      }
+
       // Blink code
       game.counter = 0 // we need a way to switch back and forth really fast, so we will use even and odd numbers
-
-      const updateCounter = function () {
+      const shotBlink = function () {
         game.counter++
+
+        if (shotDirection === 'left') {
+          shotGuy.body.velocity.x = shotKickback
+        } else if (shotDirection === 'up') {
+          shotGuy.body.velocity.y = shotKickback
+        } else if (shotDirection === 'right') {
+          shotGuy.body.velocity.x = -shotKickback
+        } else {
+          shotGuy.body.velocity.y = -shotKickback
+        }
 
         // blink for 10 frames
         if (game.counter <= 10) {
@@ -29,7 +53,7 @@ const collisions = game => {
           shotGuy.tint = shotGuy.originalTint // this is dumb, but if a second shot hits while a player is blinking, they may return as white or red
         }
       }
-      const blinkEvent = game.time.events.loop(100, updateCounter, this)
+      const blinkEvent = game.time.events.loop(1, shotBlink, this)
     } else {
       restart()
     }
@@ -38,7 +62,7 @@ const collisions = game => {
   game.physics.arcade.collide(
     [game.player2Sprite],
     game.walls,
-    game.stuckOnCorner
+    game.cornerAssist
   )
 
   // player and the walls collide

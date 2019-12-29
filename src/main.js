@@ -33,8 +33,9 @@ const mainState = {
   },
 
   update: function () {
-    require('./update/collisions').collisions(game)
     require('./update/controls').controls(game)
+
+    require('./update/collisions').collisions(game)
     require('./update/enemy').enemy(game)
   },
 
@@ -48,7 +49,7 @@ const mainState = {
 }
 
 // Initialize the game and start our state
-const game = new Phaser.Game(496, 384, Phaser.AUTO, 'phaser-example')
+const game = new Phaser.Game(320, 240, Phaser.AUTO, 'phaser-example')
 
 game.state.add('main', mainState)
 game.state.start('main')
