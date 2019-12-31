@@ -4,12 +4,14 @@ const enemy = game => {
   const hero = game.player1Sprite
   const calculationRate = 3000
   const tweenSpeed = 70
-  const runspeed = 20
+  const runspeed = 1 // 35
 
   const heroTileX = Math.round(hero.x / game.blockSize)
   const heroTileY = Math.round(hero.y / game.blockSize)
   const enemyTileX = Math.round(enemy.x / game.blockSize)
   const enemyTileY = Math.round(enemy.y / game.blockSize)
+
+  // console.log('x:', heroTileX, 'y:', heroTileY)
 
   var snap = game.add.tween(enemy)
 
@@ -22,16 +24,19 @@ const enemy = game => {
       const startingPointX =
         path[0].x * game.blockSize + game.blockSize / 2 - enemy.width / 2
 
-      game.cornerAssist = () => {
-        if (enemy.body.touching.right || enemy.body.touching.left) {
-          snap
-            .to({ y: startingPointY }, tweenSpeed, Phaser.Easing.Linear.None)
-            .start()
-        }
-        if (enemy.body.touching.up || enemy.body.touching.down) {
-          snap
-            .to({ x: startingPointX }, tweenSpeed, Phaser.Easing.Linear.None)
-            .start()
+      // Corner Assist is called from a collision of enemy to a wall
+      game.cornerAssist = enemy => {
+        if (enemy.body.touching !== null) {
+          if (enemy.body.touching.right || enemy.body.touching.left) {
+            snap
+              .to({ y: startingPointY }, tweenSpeed, Phaser.Easing.Linear.None)
+              .start()
+          }
+          if (enemy.body.touching.up || enemy.body.touching.down) {
+            snap
+              .to({ x: startingPointX }, tweenSpeed, Phaser.Easing.Linear.None)
+              .start()
+          }
         }
       }
 

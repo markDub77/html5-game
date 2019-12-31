@@ -59,6 +59,8 @@ const collisions = game => {
     }
   }
 
+  // Enemy has a really hard time getting around corners,
+  // so Corner Assist will be triggered when Enemy touches a wall
   game.physics.arcade.collide(
     [game.player2Sprite],
     game.walls,
@@ -67,8 +69,9 @@ const collisions = game => {
 
   // player and the walls collide
   game.physics.arcade.collide(
-    [game.player1Sprite, game.player2Sprite],
-    game.walls
+    [game.player1Sprite],
+    game.walls,
+    game.doorWayAssist
   )
 
   // player and player collide

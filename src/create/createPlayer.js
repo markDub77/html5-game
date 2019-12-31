@@ -9,8 +9,8 @@ var createPlayer = function (game) {
       color: '0xdd9b33',
       startingLocationX: 50,
       startingLocationY: 100,
-      walkspeed: 40,
-      jumpStrength: 220,
+      walkspeed: 50,
+      // jumpStrength: 220,
       facing: 'right',
       weapon: 'laser'
     },
@@ -19,7 +19,7 @@ var createPlayer = function (game) {
       startingLocationX: 280,
       startingLocationY: 180,
       walkspeed: 0,
-      jumpStrength: 220,
+      // jumpStrength: 220,
       facing: 'left',
       weapon: 'laser'
     }
