@@ -16,8 +16,8 @@ var createPlayer = function (game) {
     },
     player2Sprite: {
       color: '0x0055dd',
-      startingLocationX: 280,
-      startingLocationY: 180,
+      startingLocationX: 100,
+      startingLocationY: 210,
       walkspeed: 0,
       // jumpStrength: 220,
       facing: 'left',

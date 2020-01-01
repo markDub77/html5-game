@@ -7,15 +7,23 @@ var createWeapons = function (game) {
   bulletBmd.ctx.fillStyle = '#ff0000'
   bulletBmd.ctx.fill()
 
-  let weapon = game.add.weapon(1000, bulletBmd)
-  weapon.bulletKillType = Phaser.Weapon.KILL_NEVER
-  weapon.bulletSpeed = 300
-  weapon.fireAngle = 0
-  weapon.fireRate = 800
-  weapon.bulletWorldWrap = true
-  // weapon.bulletGravity = new Phaser.Point(0, 120.2)
+  let heroWeapon = game.add.weapon(1, bulletBmd)
+  heroWeapon.bulletKillType = Phaser.Weapon.KILL_NEVER
+  heroWeapon.bulletSpeed = 190
+  heroWeapon.fireAngle = 0
+  heroWeapon.fireRate = 0
+  heroWeapon.bulletWorldWrap = true
+  // heroWeapon.bulletGravity = new Phaser.Point(0, 120.2)
 
-  game.weapon = weapon
+  let enemyWeapon = game.add.weapon(100, bulletBmd)
+  enemyWeapon.bulletKillType = Phaser.Weapon.KILL_NEVER
+  enemyWeapon.bulletSpeed = 90
+  enemyWeapon.fireAngle = 0
+  enemyWeapon.fireRate = 800
+  enemyWeapon.bulletWorldWrap = true
+
+  game.heroWeapon = heroWeapon
+  game.enemyWeapon = enemyWeapon
 
   return {
     game

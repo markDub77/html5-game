@@ -80,7 +80,7 @@ const collisions = game => {
   // player and laser collide
   // if (game.shotGuy.invincible == false) {
   game.physics.arcade.overlap(
-    game.weapon.bullets,
+    [game.enemyWeapon.bullets, game.heroWeapon.bullets],
     [game.player1Sprite, game.player2Sprite],
     laserHitPlayer,
     null,
@@ -90,7 +90,7 @@ const collisions = game => {
 
   // lasers and walls collide
   game.physics.arcade.collide(
-    game.weapon.bullets,
+    [game.heroWeapon.bullets, game.enemyWeapon.bullets],
     game.walls,
     laser => {
       laser.kill()

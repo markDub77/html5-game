@@ -1,8 +1,5 @@
 /* eslint-disable no-undef */
 
-let heroXProgressArray = []
-let heroYProgressArray = []
-
 var controls = function (game) {
   game.player1Sprite.body.velocity.x = 0
   game.player1Sprite.body.velocity.y = 0
@@ -16,63 +13,28 @@ var controls = function (game) {
     const heroTileY = Math.round(hero.y / game.blockSize)
     const snap = game.add.tween(hero)
 
-    const startingPointY =
+    const heroStandingTileY =
       heroTileY * game.blockSize + game.blockSize / 2 - hero.height / 2
-    const startingPointX =
+    const heroStandingTileX =
       heroTileX * game.blockSize + game.blockSize / 2 - hero.width / 2
 
-    // if (
-    //   (hero.body.touching.left && hero.facing === 'left') ||
-    //   (hero.body.touching.right && hero.facing === 'right')
-    // ) {
-    //   // recored the progress
-    //   heroXProgressArray.push(hero.x)
-    //   if (heroXProgressArray.length > 2) {
-    //     heroXProgressArray.shift()
-    //   }
-    // }
-    // if (
-    //   (hero.body.touching.up && hero.facing === 'up') ||
-    //   (hero.body.touching.down && hero.facing === 'down')
-    // ) {
-    //   // recored the progress
-    //   heroYProgressArray.push(hero.y)
-    //   if (heroYProgressArray.length > 2) {
-    //     heroYProgressArray.shift()
-    //   }
-    // }
-
-    // read the progress
-    // console.log(
-    //   'hero.body.touching.left',
-    //   hero.body.touching.left,
-    //   'hero.facing',
-    //   hero.facing,
-    //   'heroXProgressArray[1]',
-    //   heroXProgressArray[1],
-    //   'heroXProgressArray[0]',
-    //   heroXProgressArray[0]
-    // )
     if (
       hero.body.touching.left && // you're touching a wall
       hero.facing === 'left' && // enemy is not pushing you into said wall, you're doing this on your own.
-      // heroXProgressArray[1] === heroXProgressArray[0] && // if no progress is being made
       game.levelData[heroTileY][heroTileX - 1] === 0 // there is a path in front of you
     ) {
       snap
-        .to({ y: startingPointY }, tweenSpeed, Phaser.Easing.Linear.None)
+        .to({ y: heroStandingTileY }, tweenSpeed, Phaser.Easing.Linear.None)
         .start()
     }
 
     if (
       hero.body.touching.right &&
       hero.facing === 'right' &&
-      // heroXProgressArray[1] === heroXProgressArray[0] &&
       game.levelData[heroTileY][heroTileX + 1] === 0
     ) {
-      // if no wall is blocking your path
       snap
-        .to({ y: startingPointY }, tweenSpeed, Phaser.Easing.Linear.None)
+        .to({ y: heroStandingTileY }, tweenSpeed, Phaser.Easing.Linear.None)
         .start()
     }
 
@@ -82,7 +44,7 @@ var controls = function (game) {
       game.levelData[heroTileY - 1][heroTileX] === 0
     ) {
       snap
-        .to({ x: startingPointX }, tweenSpeed, Phaser.Easing.Linear.None)
+        .to({ x: heroStandingTileX }, tweenSpeed, Phaser.Easing.Linear.None)
         .start()
     }
 
@@ -92,7 +54,7 @@ var controls = function (game) {
       game.levelData[heroTileY + 1][heroTileX] === 0
     ) {
       snap
-        .to({ x: startingPointX }, tweenSpeed, Phaser.Easing.Linear.None)
+        .to({ x: heroStandingTileX }, tweenSpeed, Phaser.Easing.Linear.None)
         .start()
     }
   }
@@ -148,7 +110,7 @@ var controls = function (game) {
       !game.player1Sprite.holdFire &&
       game.player1Sprite.weapon)
   ) {
-    require('./laserFire').laserFire(game)
+    require('./laserFire').laserFire(game, game.player1Sprite, game.heroWeapon)
   }
 
   /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

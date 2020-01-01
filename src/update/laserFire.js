@@ -1,71 +1,58 @@
 /* eslint-disable no-undef */
-const laserFire = function (game) {
-  // let playerWeaponSize = game.blockSize
+const laserFire = function (game, player, weapon) {
   var horizontalOffset = game.playerSize
   var verticleOffset = game.playerSize
 
-  if (game.player1Sprite.facing === 'left') {
-    horizontalOffset = -game.playerSize
+  if (player.facing === 'left') {
+    horizontalOffset = -3
     verticleOffset = game.playerSize / 2
 
-    if (game.weapon.bulletSpeed > 0) {
-      game.weapon.bulletSpeed = -game.weapon.bulletSpeed
+    if (weapon.bulletSpeed > 0) {
+      weapon.bulletSpeed = -weapon.bulletSpeed
     }
-    if (game.weapon.fireAngle < 0) {
-      game.weapon.fireAngle = 0
+    if (weapon.fireAngle < 0) {
+      weapon.fireAngle = 0
     }
   }
 
-  if (game.player1Sprite.facing === 'right') {
-    horizontalOffset = game.playerSize + 10
+  if (player.facing === 'right') {
+    horizontalOffset = game.playerSize + 3
     verticleOffset = game.playerSize / 2
 
-    if (game.weapon.bulletSpeed < 0) {
-      game.weapon.bulletSpeed = Math.abs(game.weapon.bulletSpeed)
+    if (weapon.bulletSpeed < 0) {
+      weapon.bulletSpeed = Math.abs(weapon.bulletSpeed)
     }
-    if (game.weapon.fireAngle <= 0) {
-      game.weapon.fireAngle = 0
+    if (weapon.fireAngle <= 0) {
+      weapon.fireAngle = 0
     }
   }
 
-  if (game.player1Sprite.facing === 'up') {
+  if (player.facing === 'up') {
     horizontalOffset = game.playerSize / 2
-    verticleOffset = -game.playerSize
+    verticleOffset = -game.playerSize + 12
 
-    if (game.weapon.bulletSpeed <= 0) {
-      game.weapon.bulletSpeed = Math.abs(game.weapon.bulletSpeed)
+    if (weapon.bulletSpeed <= 0) {
+      weapon.bulletSpeed = Math.abs(weapon.bulletSpeed)
     }
-    if (game.weapon.fireAngle >= 0) {
-      game.weapon.fireAngle = -90
+    if (weapon.fireAngle >= 0) {
+      weapon.fireAngle = -90
     }
   }
 
-  if (game.player1Sprite.facing === 'down') {
+  if (player.facing === 'down') {
     horizontalOffset = game.playerSize / 2
-    verticleOffset = game.playerSize + 10
+    verticleOffset = game.playerSize + 3
 
-    if (game.weapon.bulletSpeed > 0) {
-      game.weapon.bulletSpeed = -game.weapon.bulletSpeed
+    if (weapon.bulletSpeed > 0) {
+      weapon.bulletSpeed = -weapon.bulletSpeed
     }
-    if (game.weapon.fireAngle >= 0) {
-      game.weapon.fireAngle = -90
+    if (weapon.fireAngle >= 0) {
+      weapon.fireAngle = -90
     }
   }
 
-  // console.log(
-  //   'game.weapon.bulletSpeed',
-  //   game.weapon.bulletSpeed,
-  //   'game.weapon.fireAngle',
-  //   game.weapon.fireAngle
-  // )
-
-  game.weapon.trackSprite(
-    game.player1Sprite,
-    horizontalOffset,
-    verticleOffset,
-    false
-  )
-  game.weapon.fire()
+  weapon.trackSprite(player, horizontalOffset, verticleOffset, false)
+  weapon.fire()
 }
 
 module.exports.laserFire = laserFire
