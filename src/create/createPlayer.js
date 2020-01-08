@@ -7,7 +7,7 @@ var createPlayer = function (game) {
   const players = {
     player1Sprite: {
       color: '0xdd9b33',
-      startingLocationX: 50,
+      startingLocationX: 200,
       startingLocationY: 100,
       walkspeed: 50,
       // jumpStrength: 220,
@@ -17,7 +17,16 @@ var createPlayer = function (game) {
     player2Sprite: {
       color: '0x0055dd',
       startingLocationX: 100,
-      startingLocationY: 210,
+      startingLocationY: 100,
+      walkspeed: 0,
+      // jumpStrength: 220,
+      facing: 'left',
+      weapon: 'laser'
+    },
+    player3Sprite: {
+      color: '0xff0000',
+      startingLocationX: 150,
+      startingLocationY: 100,
       walkspeed: 0,
       // jumpStrength: 220,
       facing: 'left',

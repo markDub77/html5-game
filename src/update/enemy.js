@@ -5,7 +5,7 @@ const enemy = game => {
   const hero = game.player1Sprite
   const calculationRate = 3000
   const tweenSpeed = 70
-  const runspeed = 15 // 35
+  const runspeed = 0 // 35
   const heroTileX = Math.round(hero.x / game.blockSize)
   const heroTileY = Math.round(hero.y / game.blockSize)
   const enemyTileX = Math.round(enemy.x / game.blockSize)
@@ -18,6 +18,8 @@ const enemy = game => {
   let focusTileX = enemyTileX
   let axis
   let direction
+
+  game.line1.fromSprite(enemy, hero, false)
 
   const wallCheck = (tilesAway, focusTile, axis, direction) => {
     for (let i = 0; i < Math.abs(tilesAway); i++) {

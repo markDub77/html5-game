@@ -118,6 +118,8 @@ const collisions = game => {
     null,
     this
   )
+
+  console.log('Hitting wall', Phaser.Line.intersectsRectangle(game.line1, game.player3Sprite))
 }
 
 module.exports.collisions = collisions
