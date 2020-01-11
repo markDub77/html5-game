@@ -28,7 +28,7 @@ const laserFire = function (game, player, weapon) {
   }
 
   if (player.facing === 'up') {
-    horizontalOffset = game.playerSize / 2
+    horizontalOffset = game.playerSize + 1
     verticleOffset = -game.playerSize + 12
 
     if (weapon.bulletSpeed <= 0) {
@@ -40,7 +40,7 @@ const laserFire = function (game, player, weapon) {
   }
 
   if (player.facing === 'down') {
-    horizontalOffset = game.playerSize / 2
+    horizontalOffset = -1
     verticleOffset = game.playerSize + 3
 
     if (weapon.bulletSpeed > 0) {

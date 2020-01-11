@@ -19,7 +19,8 @@ const enemy = game => {
   let axis
   let direction
 
-  game.line1.fromSprite(enemy, hero, false)
+  // game.line1.fromSprite(enemy, hero, true)
+  // console.log('Hitting new wall', Phaser.Line.intersectsRectangle(game.line1, game.walls))
 
   const wallCheck = (tilesAway, focusTile, axis, direction) => {
     for (let i = 0; i < Math.abs(tilesAway); i++) {
@@ -97,11 +98,18 @@ const enemy = game => {
         // going up
         enemy.body.velocity.y = -runspeed
         enemy.facing = 'up'
+        // enemy.angle = -90
         // console.log('facing up')
+        game.gun.x = 15
+        game.gun.y = 8
+        game.gun.angle = -90
       } else if (path[0].y < path[1].y) {
         // going down
         enemy.body.velocity.y = runspeed
         enemy.facing = 'down'
+        game.gun.angle = 90
+        game.gun.x = 1
+        game.gun.y = 9
         // console.log('facing down')
       } else {
         enemy.body.velocity.y = 0
@@ -111,11 +119,17 @@ const enemy = game => {
         // go left
         enemy.body.velocity.x = -runspeed
         enemy.facing = 'left'
+        game.gun.angle = 180
+        game.gun.x = 6
+        game.gun.y = 9
         // console.log('facing left')
       } else if (path[0].x < path[1].x) {
         // go right
         enemy.body.velocity.x = runspeed
         enemy.facing = 'right'
+        game.gun.angle = 0
+        game.gun.x = 8
+        game.gun.y = 6
         // console.log('facing right')
       } else {
         enemy.body.velocity.x = 0
@@ -124,6 +138,8 @@ const enemy = game => {
   })
   game.easystar.setIterationsPerCalculation(calculationRate)
   game.easystar.calculate()
+
+  game.laserSight.width = 300
 }
 
 module.exports.enemy = enemy

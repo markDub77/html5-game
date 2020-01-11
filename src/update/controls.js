@@ -112,53 +112,6 @@ var controls = function (game) {
   ) {
     require('./laserFire').laserFire(game, game.player1Sprite, game.heroWeapon)
   }
-
-  /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // pad2
-  // dpad left
-  if (
-    game.pad2.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) ||
-    game.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1
-  ) {
-    game.player2Sprite.body.velocity.x = -game.player2Sprite.walkspeed
-    game.player2Sprite.facing = 'left'
-
-    // dpad right
-  } else if (
-    (game.pad2 && game.pad2.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT)) ||
-    (game.pad2 && game.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)) > 0.1
-  ) {
-    game.player2Sprite.body.velocity.x = game.player2Sprite.walkspeed
-    game.player2Sprite.facing = 'right'
-  }
-
-  // jump button
-  if (
-    game.pad2.justPressed(Phaser.Gamepad.XBOX360_A) &&
-    (game.player2Sprite.body.onFloor() || game.player2Sprite.body.touching.down)
-  ) {
-    game.player2Sprite.body.velocity.y = -game.player2Sprite.jumpStrength
-  }
-
-  // shoot button
-  if (
-    game.pad2.justPressed(Phaser.Gamepad.XBOX360_B) &&
-    !game.player2Sprite.holdFire
-  ) {
-    // game.player2Sprite.holdFire = true
-
-    // not sure if this should really go here
-    if (game.player2Sprite.facing === 'right') {
-      game.lasers.callAll('anchor.setTo', 'anchor', -5, -1.5)
-    } else {
-      game.lasers.callAll('anchor.setTo', 'anchor', 2, -1.5)
-    }
-  }
-
-  if (game.pad2.justReleased(Phaser.Gamepad.XBOX360_B)) {
-    game.player2Sprite.holdFire = false
-  }
-
   return {
     game
   }

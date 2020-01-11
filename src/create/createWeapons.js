@@ -12,7 +12,7 @@ var createWeapons = function (game) {
   heroWeapon.bulletSpeed = 190
   heroWeapon.fireAngle = 0
   heroWeapon.fireRate = 0
-  heroWeapon.bulletWorldWrap = true
+  // heroWeapon.bulletWorldWrap = true
   // heroWeapon.bulletGravity = new Phaser.Point(0, 120.2)
 
   let enemyWeapon = game.add.weapon(100, bulletBmd)
@@ -20,7 +20,7 @@ var createWeapons = function (game) {
   enemyWeapon.bulletSpeed = 90
   enemyWeapon.fireAngle = 0
   enemyWeapon.fireRate = 800
-  enemyWeapon.bulletWorldWrap = true
+  // enemyWeapon.bulletWorldWrap = true
 
   game.heroWeapon = heroWeapon
   game.enemyWeapon = enemyWeapon

@@ -59,6 +59,18 @@ const collisions = game => {
     }
   }
 
+  const weee = () => {
+    console.log('touching wall')
+  }
+
+  game.physics.arcade.overlap(
+    game.foo,
+    game.walls,
+    weee,
+    null,
+    this
+  )
+
   // Enemy has a really hard time getting around corners,
   // so Corner Assist will be triggered when Enemy touches a wall
   game.physics.arcade.collide(
@@ -118,8 +130,6 @@ const collisions = game => {
     null,
     this
   )
-
-  console.log('Hitting wall', Phaser.Line.intersectsRectangle(game.line1, game.player3Sprite))
 }
 
 module.exports.collisions = collisions

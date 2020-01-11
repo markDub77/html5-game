@@ -25,12 +25,12 @@ const mainState = {
 
   create: function () {
     require('./create/enablePhysics').enablePhysics(game)
-    require('./create/createPlayer').createPlayer(game)
+    require('./create/createHero').createHero(game)
+    require('./create/createEnemy').createEnemy(game)
     require('./create/createControls').createControls(game)
     require('./create/createLevel').createLevel(game)
     require('./create/createWeapons').createWeapons(game)
     require('./create/createHud').createHud(game)
-    game.line1 = new Phaser.Line(game.player2Sprite.x, game.player2Sprite.y, game.player1Sprite.x, game.player1Sprite.y)
   },
 
   update: function () {
@@ -41,7 +41,7 @@ const mainState = {
 
   render: function () {
     game.debug.geom(game.line1)
-    game.debug.lineInfo(game.line1, 32, 32)
+    // game.debug.lineInfo(game.line1, 32, 32)
     //  FPS debug info
     game.debug.text(game.time.fps, 480, 16, '#cccccc', {
       font: '10pt Arial',

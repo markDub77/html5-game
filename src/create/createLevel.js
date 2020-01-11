@@ -58,9 +58,9 @@ var createLevel = function (game) {
 
   // Create 3 groups that will contain our objects
   game.walls = game.add.group()
-  game.grounds = game.add.group()
-  game.laserIconGroup = game.add.group()
-  game.enemies = game.add.group()
+  // game.grounds = game.add.group()
+  // game.laserIconGroup = game.add.group()
+  
 
   // eslint-disable-next-line space-before-function-paren
   function placeTile(tileType, i, j) {
@@ -68,13 +68,13 @@ var createLevel = function (game) {
     // var tile
     if (tileType === 1) {
       // var tile = wallBmd
-      // var wall = game.add.sprite(
-      //   game.blockSize * j,
-      //   game.blockSize * i,
-      //   wallBmd
-      // )
-      // game.walls.add(wall)
-      // wall.body.immovable = true
+      const wall = game.add.sprite(
+        game.blockSize * j,
+        game.blockSize * i,
+        wallBmd
+      )
+      game.walls.add(wall)
+      wall.body.immovable = true
     }
     // if (tileType === 0) {
       // tile = groundBmd

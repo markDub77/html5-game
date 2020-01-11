@@ -1,4 +1,4 @@
-var createPlayer = function (game) {
+var createHero = function (game) {
   // const gravity = 500
   game.blockSize = 16 // TODO we need global constants
   game.playerSize = 15 // TODO we need global constants
@@ -8,7 +8,7 @@ var createPlayer = function (game) {
     player1Sprite: {
       color: '0xdd9b33',
       startingLocationX: 200,
-      startingLocationY: 100,
+      startingLocationY: 106,
       walkspeed: 50,
       // jumpStrength: 220,
       facing: 'right',
@@ -17,16 +17,7 @@ var createPlayer = function (game) {
     player2Sprite: {
       color: '0x0055dd',
       startingLocationX: 100,
-      startingLocationY: 100,
-      walkspeed: 0,
-      // jumpStrength: 220,
-      facing: 'left',
-      weapon: 'laser'
-    },
-    player3Sprite: {
-      color: '0xff0000',
-      startingLocationX: 150,
-      startingLocationY: 100,
+      startingLocationY: 106,
       walkspeed: 0,
       // jumpStrength: 220,
       facing: 'left',
@@ -73,4 +64,4 @@ var createPlayer = function (game) {
   }
 }
 
-module.exports.createPlayer = createPlayer
+module.exports.createHero = createHero
