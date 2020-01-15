@@ -4,6 +4,8 @@ var controls = function (game) {
   game.player1Sprite.body.velocity.x = 0
   game.player1Sprite.body.velocity.y = 0
 
+  game.world.wrap(game.player1Sprite, 0, true, true, true)
+
   // TODO find a better place for this
   // Doorway Assist - It's very dificult to go through small openings,
   // so we need help lining up hero

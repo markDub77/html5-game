@@ -1,10 +1,11 @@
 var createEnemy = function (game) {
   // TODO we need global constants
+
   const players = {
     player2Sprite: {
       color: '0x0055dd',
-      startingLocationX: 100,
-      startingLocationY: 106,
+      startingLocationX: 100, // 20
+      startingLocationY: 100,
       walkspeed: 0,
       facing: 'left',
       weapon: 'laser'
@@ -30,7 +31,7 @@ var createEnemy = function (game) {
     playerSprite.facing = players[player].facing
     playerSprite.weapon = players[player].weapon
     playerSprite.walkspeed = players[player].walkspeed
-    playerSprite.jumpStrength = players[player].jumpStrength
+    // playerSprite.jumpStrength = players[player].jumpStrength
 
     // save it as a global variable
     game[player] = playerSprite
@@ -39,10 +40,10 @@ var createEnemy = function (game) {
   // enemy laser pointer.
   // so enemy will not shoot into wall
   // game.enemyGroup = game.add.group()
-  const enemyLaserSightBmd = game.add.bitmapData(10, 3) // (width, height)
+  const enemyLaserSightBmd = game.add.bitmapData(10, 4) // (width, height)
   enemyLaserSightBmd.ctx.beginPath()
-  enemyLaserSightBmd.ctx.rect(0, 0, 10, 3) // (x, y, width, height)
-  // enemyLaserSightBmd.ctx.fillStyle = '#ff0000'
+  enemyLaserSightBmd.ctx.rect(0, 0, 10, 4) // (x, y, width, height)
+  enemyLaserSightBmd.ctx.fillStyle = 'green'
   // enemyLaserSightBmd.ctx.fill()
 
   const enemyGunBmd = game.add.bitmapData(10, 3) // (width, height)

@@ -59,18 +59,6 @@ const collisions = game => {
     }
   }
 
-  const weee = () => {
-    console.log('touching wall')
-  }
-
-  game.physics.arcade.overlap(
-    game.foo,
-    game.walls,
-    weee,
-    null,
-    this
-  )
-
   // Enemy has a really hard time getting around corners,
   // so Corner Assist will be triggered when Enemy touches a wall
   game.physics.arcade.collide(
@@ -79,18 +67,18 @@ const collisions = game => {
     game.cornerAssist
   )
 
-  // player and the walls collide
+  // Hero can easily get snagged on a doorway corner
+  // so doorway assist will be triggered when hero touches a wall
   game.physics.arcade.collide(
     [game.player1Sprite],
     game.walls,
     game.doorWayAssist
   )
 
-  // player and player collide
+  // Hero and Enemy collide
   game.physics.arcade.collide(game.player1Sprite, game.player2Sprite)
 
   // player and laser collide
-  // if (game.shotGuy.invincible == false) {
   game.physics.arcade.overlap(
     [game.enemyWeapon.bullets, game.heroWeapon.bullets],
     [game.player1Sprite, game.player2Sprite],
@@ -98,7 +86,6 @@ const collisions = game => {
     null,
     this
   )
-  // }
 
   // lasers and walls collide
   game.physics.arcade.collide(

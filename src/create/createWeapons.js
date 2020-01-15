@@ -7,7 +7,7 @@ var createWeapons = function (game) {
   bulletBmd.ctx.fillStyle = '#ff0000'
   bulletBmd.ctx.fill()
 
-  let heroWeapon = game.add.weapon(1, bulletBmd)
+  let heroWeapon = game.add.weapon(100, bulletBmd)
   heroWeapon.bulletKillType = Phaser.Weapon.KILL_NEVER
   heroWeapon.bulletSpeed = 190
   heroWeapon.fireAngle = 0

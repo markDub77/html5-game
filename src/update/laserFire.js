@@ -17,7 +17,7 @@ const laserFire = function (game, player, weapon) {
 
   if (player.facing === 'right') {
     horizontalOffset = game.playerSize + 3
-    verticleOffset = game.playerSize / 2
+    verticleOffset = 8
 
     if (weapon.bulletSpeed < 0) {
       weapon.bulletSpeed = Math.abs(weapon.bulletSpeed)

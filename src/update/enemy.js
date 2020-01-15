@@ -5,7 +5,7 @@ const enemy = game => {
   const hero = game.player1Sprite
   const calculationRate = 3000
   const tweenSpeed = 70
-  const runspeed = 0 // 35
+  const runspeed = 30 // 35
   const heroTileX = Math.round(hero.x / game.blockSize)
   const heroTileY = Math.round(hero.y / game.blockSize)
   const enemyTileX = Math.round(enemy.x / game.blockSize)
@@ -19,8 +19,21 @@ const enemy = game => {
   let axis
   let direction
 
-  // game.line1.fromSprite(enemy, hero, true)
-  // console.log('Hitting new wall', Phaser.Line.intersectsRectangle(game.line1, game.walls))
+  game.wallBlocksShot = false
+  game.laserSight.width = Phaser.Math.distance(enemy.x, enemy.y, hero.x, hero.y)
+  // game.laserSight.width = enemy.y - hero.y
+
+  game.physics.arcade.overlap(
+    game.laserSight,
+    game.walls,
+    () => {
+      game.wallBlocksShot = true
+    },
+    null,
+    this
+  )
+
+  console.log('game.wallBlocksShot', game.wallBlocksShot)
 
   const wallCheck = (tilesAway, focusTile, axis, direction) => {
     for (let i = 0; i < Math.abs(tilesAway); i++) {
@@ -37,21 +50,38 @@ const enemy = game => {
         (axis === 'y' && game.levelData[focusTile][enemyTileX] !== 0) ||
         (axis === 'x' && game.levelData[enemyTileY][focusTile] !== 0)
       ) {
+        // console.log('wallCheck says wall in the way')
         return
       }
     }
+
+    if (direction === 'up') {
+      // enemy.x = hero.x
+      enemy.body.velocity.x = -runspeed
+    }
+    if (direction === 'down') {
+      enemy.body.velocity.x = runspeed
+    }
+    if (direction === 'left') {
+      enemy.body.velocity.y = -runspeed
+    }
+    if (direction === 'right') {
+      enemy.body.velocity.y = runspeed
+    }
+
+    // set the length of the laser sight
     enemy.facing = direction
+
     laserFire(game, game.player2Sprite, game.enemyWeapon)
   }
 
+  // when the tiles line up run wallCheck function
   if (enemyTileX === heroTileX) {
     axis = 'y'
     if (enemyTileY >= heroTileY) {
       direction = 'up'
-      // console.log('up')
     } else {
       direction = 'down'
-      // console.log('down')
     }
     wallCheck(tilesAwayY, focusTileY, axis, direction)
   }
@@ -60,10 +90,8 @@ const enemy = game => {
     axis = 'x'
     if (enemyTileX >= heroTileX) {
       direction = 'left'
-      // console.log('left')
     } else {
       direction = 'right'
-      // console.log('right')
     }
     wallCheck(tilesAwayX, focusTileX, axis, direction)
   }
@@ -138,8 +166,6 @@ const enemy = game => {
   })
   game.easystar.setIterationsPerCalculation(calculationRate)
   game.easystar.calculate()
-
-  game.laserSight.width = 300
 }
 
 module.exports.enemy = enemy

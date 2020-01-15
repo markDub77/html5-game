@@ -7,22 +7,22 @@ var createHero = function (game) {
   const players = {
     player1Sprite: {
       color: '0xdd9b33',
-      startingLocationX: 200,
-      startingLocationY: 106,
+      startingLocationX: 100,
+      startingLocationY: 50,
       walkspeed: 50,
       // jumpStrength: 220,
       facing: 'right',
       weapon: 'laser'
-    },
-    player2Sprite: {
-      color: '0x0055dd',
-      startingLocationX: 100,
-      startingLocationY: 106,
-      walkspeed: 0,
-      // jumpStrength: 220,
-      facing: 'left',
-      weapon: 'laser'
     }
+    // player2Sprite: {
+    //   color: '0x0055dd',
+    //   startingLocationX: 100,
+    //   startingLocationY: 106,
+    //   walkspeed: 0,
+    //   // jumpStrength: 220,
+    //   facing: 'left',
+    //   weapon: 'laser'
+    // }
   }
 
   for (const player in players) {
