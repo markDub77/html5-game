@@ -40,13 +40,13 @@ const mainState = {
   },
 
   render: function () {
-    game.debug.geom(game.line1)
+    // game.debug.geom(game.line1)
     // game.debug.lineInfo(game.line1, 32, 32)
     //  FPS debug info
-    game.debug.text(game.time.fps, 480, 16, '#cccccc', {
-      font: '10pt Arial',
-      fill: '#000'
-    })
+    // game.debug.text(game.time.fps, 480, 16, '#cccccc', {
+    //   font: '10pt Arial',
+    //   fill: '#000'
+    // })
   }
 }
 

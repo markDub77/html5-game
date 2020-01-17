@@ -3,6 +3,8 @@ var createHero = function (game) {
   game.blockSize = 16 // TODO we need global constants
   game.playerSize = 15 // TODO we need global constants
 
+  game.linedUp = false
+
   // TODO we need global constants
   const players = {
     player1Sprite: {
